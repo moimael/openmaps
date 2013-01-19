@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>OpenMaps</title>
+    <meta name="description" content="Map application using OpenStreetMap">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+  <body role="application">
+  
+    <section id="sidebar">
+    </section>
+    
+     <!-- START content -->
+     <section id="drawer" role="region">
+    <header id="action-bar">
+
+    </header>
+    <div role="main">
+    <section id="instructions-pane" class="view" data-type="list">
+    <ul id="instructions-list">
+    </ul>
+    </section>
+        <div id="map">
+        </div>
+        <div id="action-menu">
+        </div>
+        <div id="toolbar">
+        </div>
+    </div>
+  </section>
+    <!-- END content -->
+<!--      "csp": "default-src *; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'",-->
+    <!-- Using require.js, a module system for javascript, include the
+         js files. This loads "main.js", which in turn can load other
+         files, all handled by require.js:
+         http://requirejs.org/docs/api.html#jsfiles -->
+    <script type="text/javascript"
+            data-main="js/init.js"
+            src="js/lib/require.js"></script>
+  </body>
+</html>
