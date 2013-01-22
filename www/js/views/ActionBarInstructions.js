@@ -2,9 +2,8 @@ define([
 'zepto',
 'underscore',
 'backbone',
-'text!../templates/instructions-header.html',
 '../common'
-], function( $, _, Backbone, instructionsTemplate, Common ) {
+], function( $, _, Backbone, Common ) {
     
     var ActionBarInstructions = Backbone.View.extend({
 
@@ -12,14 +11,19 @@ define([
         // the App already present in the HTML.
         el: '#action-bar',
 
-        // Compile our search template.
-        template: _.template(instructionsTemplate),
+        // Pre-comppiled template. They cannot be generate on the fly because of Content Security Policy.
+        // It is also much quicker to load this way.
+        template: function(obj){
+            var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+            with(obj||{}){
+                __p+='<a id="back-button"><span class="icon icon-back">back</span></a>\n<h1>Instructions</h1>\n';
+            }
+            return __p;
+        },
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
             'click #back-button': 'goBack'
-//            'click #route-button': 'route',
-//            'keypress #search-input': 'searchPlace',
         },
         
         // At initialization we bind to the relevant events on the `Todos`
@@ -32,10 +36,6 @@ define([
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
         render: function() {
             this.$el.html(this.template());
-//            this.btnLocate = this.$('#locate-button');
-//            this.btnRoute = this.$('#route-button');
-//            this.searchInput = this.$('#search-input');
-//            this.btnMenu = this.$('#menu-button');
         },
         
         goBack:function() {

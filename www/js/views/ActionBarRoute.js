@@ -4,9 +4,8 @@ define([
 'backbone',
 '../models/Search',
 '../models/Route',
-'text!../templates/route-header.html',
 '../common'
-], function( $, _, Backbone, Search, Route, routeTemplate, Common ) {
+], function( $, _, Backbone, Search, Route, Common ) {
     
     var ActionBarRoute = Backbone.View.extend({
 
@@ -14,8 +13,15 @@ define([
         // the App already present in the HTML.
         el: '#action-bar',
 
-        // Compile our route template.
-        template: _.template(routeTemplate),
+        // Pre-compiled template. They cannot be generate on the fly because of Content Security Policy.
+        // It is also much quicker to load this way.
+        template: function(obj){
+            var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+            with(obj||{}){
+                __p+='<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n<menu type="toolbar">\n<button id="search-button"><span class="icon icon-search">edit</span></button>\n</menu>\n<form action="#">\n<input id="start-input" type="text" required="required" placeholder="From">\n<!--<button type="reset">Remove text</button>-->\n<input id="end-input" type="text" required="required" placeholder="To">\n<!--<button type="reset">Remove text</button>-->\n</form>\n';
+            }
+            return __p;
+        },
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
@@ -48,35 +54,32 @@ define([
                 return;
             }
             
-            this.find.findLocation(this.startInput.val(), (function(scope){
-                return function(data) {
+            self = this;
+            this.find.findLocation(this.startInput.val(), function(data){
                     var results = data.ResultSet.Results;
                     var lat = results[0].latitude;
                     var lng = results[0].longitude;
                     var latlng = new L.LatLng(lat, lng);
-                    scope.locations.push(latlng);
+                    self.locations.push(latlng);
                     
-                    if(scope.locations.length === 2){
-                        scope.route.startRouting(locations[0], locations[1]);
-                        scope.locations = [];
+                    if(self.locations.length === 2){
+                        self.route.startRouting(self.locations[0], self.locations[1]);
+                        self.locations = [];
                     }
-                }
-            })(this));
+            });
         
-            this.find.findLocation(this.endInput.val(), (function(scope){
-                return function(data) {
+            this.find.findLocation(this.endInput.val(), function(data){
                     var results = data.ResultSet.Results;
                     var lat = results[0].latitude;
                     var lng = results[0].longitude;
                     var latlng = new L.LatLng(lat, lng);
-                    scope.locations.push(latlng);
+                    self.locations.push(latlng);
                     
-                    if(scope.locations.length === 2){
-                        scope.route.startRouting(scope.locations[0], scope.locations[1]);
-                        scope.locations = [];
+                    if(self.locations.length === 2){
+                        self.route.startRouting(self.locations[0], self.locations[1]);
+                        self.locations = [];
                     }
-                }
-            })(this));
+            });
         },
         
         showSearchView: function() {

@@ -2,12 +2,10 @@ define([
 'zepto',
 'underscore',
 'backbone',
-'jquery.autoSuggest',
 '../models/Search',
 '../models/Location',
-'text!../templates/search-header.html',
 '../common'
-], function( $, _, Backbone, AutoComplete, Search, Location, searchTemplate, Common ) {
+], function( $, _, Backbone, Search, Location, Common ) {
     
     var ActionBarSearch = Backbone.View.extend({
 
@@ -15,12 +13,18 @@ define([
         // the App already present in the HTML.
         el: '#action-bar',
 
-        // Compile our search template.
-        template: _.template(searchTemplate),
+        // Pre-compiled template. They cannot be generate on the fly because of Content Security Policy.
+        // It is also much quicker to load this way.
+        template: function(obj){
+            var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+            with(obj||{}){
+                __p+='<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n<menu type="toolbar">\n<button id="route-button"><span class="icon icon-edit">edit</span></button>\n<button id="locate-button"><span class="icon icon-user">user</span></button>\n</menu>\n<form action="#">\n<input id="search-input" type="text" required="required" placeholder="Enter search terms">\n<button type="reset">Remove text</button>\n</form>\n';
+            }
+            return __p;
+        },
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-//            'click #menu-button': 'showMenu',
             'click #locate-button': 'locate',
             'click #route-button': 'route',
             'keypress #search-input': 'searchPlace',
@@ -41,42 +45,6 @@ define([
             this.btnRoute = this.$('#route-button');
             this.searchInput = this.$('#search-input');
             this.btnMenu = this.$('#menu-button');
-            
-//            this.searchInput.autoSuggest('http://where.yahooapis.com/geocode', {
-//                minChars: 2,
-//                queryParam: 'location',
-//                extraParams: '&flags=J&appid=fTGKVi5e', 
-//                retrieveComplete: function(data){ 
-//                    var results = data.ResultSet.Results;
-//                    console.log(results);
-//                    var test = [];
-//                    for(var i = 0; i < results.length; i++){
-//                        test.push({"value": results[i].city});
-//                    }
-
-//                    return test; 
-//                }
-//            });
-//            this.searchInput.autocomplete({
-//                serviceUrl: 'http://where.yahooapis.com/geocode',
-//                params: {
-//                    flags: 'J',
-//                    appid: 'fTGKVi5e'
-//                },
-//                onSelect: function (suggestion) {
-//                    alert('You selected: ' + suggestion.value + ', ' + suggestion.data);
-//                },
-//                onSearchComplete: function (query) {
-//                    console.log(query);
-//                }
-//            });
-
-//            this.searchInput.autocomplete('http://where.yahooapis.com/geocode', {
-//                extraParams: {
-//                    flags: 'J',
-//                    appid: 'fTGKVi5e'
-//                }
-//            });
         },
 
         searchPlace: function(e) {

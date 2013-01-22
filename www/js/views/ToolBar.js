@@ -3,9 +3,8 @@ define([
 'underscore',
 'backbone',
 './ActionMenu',
-'text!../templates/toolbar.html',
 '../common'
-], function( $, _, Backbone, ActionMenu, toolbarTemplate, Common ) {
+], function( $, _, Backbone, ActionMenu, Common ) {
     
     var ToolBar = Backbone.View.extend({
 
@@ -13,8 +12,15 @@ define([
         // the App already present in the HTML.
         el: '#toolbar',
 
-        // Compile our route template.
-        template: _.template(toolbarTemplate),
+        // Pre-compiled template. They cannot be generate on the fly because of Content Security Policy.
+        // It is also much quicker to load this way.
+        template: function(obj){
+            var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
+            with(obj||{}){
+                __p+='<ul>\n<li><button class="pack-icon-delete">Delete</button></li>\n</ul>\n<ul>\n<li><button class="pack-icon-move">Move</button></li>\n<li><button class="pack-icon-share">Share</button></li>\n</ul>\n';
+            }
+            return __p;
+        },
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
@@ -35,7 +41,6 @@ define([
 
         // Render the sidebar
         render: function() {
-        
             //We set data-type here to avoid sidebar flicker when loading the app for the first time
             this.$el.attr('role', 'toolbar');
             this.$el.html(this.template);
