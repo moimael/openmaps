@@ -1,46 +1,34 @@
 {
   "version": "0.1",
-  "name": "OpenMaps",
+  "name": "Cartes",
   "description": "OpenStreetMap based application that let you find your way.",
   "launch_path": "/index.html",
   "icons": {
-    "16": "/img/icons/mortar-16.png",
-    "48": "/img/icons/mortar-48.png",
-    "128": "/img/icons/mortar-128.png"
+    "60": "/img/icons/openmaps-60.png",
+    "128": "/img/icons/openmaps-128.png"
   },
   "developer": {
     "name": "Maël Lavault",
-    "url": "http://yourawesomeapp.com"
+    "url": "https://github.com/moimael/openmaps"
   },
   "installs_allowed_from": ["*"],
-  "appcache_path": "/cache.manifest",
 
   "locales": {
-    "es": {
-      "description": "Su nueva aplicación impresionante Open Web",
+    "fr": {
+      "description": "Une application basée sur OpenStreetMap qui vous permet de trouver votre chemin.",
       "developer": {
-        "url": "http://yourawesomeapp.com"
-      }
-    },
-    "it": {
-      "description": "Il vostro nuovo fantastico Open Web App",
-      "developer": {
-        "url": "http://yourawesomeapp.com"
+        "url": "https://github.com/moimael/openmaps"
       }
     }
   },
   "default_locale": "en",
+  "type": "privileged",
   "permissions": {
-    "device-storage:sdcard": {
-      "description": "Required for offline maps",
-      "access": "readonly"
+    "systemXHR": {
+      "description": "Required for search, route and map display"
     },
     "geolocation": {
       "description": "Required to display your location"
-    },
-    "network-http": {
-      "description": "Required to display maps"
     }
   }
-
 }
