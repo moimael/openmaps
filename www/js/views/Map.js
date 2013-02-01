@@ -2,7 +2,8 @@ define([
 'zepto',
 'underscore',
 'backbone',
-'leaflet'
+'leaflet',
+//'../models/OfflineMap'
 ], function( $, _, Backbone, Leaflet) {
 
     L.Marker.prototype.animateDragging = function () {
@@ -40,8 +41,9 @@ define([
         // collection, when items are added or changed. Kick things off by
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
+//            this.offlineMap = new OfflineMap();
+            L.Icon.Default.imagePath = '../../img'
             this.render();
-            
             this.on('change:mapType', this.mapTypeChanged, this);
         },
 
@@ -51,7 +53,7 @@ define([
             try {
                 this.createMap();
             } catch (e) {
-                //this.doLoadFailure(e);
+                //fail to load map
                 return;
             }
 
@@ -71,11 +73,17 @@ define([
                 maxZoom: 18, 
                 subdomains: ['a', 'b', 'c']
             });
+            
+//            var offline = new L.TileLayer.MBTiles('', {
+//                maxZoom: 18, 
+//                subdomains: ['a', 'b', 'c']
+//            }, this.offlineMap.getDb());
 
             this.baseMaps = {
                 "road": cloudMade,
                 "satellite": openAerials,
                 "cycle": openCycleMap
+//                "offline": offline
             };
 
             // Add the CloudMade layer to the map and set the view to a given center
@@ -118,7 +126,7 @@ define([
         
         showLocation: function() {
             this.clearAll(); //TODO: refléchir quoi effacer
-            this.map.locate({setView: true, maxZoom: 16});
+            this.map.locate({setView: true, maxZoom: 16, enableHighAccuracy: true});
         },
 
         connectEvents: function() {
@@ -157,6 +165,12 @@ define([
                 this.map.removeLayer(this.baseMaps.satellite);
                 this.map.addLayer(this.baseMaps.cycle);
             }
+//            else {
+//                this.map.removeLayer(this.baseMaps.road);
+//                this.map.removeLayer(this.baseMaps.satellite);
+//                this.map.removeLayer(this.baseMaps.cycle);
+//                this.map.addLayer(this.baseMaps.offline);
+//            }
         },
         
         setMapType: function(mapType) {
