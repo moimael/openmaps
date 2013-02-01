@@ -32,9 +32,9 @@ define([
                     type: 'GET',
                     url: 'http://routes.cloudmade.com/' + '8c92938a1540489f822ce0ade39e7acc'/*this.credentials*/ + '/api/0.3/' + startPoint.lat + ',' + startPoint.lng + ',' + endPoint.lat + ',' + endPoint.lng + '/car.js',
                     // data to be added to query string:
-                    data: { lang: 'fr'/*this.language*/, units: 'km'},
+                    data: { lang: 'en'/*this.language*/, units: 'km'},
                     // type of data we are expecting in return:
-                    dataType: 'json',
+                    dataType: 'jsonp',
                     success: function(data){
                         var path = data.route_geometry;
                         var instructions = data.route_instructions;
