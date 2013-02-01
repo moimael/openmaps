@@ -11,8 +11,7 @@
     "dependencies": {
       "zepto": "github:madrobby/zepto/v0.8",
       "underscore": "github:amdjs/underscore/1.4.3",
-      "backbone": "github:amdjs/backbone/0.9.9",
-      "text": "github:requirejs/text/2.0.3"
+      "backbone": "github:amdjs/backbone/0.9.9"
     },
     "baseUrl": "www/js/lib"
   }
