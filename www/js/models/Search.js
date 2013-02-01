@@ -5,6 +5,7 @@ define([
 ], function(_, Backbone, Location) {
 //network info api
 //send event -> notification api to notify user if no network
+
     var Search = Backbone.Model.extend({
         defaults: {
             credentials: '',
@@ -36,8 +37,7 @@ define([
                 // data to be added to query string:
                 data: { location: location, flags: 'J', appid: this.credentials },
                 // type of data we are expecting in return:
-                dataType: 'json',
-                timeout: 5000,
+                dataType: 'jsonp',
                 success: function(data){
                     callback(data);
                 },
