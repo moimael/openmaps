@@ -592,10 +592,10 @@ var Zepto = (function() {
       return this.each(function(index, target){
         for (var i = 0; i < nodes.length; i++) {
           var node = nodes[inReverse ? nodes.length-i-1 : i]
-          traverseNode(node, function(node){
-            if (node.nodeName != null && node.nodeName.toUpperCase() === 'SCRIPT' && (!node.type || node.type === 'text/javascript'))
-              window['eval'].call(window, node.innerHTML)
-          })
+//          traverseNode(node, function(node){
+//            if (node.nodeName != null && node.nodeName.toUpperCase() === 'SCRIPT' && (!node.type || node.type === 'text/javascript'))
+//              window['eval'].call(window, node.innerHTML)
+//          })
           if (copyByClone && index < size - 1) node = node.cloneNode(true)
           insert(operator, target, node)
         }
@@ -1081,6 +1081,7 @@ window.Zepto = Zepto
     context: null,
     // Whether to trigger "global" Ajax events
     global: true,
+    mozSystem: true,
     // Transport
     xhr: function () {
       return new window.XMLHttpRequest()
@@ -1279,7 +1280,9 @@ window.Zepto = Zepto
   var touch = {}, touchTimeout
 
   function parentIfText(node){
+  try {
     return 'tagName' in node ? node : node.parentNode
+    } catch(ex){}
   }
 
   function swipeDirection(x1, x2, y1, y2){
