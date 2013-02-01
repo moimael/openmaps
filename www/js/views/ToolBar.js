@@ -17,16 +17,17 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<ul>\n<li><button class="pack-icon-delete">Delete</button></li>\n</ul>\n<ul>\n<li><button class="pack-icon-move">Move</button></li>\n<li><button class="pack-icon-share">Share</button></li>\n</ul>\n';
+                __p+='<ul><li><button id="toggle-search-button" class="pack-icon-route"></button></li>\n</ul>\n<ul>\n<li><button class="pack-icon-layers"></button></li>\n<li><button class="pack-icon-marker"></button></li>\n<li><button class="pack-icon-location"></button></li>\n</ul>';
             }
             return __p;
         },
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'click .pack-icon-share': 'addDragableMarker',
-            'click .pack-icon-move': 'showLayerMenu',
-            'click .pack-icon-delete': 'clearMap'
+            'click .pack-icon-marker': 'addDragableMarker',
+            'click .pack-icon-layers': 'showLayerMenu',
+            'click #toggle-search-button': 'toggleSearchView',
+            'click .pack-icon-location': 'locate'
         },
         
         initialize: function() {
@@ -35,7 +36,7 @@ define([
             this.actionMenu.hideMenu();
             this.render();
             
-            this.actionMenu.on('actionmenu:hide', this.show, this);
+            events.on('actionmenu:hide', this.show, this);
             
         },
 
@@ -44,14 +45,21 @@ define([
             //We set data-type here to avoid sidebar flicker when loading the app for the first time
             this.$el.attr('role', 'toolbar');
             this.$el.html(this.template);
+            this.toggleSearchButton = this.$('#toggle-search-button');
         },
         
         addDragableMarker: function() {
             L.marker([50.5, 30.51], {draggable: true}).animateDragging().addTo(app.map.hasMap());
         },
         
-        clearMap: function() {
-            app.map.clearAll();
+//        clearMap: function() {
+//            app.map.clearAll();
+//        },
+        toggleSearchView: function() {
+            this.toggleSearchButton.toggleClass('pack-icon-search');
+            this.toggleSearchButton.toggleClass('pack-icon-route');
+            events.trigger('toolbar:togglesearchview');
+            //css transform to resize search field
         },
         
         show: function() {
@@ -61,6 +69,10 @@ define([
         showLayerMenu: function() {
             this.$el.hide();
             this.actionMenu.showMenu();
+        },
+        
+        locate: function() {
+            events.trigger('toolbar:locate');
         }
     });
     return ToolBar;

@@ -11,7 +11,7 @@ define([
         // the App already present in the HTML.
         el: '#action-bar',
 
-        // Pre-comppiled template. They cannot be generate on the fly because of Content Security Policy.
+        // Pre-compiled template. They cannot be generate on the fly because of Content Security Policy.
         // It is also much quicker to load this way.
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};

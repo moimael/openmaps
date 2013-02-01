@@ -18,15 +18,15 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n<menu type="toolbar">\n<button id="search-button"><span class="icon icon-search">edit</span></button>\n</menu>\n<form action="#">\n<input id="start-input" type="text" required="required" placeholder="From">\n<!--<button type="reset">Remove text</button>-->\n<input id="end-input" type="text" required="required" placeholder="To">\n<!--<button type="reset">Remove text</button>-->\n</form>\n';
+                __p+='<menu type="toolbar">\n<button id="instructions-list-button"><span class="icon icon-menu">edit</span></button>\n</menu>\n<form action="#">\n<input id="start-input" type="text" required="required" placeholder="From">\n<input id="end-input" type="text" required="required" placeholder="To">\n</form>\n';
             }
             return __p;
         },
-        
+        //<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'click #search-button': 'showSearchView',
-            'keypress #end-input': 'search',
+            'click #instructions-list-button' : 'showInstructionsPane',
+            'keypress #end-input': 'search'
         },
         
         // At initialization we bind to the relevant events on the `Todos`
@@ -82,9 +82,8 @@ define([
             });
         },
         
-        showSearchView: function() {
-            events.trigger('actionbarroute:showsearchview');
-            //css transform to resize search field
+        showInstructionsPane: function() {
+            events.trigger('actionbarroute:showinstructionspane');
         }
     });
     return ActionBarRoute;

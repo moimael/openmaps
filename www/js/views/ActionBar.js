@@ -31,9 +31,9 @@ define([
             this.render();
 
             events.on('actionbarsearch:showrouteview', this.showRouteView, this);
-            events.on('actionbarroute:showsearchview', this.showSearchView, this);
+            events.on('toolbar:togglesearchview', this.toggleSearchView, this);
             events.on('actionbarinstructions:back', this.showRouteView, this);
-            events.on('map:routefinished', this.showInstructionsView, this);
+            events.on('instructionspane:rendered actionbarroute:showinstructionspane', this.showInstructionsView, this);
         },
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
@@ -49,13 +49,17 @@ define([
             }
         },
         
-        showRouteView: function(){
-            this.view = 'route';
+        toggleSearchView: function(){
+            if(this.view === 'search'){
+                this.view = 'route';
+            } else {
+                this.view = 'search'
+            }
             this.render();
         },
         
-        showSearchView: function(){
-            this.view = 'search';
+        showRouteView: function(){
+            this.view = 'route';
             this.render();
         },
         

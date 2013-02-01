@@ -42,22 +42,18 @@ define([
         render: function(instructions) {
             this.instructionsList.html("");
             
-            // We cannot use append here because it is implemented with eval() in Zepto 
-            // and it is forbidden by Content Security Policy.
-            // So we concatenate all our html and insert it in one step.
-            var html = "";
             for (var i = 0; i < instructions.length; i++){
-                html += this.template({
+                this.instructionsList.append(this.template({
                     directive: instructions[i][0], 
                     duration: Common.secondsToTime(instructions[i][3]), 
-                    length: instructions[i][4],
-                });
+                    length: instructions[i][4]
+                }));
             }
-            this.instructionsList.html(html);
+            events.trigger("instructionspane:rendered");
         },
         
         toggle: function() {
-            this.$el.toggleClass('slide-view-vertical');
+            this.$el.toggleClass('slide-view-vertical-in');
         }
         
     });

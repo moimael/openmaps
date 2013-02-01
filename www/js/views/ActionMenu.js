@@ -17,11 +17,11 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<form onsubmit="return false;" data-type="action" role="dialog">\n<header>Layers</header>\n<menu>\n<button id="map-view-button">Map</button>\n<button id="satellite-view-button">Satellite</button>\n<button id="cycle-view-button">Cycle</button>\n<button id="offline-view-button">Offline</button>\n<button id="cancel-button">Cancel</button>\n</menu>\n</form>\n';
+                __p+='<form data-type="action" role="dialog" onsubmit="return false;"><header>Layers</header><menu><button id="map-view-button">Map</button><button id="satellite-view-button">Satellite</button><button id="cycle-view-button">Cycle</button><button id="cancel-button">Cancel</button></menu></form>';
             }
             return __p;
         },
-        
+        //\n<button id="offline-view-button">Offline</button>
         // Delegated events for creating new items, and clearing completed ones.
         events: {
             'click #map-view-button': 'showMapLayer',
@@ -35,7 +35,7 @@ define([
             this.render();
         },
 
-        // Render the sidebar
+        // Render the menu
         render: function() {
             this.$el.html(this.template);
         },
@@ -46,7 +46,7 @@ define([
         
         hideMenu: function() {
             this.$el.hide();
-            this.trigger('actionmenu:hide');
+            events.trigger('actionmenu:hide');
         },
         
         showMapLayer: function() {

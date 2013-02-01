@@ -18,16 +18,15 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n<menu type="toolbar">\n<button id="route-button"><span class="icon icon-edit">edit</span></button>\n<button id="locate-button"><span class="icon icon-user">user</span></button>\n</menu>\n<form action="#">\n<input id="search-input" type="text" required="required" placeholder="Enter search terms">\n<button type="reset">Remove text</button>\n</form>\n';
+                __p+='<form action="#">\n<input id="search-input" type="text" required="required" placeholder="Enter search terms">\n<button type="reset">Remove text</button>\n</form>\n';
             }
             return __p;
         },
+        //<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'click #locate-button': 'locate',
-            'click #route-button': 'route',
-            'keypress #search-input': 'searchPlace',
+            'keypress #search-input': 'searchPlace'
         },
         
         // At initialization we bind to the relevant events on the `Todos`
@@ -41,10 +40,7 @@ define([
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
         render: function() {
             this.$el.html(this.template());
-            this.btnLocate = this.$('#locate-button');
-            this.btnRoute = this.$('#route-button');
             this.searchInput = this.$('#search-input');
-            this.btnMenu = this.$('#menu-button');
         },
 
         searchPlace: function(e) {
@@ -66,14 +62,6 @@ define([
                     });
                     events.trigger("search:completed", locationProperties);
                 });
-        },
-        
-        locate: function() {
-            events.trigger('actionbarsearch:locate');
-        },
-        
-        route: function() {
-            events.trigger('actionbarsearch:showrouteview');
         }
     });
     return ActionBarSearch;

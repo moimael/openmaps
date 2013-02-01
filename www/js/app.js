@@ -5,10 +5,11 @@ define([
 './views/Map',
 './views/ActionBar',
 './views/ToolBar',
-'./views/SideBar',
+//'./views/SideBar',
 './views/InstructionsPane',
+//'./models/OfflineMap',
 './common'
-], function( $, _, Backbone, Map, ActionBar, ToolBar, SideBar, InstructionsPane, Common ) {
+], function( $, _, Backbone, Map, ActionBar, ToolBar, InstructionsPane, Common ) {
     events = _.clone(Backbone.Events);
     var AppView = Backbone.View.extend({
 
@@ -18,25 +19,17 @@ define([
 
         initialize: function() {
             this.map = new Map();
-            this.actionBar = new ActionBar();
             this.toolBar = new ToolBar();
-            this.sideBar = new SideBar();
-            this.instructionsPane = new InstructionsPane
+            this.actionBar = new ActionBar();
+            this.instructionsPane = new InstructionsPane();
             this.locate();
-            
-//            var deviceStorage = navigator.getDeviceStorage("");
-//            console.log(deviceStorage);
-//            console.log(deviceStorage.type);
-//            cursor = deviceStorage.enumerate();
-//            var file = deviceStorage.get('test.mbtiles');
-//            console.log(file.getAsText());
             
             events.on('search:completed', this.drawSearchMarker, this);
             events.on('routing:completedlats', this.drawRoute, this);
             events.on('routing:completedinstructions', this.setInstructions, this);
-            events.on('actionbarsearch:locate', this.locate, this);
-            events.on('actionbarinstructions:back map:routefinished', this.toggleView, this);
-            events.on('actionmenu:maplayer actionmenu:satellitelayer actionmenu:cyclelayer', this.changeMapType, this);
+            events.on('toolbar:locate', this.locate, this);
+            events.on('actionbarinstructions:back instructionspane:rendered actionbarroute:showinstructionspane', this.toggleView, this);
+            events.on('actionmenu:maplayer actionmenu:satellitelayer actionmenu:cyclelayer actionmenu:offlinelayer', this.changeMapType, this);
 
             
         },
@@ -46,14 +39,14 @@ define([
         
         drawSearchMarker: function(inResults) {
             var markerLocation = [inResults.get('lat'), inResults.get('lng')];
-            var marker = new L.Marker(markerLocation).addTo(app.map.hasMap());
+            var marker = new L.Marker(markerLocation).addTo(this.map.hasMap());
             marker.bindPopup("<b>" + inResults.get('city') + ", " + inResults.get('county') + "<br/>" + inResults.get('state') + ", " + inResults.get('country') + "</b>").openPopup();
-            app.map.hasMap().setView([inResults.get('lat'), inResults.get('lng')], 16);
-            if(app.map.getMapType() === "road") {
-                app.map.hasMap().setView(markerLocation, 16);
+            this.map.hasMap().setView([inResults.get('lat'), inResults.get('lng')], 16);
+            if(this.map.getMapType() === "road") {
+                this.map.hasMap().setView(markerLocation, 16);
             }
             else {
-                app.map.hasMap().setView(markerLocation, 11);
+                this.map.hasMap().setView(markerLocation, 11);
             }
         },
         
