@@ -13,14 +13,7 @@ define([
             countycode: "",
             state: "",
             uzip: ""
-        },
-        
-        validate: function(attrs) {
-            if ( _.isEmpty(attrs.lat) || _.isEmpty(attrs.lng)) {
-                return "Missing Coordinates";
-            }
         }
-
     });
 
     return Location;
