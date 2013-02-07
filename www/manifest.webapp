@@ -1,15 +1,15 @@
 {
   "version": "0.1",
   "name": "Cartes",
+  "developer": {
+    "name": "Maël Lavault",
+    "url": "https://github.com/moimael/openmaps"
+  },
   "description": "OpenStreetMap based application that let you find your way.",
   "launch_path": "/index.html",
   "icons": {
     "60": "/img/icons/openmaps-60.png",
     "128": "/img/icons/openmaps-128.png"
-  },
-  "developer": {
-    "name": "Maël Lavault",
-    "url": "https://github.com/moimael/openmaps"
   },
   "installs_allowed_from": ["*"],
 
