@@ -9,9 +9,10 @@
   "amd": {},
   "volo": {
     "dependencies": {
-      "zepto": "github:madrobby/zepto/v0.8",
-      "underscore": "github:amdjs/underscore/1.5.1",
-      "backbone": "github:amdjs/backbone/1.0.0"
+      "zepto": "github:madrobby/zepto/v1.0",
+      "underscore": "github:amdjs/underscore/1.5.2",
+      "backbone": "github:amdjs/backbone/1.0.0",
+      "require": "github:jrburke/requirejs/2.1.8"
     },
     "baseUrl": "www/js/lib"
   }
