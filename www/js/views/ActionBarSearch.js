@@ -34,7 +34,7 @@ define([
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
             this.find = new Search();
-            this.find.setCredentials('fTGKVi5e');
+            this.find.setCredentials('Fmjtd|luub2duan9%2C8a%3Do5-9u2llr');
         },
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
@@ -48,17 +48,17 @@ define([
                 return;
             }
             this.find.findLocation(this.searchInput.val(), function(data){
-                    var results = data.ResultSet.Results;
+                    var results = data.results[0].locations;
 
                     var locationProperties = new Location({
-                        lat: results[0].latitude,
-                        lng: results[0].longitude,
-                        city: results[0].city,
-                        country: results[0].country,
-                        county: results[0].county,
-                        countycode: results[0].countycode,
-                        state: results[0].state,
-                        uzip: results[0].uzip
+                        lat: results[0].latLng.lat,
+                        lng: results[0].latLng.lng,
+                        city: results[0].adminArea5,
+                        country: results[0].adminArea1,
+                        county: results[0].adminArea4,
+//                        countycode: results[0].countycode,
+                        state: results[0].adminArea3,
+                        uzip: results[0].postalCode
                     });
                     events.trigger("search:completed", locationProperties);
                 });

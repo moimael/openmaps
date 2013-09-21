@@ -33,9 +33,9 @@ define([
         findLocation : function(location, callback) {
             $.ajax({
                 type: 'GET',
-                url: 'http://where.yahooapis.com/geocode',
+                url: 'http://open.mapquestapi.com/geocoding/v1/address',
                 // data to be added to query string:
-                data: { location: location, flags: 'J', appid: this.credentials },
+                data: { key: this.credentials, location: location },
                 // type of data we are expecting in return:
                 dataType: 'jsonp',
                 success: function(data){
