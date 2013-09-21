@@ -59,6 +59,7 @@ define([
         },
         
         toggleView: function() {
+            $('#instructions-list-button').prop('disabled', false);
             this.instructionsPane.toggle();
         },
         
