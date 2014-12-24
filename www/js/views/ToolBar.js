@@ -17,14 +17,14 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<ul><li><button id="toggle-search-button" class="pack-icon-route"></button></li>\n</ul>\n<ul>\n<li><button class="pack-icon-layers"></button></li>\n<li><button class="pack-icon-marker"></button></li>\n<li><button class="pack-icon-location"></button></li>\n</ul>';
+                __p+='<ul><li><button id="toggle-search-button" class="pack-icon-route"></button></li>\n</ul>\n<ul>\n<li><button class="pack-icon-layers"></button></li>\n<li><button class="pack-icon-location"></button></li>\n</ul>';
             }
             return __p;
         },
-        
+        //<li><button class="pack-icon-marker"></button></li>\n
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'click .pack-icon-marker': 'addDragableMarker',
+            // 'click .pack-icon-marker': 'addDragableMarker',
             'click .pack-icon-layers': 'showLayerMenu',
             'click #toggle-search-button': 'toggleSearchView',
             'click .pack-icon-location': 'locate'
