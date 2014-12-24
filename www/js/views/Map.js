@@ -58,9 +58,9 @@ define([
             }
 
             // Create a CloudMade tile layer
-            var cloudMade = new L.TileLayer('http://{s}.tile.cloudmade.com/' + this.credentials + 
-            '/997/256/{z}/{x}/{y}.png', {
-                maxZoom: 18
+            var mapQuest = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                subdomains: ['otile1', 'otile2', 'otile3', 'otile4'] 
             });
 
             // Create a OpenAerials tile layer
@@ -80,14 +80,14 @@ define([
 //            }, this.offlineMap.getDb());
 
             this.baseMaps = {
-                "road": cloudMade,
+                "road": mapQuest,
                 "satellite": openAerials,
                 "cycle": openCycleMap
 //                "offline": offline
             };
 
             // Add the CloudMade layer to the map and set the view to a given center
-            this.map.addLayer(cloudMade).setView(new L.LatLng(51.505, -0.09), 3);
+            this.map.addLayer(mapQuest).setView(new L.LatLng(51.505, -0.09), 3);
             this.map.addLayer(this.layerGroup);
             this.map.addLayer(this.userGPSPosition);
             this.connectEvents();
