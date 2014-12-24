@@ -44,9 +44,10 @@ define([
             
             for (var i = 0; i < instructions.length; i++){
                 this.instructionsList.append(this.template({
-                    directive: instructions[i][0], 
-                    duration: Common.secondsToTime(instructions[i][3]), 
-                    length: instructions[i][4]
+                    icon: instructions[i].iconUrl,
+                    directive: instructions[i].narrative, 
+                    duration: Common.secondsToTime(instructions[i].time), 
+                    length: instructions[i].distance
                 }));
             }
             events.trigger("instructionspane:rendered");

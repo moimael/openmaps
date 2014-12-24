@@ -3,8 +3,10 @@ define([
 'underscore',
 'backbone',
 'leaflet',
+'mq-map',
+'mq-routing'
 //'../models/OfflineMap'
-], function( $, _, Backbone, Leaflet) {
+], function( $, _, Backbone, Leaflet, MQMap, MQRouting) {
 
     L.Marker.prototype.animateDragging = function () {
 
@@ -182,39 +184,46 @@ define([
             return this.mapType;
         },
         
-        drawRoute: function(latlngs) {
+        drawRoute: function(dir) {
 
-            // Create a blue Polyline from an arrays of LatLng points
-            var polyline = new L.Polyline(latlngs);
+            this.layerGroup.addLayer(MQ.routing.routeLayer({
+              directions: dir,
+              fitBounds: true,
+              ribbonOptions: {
+                draggable: false
+              }
+            }))
+            // // Create a blue Polyline from an arrays of LatLng points
+            // var polyline = new L.Polyline(latlngs);
 
-            // Create two markers with custom icons for route startPoint and endPoint
-            var startMarker = new L.Marker(latlngs[0], {
-                icon: new L.Icon({
-                    iconUrl: 'img/marker-a.png', iconSize: new L.Point(25, 41),
-                    iconAnchor: new L.Point(13, 41),
-                    popupAnchor: new L.Point(0, -33),
-                    shadowSize: new L.Point(41, 41)
-                })
-            });
+            // // Create two markers with custom icons for route startPoint and endPoint
+            // var startMarker = new L.Marker(latlngs[0], {
+            //     icon: new L.Icon({
+            //         iconUrl: 'img/marker-a.png', iconSize: new L.Point(25, 41),
+            //         iconAnchor: new L.Point(13, 41),
+            //         popupAnchor: new L.Point(0, -33),
+            //         shadowSize: new L.Point(41, 41)
+            //     })
+            // });
 
-            var endMarker = new L.Marker(latlngs[latlngs.length - 1], {
-                icon: new L.Icon({
-                    iconUrl: 'img/marker-b.png',
-                    iconSize: new L.Point(25, 41),
-                    iconAnchor: new L.Point(13, 41),
-                    popupAnchor: new L.Point(0, -33),
-                    shadowSize: new L.Point(41, 41)
-                })
-            });
+            // var endMarker = new L.Marker(latlngs[latlngs.length - 1], {
+            //     icon: new L.Icon({
+            //         iconUrl: 'img/marker-b.png',
+            //         iconSize: new L.Point(25, 41),
+            //         iconAnchor: new L.Point(13, 41),
+            //         popupAnchor: new L.Point(0, -33),
+            //         shadowSize: new L.Point(41, 41)
+            //     })
+            // });
 
-            //Add the to markers on the map
-            this.layerGroup.addLayer(startMarker).addLayer(endMarker);
+            // //Add the to markers on the map
+            // this.layerGroup.addLayer(startMarker).addLayer(endMarker);
 
-            // Zoom the map to the Polyline
-            this.map.fitBounds(polyline.getBounds());
+            // // Zoom the map to the Polyline
+            // this.map.fitBounds(polyline.getBounds());
 
-            // Add the polyline to the map
-            this.layerGroup.addLayer(polyline);
+            // // Add the polyline to the map
+            // this.layerGroup.addLayer(polyline);
 
             // Show route instruction in a sidebar popup
             events.trigger('map:routefinished');
