@@ -37,7 +37,7 @@ define([
                 // data to be added to query string:
                 data: { key: this.credentials, location: location },
                 // type of data we are expecting in return:
-                dataType: 'jsonp',
+                dataType: 'json',
                 success: function(data){
                     callback(data);
                 },
