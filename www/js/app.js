@@ -22,6 +22,14 @@ define([
             this.toolBar = new ToolBar();
             this.actionBar = new ActionBar();
             this.instructionsPane = new InstructionsPane();
+
+            // Zepto ajax global settings
+            $.ajaxSettings.xhr = function() {
+                return new window.XMLHttpRequest({
+                    mozSystem: true
+                });
+            };
+
             this.locate();
             
             events.on('search:completed', this.drawSearchMarker, this);
@@ -64,7 +72,7 @@ define([
         },
         
         setInstructions: function(instructions) {
-            this.instructionsPane.render(instructions);
+            this.instructionsPane.render(instructions.routes[0].instructions);
         },
         
         changeMapType: function(mapType) {
@@ -72,7 +80,7 @@ define([
         }
     });
     
-    $(function() {
+    Zepto(function() {
         // Kick things off by creating the **App**.
         app = new AppView();
     });

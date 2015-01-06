@@ -3,9 +3,8 @@ define([
 'backbone', 
 './Location',
 './Search',
-'mq-map',
-'mq-routing'
-], function(_, Backbone, Location, Search, MQMap, MQRouting) {
+'leaflet-routing-machine',
+], function(_, Backbone, Location, Search, RoutingMachine) {
 //network info api
 //var connection = window.navigator.mozConnection, online = connection.bandwidth > 0, offline = ...
     var Route = Backbone.Model.extend({
@@ -30,24 +29,22 @@ define([
         },
 
         startRouting: function(startPoint, endPoint){
-            var dir = MQ.routing.directions().on('success', function(data) {
-                var legs = data.route.legs,
-                  instructions;
+            // var dir = MQ.routing.directions().on('success', function(data) {
+            //     var legs = data.route.legs,
+            //       instructions;
 
-                if (legs && legs.length) {
-                  instructions = legs[0].maneuvers;
-                  events.trigger("routing:completedinstructions", instructions);
-                }
-            });
+            //     if (legs && legs.length) {
+            //       instructions = legs[0].maneuvers;
+            //       events.trigger("routing:completedinstructions", instructions);
+            //     }
+            // });
 
-            dir.route({
-              locations: [
-                { latLng: startPoint },
-                { latLng: endPoint },
-              ]
-            });
+            waypoints = [
+                startPoint,
+                endPoint
+            ]
 
-            events.trigger("routing:completedlats", dir);
+            events.trigger("routing:completedlats", waypoints);
             // events.trigger("routing:completedinstructions", instructions);
             // $.ajax({
             //         type: 'GET',

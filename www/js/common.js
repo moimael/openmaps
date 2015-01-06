@@ -16,6 +16,16 @@ define([], function() {
                      (minutes > 0 ? minutes + ' minute' + ((minutes > 1) ? 's ' : ' ') : '') +
                      seconds + ' second' + ((seconds > 1) ? 's' : '');
             return formattedTime;
+        },
+
+        metersToDistance: function(meters){
+            if (meters > 1000) {
+                var km = (meters / 1000).toFixed(1);
+                var formattedKm = km + ' km'
+                return formattedKm;
+            }
+            var formattedMeters = meters + " m"
+            return formattedMeters;
         }
     };
 });

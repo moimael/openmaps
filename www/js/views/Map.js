@@ -3,10 +3,9 @@ define([
 'underscore',
 'backbone',
 'leaflet',
-'mq-map',
-'mq-routing'
+'leaflet-routing-machine',
 //'../models/OfflineMap'
-], function( $, _, Backbone, Leaflet, MQMap, MQRouting) {
+], function( $, _, Backbone, Leaflet, RoutingMachine) {
 
     L.Marker.prototype.animateDragging = function () {
 
@@ -100,6 +99,7 @@ define([
             this.map = new L.Map(this.el, {zoomControl : false, attributionControl: false});
             this.layerGroup = new L.LayerGroup();
             this.userGPSPosition = new L.LayerGroup();
+            this.routeControl =  new L.Routing.control({});
         },
         
         destroyMap: function(){
@@ -184,15 +184,16 @@ define([
             return this.mapType;
         },
         
-        drawRoute: function(dir) {
+        drawRoute: function(waypoints) {
 
-            this.layerGroup.addLayer(MQ.routing.routeLayer({
-              directions: dir,
-              fitBounds: true,
-              ribbonOptions: {
-                draggable: false
-              }
-            }))
+            // Clear previous routes
+            this.routeControl.getPlan().setWaypoints([]);
+
+            // Add new waypoints
+            this.routeControl.getPlan().setWaypoints(waypoints)
+
+            // Display route
+            this.map.addLayer(this.routeControl);
             // // Create a blue Polyline from an arrays of LatLng points
             // var polyline = new L.Polyline(latlngs);
 
@@ -226,6 +227,9 @@ define([
             // this.layerGroup.addLayer(polyline);
 
             // Show route instruction in a sidebar popup
+            this.routeControl.on('routesfound', function(routeData) {
+                events.trigger("routing:completedinstructions", routeData);
+            })
             events.trigger('map:routefinished');
         }
     });

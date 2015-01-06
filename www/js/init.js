@@ -5,18 +5,13 @@ require.config({
     // both jquery and zepto. If you want to use jquery, remove this.
     map: { '*': { 'jquery': 'zepto' } },
     shim: {
-        'mq-routing': {
-            //These script dependencies should be loaded before loading
-            //backbone.js
-            deps: ['mq-map'],
-            //Once loaded, use the global 'Backbone' as the
-            //module value.
-            exports: 'MQRouting'
+        'zepto': {
+            exports: 'Zepto'
+        },
+        'leaflet-routing-machine': {
+            deps: ['leaflet'],
+            exports: 'RoutingMachine'
         }
-    },
-    paths: { 
-    	'mq-map': 'http://open.mapquestapi.com/sdk/leaflet/v1.s/mq-map.js?key=Fmjtd%7Cluub2duan9%2C8a%3Do5-9u2llr', 
-    	'mq-routing': 'http://open.mapquestapi.com/sdk/leaflet/v1.s/mq-routing.js?key=Fmjtd%7Cluub2duan9%2C8a%3Do5-9u2llr'
     }
 });
 
