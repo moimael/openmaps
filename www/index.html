@@ -6,14 +6,16 @@
     <title>OpenMaps</title>
     <meta name="description" content="Map application using OpenStreetMap">
     <meta name="viewport" content="width=device-width">
-    
-    <!-- localization -->
-    <link rel="resource" type="application/l10n" href="/locales/locales.ini">
-
-    <!-- Place favicon.ico in the root directory -->
 
     <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/leaflet-routing-machine.css">
+    <!-- Using require.js, a module system for javascript, include the
+     js files. This loads "main.js", which in turn can load other
+     files, all handled by require.js:
+     http://requirejs.org/docs/api.html#jsfiles -->
+    <script type="text/javascript"
+            data-main="js/init.js"
+            src="js/lib/require.js"></script>
   </head>
   <body role="application">
   
@@ -40,13 +42,5 @@
     </div>
   </section>
     <!-- END content -->
-<!--      "csp": "default-src *; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'",-->
-    <!-- Using require.js, a module system for javascript, include the
-         js files. This loads "main.js", which in turn can load other
-         files, all handled by require.js:
-         http://requirejs.org/docs/api.html#jsfiles -->
-    <script type="text/javascript"
-            data-main="js/init.js"
-            src="js/lib/require.js"></script>
   </body>
 </html>
