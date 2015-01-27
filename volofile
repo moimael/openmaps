@@ -252,11 +252,12 @@ module.exports = {
     serve: function(d, v, namedArgs) {
         try {
             var connect = require('connect');
+            var header = require('connect-header');
         }
         catch(e) {
             console.log('To use the `serve` command, you must ' +
-                        'install the connect module:\n\n' + 
-                        'npm install connect');
+                        'install the connect module and connect-header middleware:\n\n' + 
+                        'npm install connect connect-header');
             return;
         }
 
@@ -265,6 +266,7 @@ module.exports = {
         var port = 8008;
         var base = path.join(process.cwd(), namedArgs.base || 'www');
         var middleware = [
+            header({'Content-Security-Policy': "default-src *; script-src 'self'; object-src 'none'; style-src 'self' 'unsafe-inline'"}),
             lessMiddleware({ src: base }),
             connect.static(base),
             connect.directory(base),
