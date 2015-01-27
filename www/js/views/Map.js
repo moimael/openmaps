@@ -43,7 +43,7 @@ define([
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
 //            this.offlineMap = new OfflineMap();
-            L.Icon.Default.imagePath = '../../img'
+            L.Icon.Default.imagePath = '../img'
             this.render();
             this.on('change:mapType', this.mapTypeChanged, this);
         },
@@ -61,18 +61,24 @@ define([
             // Create a CloudMade tile layer
             var mapQuest = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
                 maxZoom: 18,
-                subdomains: ['otile1', 'otile2', 'otile3', 'otile4'] 
+                subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
+                reuseTiles: true,
+                crossOrigin: true
             });
 
             // Create a OpenAerials tile layer
             var openAerials = new L.TileLayer('http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png', {
                 maxZoom: 18, 
-                subdomains: ['otile1', 'otile2', 'otile3', 'otile4']
+                subdomains: ['otile1', 'otile2', 'otile3', 'otile4'],
+                reuseTiles: true,
+                crossOrigin: true
             });
             
             var openCycleMap = new L.TileLayer('http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png', {
                 maxZoom: 18, 
-                subdomains: ['a', 'b', 'c']
+                subdomains: ['a', 'b', 'c'],
+                reuseTiles: true,
+                crossOrigin: true
             });
             
 //            var offline = new L.TileLayer.MBTiles('', {
@@ -155,17 +161,17 @@ define([
             if (this.mapType == "road"){
                 this.map.removeLayer(this.baseMaps.satellite);
                 this.map.removeLayer(this.baseMaps.cycle);
-                this.map.addLayer(this.baseMaps.road);
+                this.map.addLayer(this.baseMaps.road, true);
             }
             else if (this.mapType == "satellite"){
                 this.map.removeLayer(this.baseMaps.road);
                 this.map.removeLayer(this.baseMaps.cycle);
-                this.map.addLayer(this.baseMaps.satellite);
+                this.map.addLayer(this.baseMaps.satellite, true);
             }
             else {
                 this.map.removeLayer(this.baseMaps.road);
                 this.map.removeLayer(this.baseMaps.satellite);
-                this.map.addLayer(this.baseMaps.cycle);
+                this.map.addLayer(this.baseMaps.cycle, true);
             }
 //            else {
 //                this.map.removeLayer(this.baseMaps.road);
