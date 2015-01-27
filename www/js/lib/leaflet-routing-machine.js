@@ -1215,12 +1215,10 @@
 	L.Routing._jsonpCallbackId = 0;
 	L.Routing._jsonp = function(url, callback, context) {
 		var req = new XMLHttpRequest({mozAnon:true,mozSystem: true});
-		console.log(url);
 		req.open('GET', 'https:' + url, true);
 		req.onreadystatechange = function (aEvt) {
 		  if (req.readyState == 4) {
 		     if(req.status == 200){
-		     	console.log(req.responseText);
 		     	var jsonResponse = JSON.parse(req.responseText);
 		     	var bindedCallback = L.Util.bind(callback, context);
 		      	bindedCallback(jsonResponse);
@@ -1230,7 +1228,6 @@
 		  	}
 		  }
 		};
-		console.log(req);
 		req.send();
 	};
 
