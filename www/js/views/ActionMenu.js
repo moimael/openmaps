@@ -17,7 +17,7 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<form data-type="action" role="dialog" onsubmit="return false;"><header>Layers</header><menu><button id="map-view-button">Map</button><button id="satellite-view-button">Satellite</button><button id="cycle-view-button">Cycle</button><button id="cancel-button">Cancel</button></menu></form>';
+                __p+='<form data-type="action" role="dialog"><header>Layers</header><menu><button type="button" id="map-view-button">Map</button><button type="button" id="satellite-view-button">Satellite</button><button type="button" id="cycle-view-button">Cycle</button><button type="button" id="cancel-button">Cancel</button></menu></form>';
             }
             return __p;
         },
