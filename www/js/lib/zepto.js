@@ -1,4 +1,4 @@
-// Zepto 1.1.4 (generated with Zepto Builder) - zepto event ajax data deferred callbacks - zeptojs.com/license 
+// Zepto 1.1.6 (generated with Zepto Builder) - zepto event ajax callbacks data deferred - zeptojs.com/license 
 //     Zepto.js
 //     (c) 2010-2015 Thomas Fuchs
 //     Zepto.js may be freely distributed under the MIT license.
@@ -1158,8 +1158,8 @@ window.$ === undefined && (window.$ = Zepto)
 
           try {
             // http://perfectionkills.com/global-eval-what-are-the-options/
-            // if (dataType == 'script')    (1,eval)(result)
-            if (dataType == 'xml')  result = xhr.responseXML
+            if (dataType == 'script')    (1,eval)(result)
+            else if (dataType == 'xml')  result = xhr.responseXML
             else if (dataType == 'json') result = blankRE.test(result) ? null : $.parseJSON(result)
           } catch (e) { error = e }
 
