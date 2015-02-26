@@ -42,7 +42,7 @@ define([
             waypoints = [
                 startPoint,
                 endPoint
-            ]
+            ];
 
             events.trigger("routing:completedlats", waypoints);
             // events.trigger("routing:completedinstructions", instructions);

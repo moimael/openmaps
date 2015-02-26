@@ -21,10 +21,10 @@ define([], function() {
         metersToDistance: function(meters){
             if (meters > 1000) {
                 var km = (meters / 1000).toFixed(1);
-                var formattedKm = km + ' km'
+                var formattedKm = km + ' km';
                 return formattedKm;
             }
-            var formattedMeters = meters + " m"
+            var formattedMeters = meters + " m";
             return formattedMeters;
         }
     };

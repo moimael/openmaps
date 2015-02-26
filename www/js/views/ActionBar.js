@@ -53,7 +53,7 @@ define([
             if(this.view === 'search'){
                 this.view = 'route';
             } else {
-                this.view = 'search'
+                this.view = 'search';
             }
             this.render();
         },

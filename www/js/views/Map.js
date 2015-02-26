@@ -43,7 +43,7 @@ define([
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
 //            this.offlineMap = new OfflineMap();
-            L.Icon.Default.imagePath = '../img'
+            L.Icon.Default.imagePath = '../img';
             this.render();
             this.on('change:mapType', this.mapTypeChanged, this);
             $(window).on('deviceorientation', this.testOrientation, this);
@@ -208,7 +208,7 @@ define([
             this.routeControl.getPlan().setWaypoints([]);
 
             // Add new waypoints
-            this.routeControl.getPlan().setWaypoints(waypoints)
+            this.routeControl.getPlan().setWaypoints(waypoints);
 
             // Display route
             this.map.addLayer(this.routeControl);
@@ -247,7 +247,7 @@ define([
             // Show route instruction in a sidebar popup
             this.routeControl.on('routesfound', function(routeData) {
                 events.trigger("routing:completedinstructions", routeData);
-            })
+            });
             events.trigger('map:routefinished');
         }
     });

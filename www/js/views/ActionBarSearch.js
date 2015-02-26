@@ -40,7 +40,7 @@ define([
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
         render: function() {
-            this.$el.html(this.template())
+            this.$el.html(this.template());
             this.searchInput = this.$('#search-input');
         },
 

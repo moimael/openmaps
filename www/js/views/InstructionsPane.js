@@ -27,13 +27,13 @@ define([
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
                 __p+='<li><aside class="pack-start"><span class="leaflet-routing-icon '+
-                ((__t=( icon ))==null?'':__t)+
+                ((__t=( icon ))===null?'':__t)+
                 '"></span></aside><p>'+
-                ((__t=( directive ))==null?'':__t)+
+                ((__t=( directive ))===null?'':__t)+
                 '</p><p>'+
-                ((__t=( duration ))==null?'':__t)+
+                ((__t=( duration ))===null?'':__t)+
                 ', '+
-                ((__t=( length ))==null?'':__t)+
+                ((__t=( length ))===null?'':__t)+
                 '</p></li>';
             }
             return __p;
@@ -67,7 +67,7 @@ define([
         
         toggle: function() {
             // this.$el.toggleClass('slide-view-vertical-in');
-            this.$el.show()
+            this.$el.show();
         }
         
     });

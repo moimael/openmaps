@@ -17,11 +17,11 @@ define([
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
                 __p+='<li><p>'+
-                ((__t=( name ))==null?'':__t)+
+                ((__t=( name ))===null?'':__t)+
                 '</p><p>'+
-                ((__t=( state ))==null?'':__t)+
+                ((__t=( state ))===null?'':__t)+
                 ', '+
-                ((__t=( country ))==null?'':__t)+
+                ((__t=( country ))===null?'':__t)+
                 '</p></li>';
             }
             return __p;
@@ -53,11 +53,11 @@ define([
         },
         
         show: function() {
-            this.$el.show()
+            this.$el.show();
         },
 
         hide: function() {
-            this.$el.hide()
+            this.$el.hide();
         }
     });
     return AutocompletePane;
