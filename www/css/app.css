@@ -2,10 +2,10 @@
 /* Tip: Use "@import" to add styles instead of adding <link>'s in your
    HTML, and volo will inline it when building for production */
 
-/* Your styles here */
 @import "gaia-building-blocks/headers.css";
+@import "gaia-building-blocks/input_areas.css";
 @import "gaia-building-blocks/action_menu.css";
-@import "gaia-building-blocks/buttons.css";
+/*@import "gaia-building-blocks/buttons.css";*/
 @import "gaia-building-blocks/toolbars.css";
 @import "gaia-building-blocks/lists.css";
 @import "leaflet.css";
@@ -36,81 +36,162 @@ section[role="region"] > header:first-child{
 }
 
 div[role="main"] {
-  height: calc(100% - 5rem);
+  height: 100%;
   overflow: hidden;
 }
 
-#start-input {
-    width: calc(50% - 0.5rem);
-    transition: all 1s ease-in-out 0s;
+div#action-bar {
+  position: absolute;
+  margin: 1rem 5%;
+  width: 90%;
+  z-index: 100;
+}
+
+#start-input:not(:focus) {
+  border-bottom: none;
+  margin: 0 !important;
+}
+
+#start-input:focus {
+  margin: 0 !important;
 }
 
 #end-input {
-    width: calc(50% - 0.5rem);
-    transition: all 1s ease-in-out 0s;
+  border-top: none;
+  margin: 0 !important;
 }
 
-/*#start-input:focus{*/
-/*  width: calc(100% - 0.5rem);*/
-/*}*/
+#toggle-search-button {
+  position: absolute;
+  z-index: 90;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+  margin-bottom: 6rem;
+  border-radius: 4rem;
+  box-shadow: 1px 1px 5px 0px #656565;
+  border: none;
+  background-color: #00caf2;
+  background-position: center;
+}
 
-/*#start-input:focus + #end-input{*/
-/*  width: calc(0% - 0.5rem);*/
-/*}*/
+#toggle-search-button:hover, #toggle-search-button:active, #toggle-search-button:focus {
+  outline: none;
+}
 
-/*#end-input:focus{*/
-/*  width: calc(100% - 0.5rem);*/
-/*}*/
+#toggle-layers-button {
+  position: absolute;
+  z-index: 90;
+  bottom: 0;
+  left: 0;
+  width: 4rem;
+  height: 4rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4rem;
+  box-shadow: 1px 1px 5px 0px #656565;
+  border: none;
+  background-color: #2C393B;
+  background-position: center;
+}
 
-/*#end-input:focus + #start-input{*/
-/*  width: 0%;*/
-/*}*/
-
-/*@keyframes all {*/
-/*  0% { }*/
-/*  90% { display:none; }*/
-/*  100% { }*/
-/*}    */
+#locate-button {
+  position: absolute;
+  z-index: 90;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4rem;
+  box-shadow: 1px 1px 5px 0px #656565;
+  border: none;
+  background-color: #2C393B;
+  background-position: center;
+}
 
 #map {
   margin: 0;
   height: 100%;
 }
 
-[role="toolbar"] .pack-icon-search {
+.pack-icon-search:hover, .pack-icon-search:active, .pack-icon-search:focus{
+  outline: none;
+}
+
+[id="tool"] .pack-icon-search {
     background-image: url(gaia-building-blocks/toolbars/search.png);
+    background-repeat: no-repeat;
 }
 
-[role="toolbar"] .pack-icon-route {
+[id="tool"] .pack-icon-route {
     background-image: url(gaia-building-blocks/toolbars/route.png);
+    background-repeat: no-repeat;
 }
 
-[role="toolbar"] .pack-icon-marker {
-    background-image: url(gaia-building-blocks/toolbars/marker.png);
-}
-
-[role="toolbar"] .pack-icon-location {
+[id="tool"] .pack-icon-location {
     background-image: url(gaia-building-blocks/toolbars/location.png);
+    background-repeat: no-repeat;
 }
 
-[role="toolbar"] .pack-icon-layers {
+[id="tool"] .pack-icon-layers {
     background-image: url(gaia-building-blocks/toolbars/layers.png);
+    background-repeat: no-repeat;
+}
+
+.solid {
+  position: absolute;
+  z-index: 90;
+  top: 0;
+  height: 10rem;
+  width: 100%;
+  background-color: #F97C17;
+  box-shadow: 1px 1px 5px 0px #656565;
 }
 
 /* View */
 .view {
   background: white;
   position: fixed;
-  top: calc(10rem - 100%);
+  /*top: calc(10rem - 100%);*/
+  top: 10rem;
   left: 0;
   border: 0;
   width: 100%;
-  height: calc(100% - 5rem);
+  height: calc(100% - 10rem);
   z-index: 150;
   overflow-y: auto;
   overflow-x: hidden;
-  transition: transform 0.5s ease;
-  transform: translateY(0%);
+  display: none;
+  /*transition: transform 0.5s ease;*/
+  /*transform: translateY(0%);*/
+}
+
+.card {
+  background: white;
+  position: absolute;
+  top: 6rem;
+  /*border: 0;*/
+  height: calc(100% - 17rem);
+  left: 5%;
+  right: 5%;
+  z-index: 150;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: none;
+  /*transition: transform 0.5s ease;*/
+  /*transform: translateY(0%);*/
+}
+
+.current-location {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 1rem;
+  background-color: #FF4E00;
+  box-shadow: 1px 1px 5px 0px #656565;
 }
 
 /* View - Slide Vertical Transition */

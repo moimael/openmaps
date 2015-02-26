@@ -18,6 +18,7 @@
 .ops1 {
   height: gt-or-eq;
   height: lt-or-eq;
+  height: lt-or-eq-alias;
 }
 .ops2 {
   height: gt-or-eq;
@@ -25,6 +26,7 @@
 }
 .ops3 {
   height: lt-or-eq;
+  height: lt-or-eq-alias;
   height: not-eq;
 }
 .default1 {
@@ -55,4 +57,26 @@
   content: false, true and true and true, false;
   content: not false;
   content: not false and false, not false;
+}
+.equality-units {
+  test: pass;
+}
+.colorguardtest {
+  content: is #ff0000;
+  content: is not #0000ff its #ff0000;
+  content: is not #0000ff its #800080;
+}
+.stringguardtest {
+  content: is theme1;
+  content: is not theme2;
+  content: is theme1 no quotes;
+}
+#tryNumberPx {
+  catch: all;
+  declare: 4;
+  declare: 4px;
+}
+.call-lock-mixin .call-inner-lock-mixin {
+  a: 1;
+  x: 1;
 }

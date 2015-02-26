@@ -46,6 +46,7 @@ define([
             L.Icon.Default.imagePath = '../img'
             this.render();
             this.on('change:mapType', this.mapTypeChanged, this);
+            $(window).on('deviceorientation', this.testOrientation, this);
         },
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
@@ -102,7 +103,12 @@ define([
         },
         
         createMap: function(){
-            this.map = new L.Map(this.el, {zoomControl : false, attributionControl: false});
+            this.map = new L.Map(this.el, {
+                zoomControl : false, 
+                attributionControl: false,
+                worldCopyJump: true,
+                boxZoom: false
+            });
             this.layerGroup = new L.LayerGroup();
             this.userGPSPosition = new L.LayerGroup();
             this.routeControl =  new L.Routing.control({});
@@ -131,6 +137,10 @@ define([
         clearGPSLayer: function() {
             this.userGPSPosition.clearLayers();
         },
+
+        testOrientation: function (event) {
+            console.log(event.alpha + ' : ' + event.beta + ' : ' + event.gamma);
+        },
         
         showLocation: function() {
             this.clearAll(); //TODO: refléchir quoi effacer
@@ -148,12 +158,14 @@ define([
 
         gotLocation: function(inResponse) {
             var radius = inResponse.accuracy / 2;
-            var marker = new L.Marker(inResponse.latlng);
-            this.map.addLayer(marker);
+            var currentPositionMarker = L.divIcon({className: 'current-location'});
+            var marker = L.marker(inResponse.latlng, {icon: currentPositionMarker});
+            this.clearGPSLayer();
+            this.userGPSPosition.addLayer(marker);
             marker.bindPopup("You are within " + radius + " meters from this point").openPopup();
 
-            var circle = new L.Circle(inResponse.latlng, radius);
-            this.map.addLayer(circle);
+            var circle = new L.Circle(inResponse.latlng, radius, {color: "#FF4E00"});
+            this.userGPSPosition.addLayer(circle);
         },
 
         mapTypeChanged: function() {

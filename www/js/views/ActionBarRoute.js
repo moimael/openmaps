@@ -18,7 +18,8 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<menu type="toolbar">\n<button id="instructions-list-button" disabled="disabled"><span class="icon icon-menu">edit</span></button>\n</menu>\n<form action="#">\n<input id="start-input" type="text" required="required" placeholder="From">\n<input id="end-input" type="text" required="required" placeholder="To">\n</form>\n';
+                // <menu type="toolbar">\n<button id="instructions-list-button" disabled="disabled"><span class="icon icon-menu">edit</span></button>\n</menu>\n
+                __p+='<form action="#">\n<p><input id="start-input" type="text" placeholder="From"><button type="reset">Clear</button></p>\n<p><input id="end-input" type="text" placeholder="To"><button type="reset"></button></p>\n</form>\n';
             }
             return __p;
         },

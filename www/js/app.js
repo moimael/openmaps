@@ -7,9 +7,10 @@ define([
 './views/ToolBar',
 //'./views/SideBar',
 './views/InstructionsPane',
+'./views/AutocompletePane',
 //'./models/OfflineMap',
 './common'
-], function( $, _, Backbone, Map, ActionBar, ToolBar, InstructionsPane, Common ) {
+], function( $, _, Backbone, Map, ActionBar, ToolBar, InstructionsPane, AutocompletePane, Common ) {
     events = _.clone(Backbone.Events);
     var AppView = Backbone.View.extend({
 
@@ -22,6 +23,7 @@ define([
             this.toolBar = new ToolBar();
             this.actionBar = new ActionBar();
             this.instructionsPane = new InstructionsPane();
+            this.autocompletePane = new AutocompletePane();
 
             // Zepto ajax global settings
             $.ajaxSettings.xhr = function() {
@@ -38,24 +40,24 @@ define([
             events.on('toolbar:locate', this.locate, this);
             events.on('actionbarinstructions:back instructionspane:rendered actionbarroute:showinstructionspane', this.toggleView, this);
             events.on('actionmenu:maplayer actionmenu:satellitelayer actionmenu:cyclelayer actionmenu:offlinelayer', this.changeMapType, this);
-
-            
         },
 
         render: function() {
         },
         
         drawSearchMarker: function(inResults) {
-            var markerLocation = [inResults.get('lat'), inResults.get('lng')];
-            var marker = new L.Marker(markerLocation).addTo(this.map.hasMap());
-            marker.bindPopup("<b>" + inResults.get('city') + ", " + inResults.get('county') + "<br/>" + inResults.get('state') + ", " + inResults.get('country') + "</b>").openPopup();
-            this.map.hasMap().setView([inResults.get('lat'), inResults.get('lng')], 16);
-            if(this.map.getMapType() === "road") {
-                this.map.hasMap().setView(markerLocation, 16);
-            }
-            else {
-                this.map.hasMap().setView(markerLocation, 11);
-            }
+            this.autocompletePane.show();
+            this.autocompletePane.render(inResults[0]);
+            // var markerLocation = [inResults.get('lat'), inResults.get('lng')];
+            // var marker = new L.Marker(markerLocation).addTo(this.map.hasMap());
+            // marker.bindPopup("<b>" + inResults.get('city') + ", " + inResults.get('county') + "<br/>" + inResults.get('state') + ", " + inResults.get('country') + "</b>").openPopup();
+            // this.map.hasMap().setView([inResults.get('lat'), inResults.get('lng')], 16);
+            // if(this.map.getMapType() === "road") {
+            //     this.map.hasMap().setView(markerLocation, 16);
+            // }
+            // else {
+            //     this.map.hasMap().setView(markerLocation, 11);
+            // }
         },
         
         drawRoute: function(latlngs) {

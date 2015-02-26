@@ -18,7 +18,7 @@ define([
         template: function(obj){
             var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};
             with(obj||{}){
-                __p+='<form action="#">\n<input id="search-input" type="text" required="required" placeholder="Enter search terms">\n<button type="reset">Remove text</button>\n</form>\n';
+                __p+='<form action="#">\n<p>\n<input id="search-input" type="text" placeholder="Enter search terms">\n<button id="clear-btn" type="reset">Clear</button>\n</p>\n</form>\n';
             }
             return __p;
         },
@@ -26,7 +26,8 @@ define([
         
         // Delegated events for creating new items, and clearing completed ones.
         events: {
-            'keypress #search-input': 'searchPlace'
+            'keyup #search-input': 'searchPlace',
+            // 'click #clear-btn': 'clearInput'
         },
         
         // At initialization we bind to the relevant events on the `Todos`
@@ -34,33 +35,39 @@ define([
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
             this.find = new Search();
-            this.find.setCredentials('Fmjtd|luub2duan9%2C8a%3Do5-9u2llr');
+            this.find.setCredentials('9b753dc36cb692bf4cb8becbada0ae94');
         },
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
         render: function() {
-            this.$el.html(this.template());
+            this.$el.html(this.template())
             this.searchInput = this.$('#search-input');
         },
 
+        clearInput: function() {
+            this.searchInput.val('');
+        },
+
         searchPlace: function(e) {
-            if ( e.which !== Common.ENTER_KEY || !this.searchInput.val().trim() ) {
+            $('#autocomplete-pane').hide();
+            if ( !this.searchInput.val().trim() ) {
                 return;
             }
+            // $('#toto').children('ul').html('');
             this.find.findLocation(this.searchInput.val(), function(data){
-                    var results = data.results[0].locations;
-
-                    var locationProperties = new Location({
-                        lat: results[0].latLng.lat,
-                        lng: results[0].latLng.lng,
-                        city: results[0].adminArea5,
-                        country: results[0].adminArea1,
-                        county: results[0].adminArea4,
-//                        countycode: results[0].countycode,
-                        state: results[0].adminArea3,
-                        uzip: results[0].postalCode
-                    });
-                    events.trigger("search:completed", locationProperties);
+                events.trigger("search:completed", data);
+                // var results = data.results[0].locations;
+//                     var locationProperties = new Location({
+//                         lat: results[0].latLng.lat,
+//                         lng: results[0].latLng.lng,
+//                         city: results[0].adminArea5,
+//                         country: results[0].adminArea1,
+//                         county: results[0].adminArea4,
+// //                        countycode: results[0].countycode,
+//                         state: results[0].adminArea3,
+//                         uzip: results[0].postalCode
+//                     });
+//                     events.trigger("search:completed", locationProperties);
                 });
         }
     });

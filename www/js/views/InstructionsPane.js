@@ -66,7 +66,8 @@ define([
         },
         
         toggle: function() {
-            this.$el.toggleClass('slide-view-vertical-in');
+            // this.$el.toggleClass('slide-view-vertical-in');
+            this.$el.show()
         }
         
     });

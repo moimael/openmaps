@@ -1,15 +1,18 @@
 define([
+'zepto',
 'underscore',
-'backbone', 
+'backbone',
+'bloodhound',
 './Location'
-], function(_, Backbone, Location) {
+], function($, _, Backbone, Bloodhound, Location) {
 //network info api
 //send event -> notification api to notify user if no network
 
     var Search = Backbone.Model.extend({
         defaults: {
             credentials: '',
-            type: 'search'
+            type: 'search',
+            engine: null
         },
         
         getCredentials: function() {
@@ -22,6 +25,26 @@ define([
         
         setCredentials: function(credentials) {
             this.credentials = credentials;
+            this.startSuggestionEngine();
+        },
+
+        startSuggestionEngine: function() {
+            this.engine = new Bloodhound({
+              name: 'locations',
+              remote: {url: 'https://photon.komoot.de/api/?q=%QUERY&limit=8'}, //, ajax: {data: {key: this.credentials} }
+              datumTokenizer: function(d) {
+                return Bloodhound.tokenizers.whitespace(d.val);
+              },
+              queryTokenizer: Bloodhound.tokenizers.whitespace
+            });
+            var promise = this.engine.initialize();
+            promise
+            .done(function() {
+                console.log('success!');
+            })
+            .fail(function() {
+                console.log('err!');
+            });
         },
         
         validate: function(attrs) {
@@ -31,19 +54,8 @@ define([
         },
         
         findLocation : function(location, callback) {
-            $.ajax({
-                type: 'GET',
-                url: 'http://open.mapquestapi.com/geocoding/v1/address',
-                // data to be added to query string:
-                data: { key: this.credentials, location: location },
-                // type of data we are expecting in return:
-                dataType: 'json',
-                success: function(data){
-                    callback(data);
-                },
-                error: function(xhr, type){
-                    console.log('Ajax error!');
-                }
+            this.engine.get(location, function(suggestions) {
+              callback(suggestions);
             });
         }
 

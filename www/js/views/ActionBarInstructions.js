@@ -35,7 +35,10 @@ define([
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
         render: function() {
-            this.$el.html(this.template());
+            // this.$el.html(this.template());
+            this.$el.before('<div class="solid"></div>')
+            this.$el.children('form').attr('role', 'search');
+            // this.$el.toggleClass('solid');
         },
         
         goBack:function() {

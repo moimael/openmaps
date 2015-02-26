@@ -6,12 +6,16 @@ require.config({
     map: { '*': { 'jquery': 'zepto' } },
     shim: {
         'zepto': {
-            exports: 'Zepto'
+            exports: '$'
         },
         'leaflet-routing-machine': {
             deps: ['leaflet'],
             exports: 'RoutingMachine'
-        }
+        },
+        'bloodhound': {
+            deps: ['zepto'],
+            exports: 'Bloodhound'
+        },
     }
 });
 
