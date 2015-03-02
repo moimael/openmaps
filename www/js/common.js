@@ -1,4 +1,4 @@
-define([], function() {
+module.exports = function() {
     return {
         // What is the enter key constant?
         ENTER_KEY: 13,
@@ -28,4 +28,4 @@ define([], function() {
             return formattedMeters;
         }
     };
-});
+};

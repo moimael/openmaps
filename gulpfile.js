@@ -1,7 +1,13 @@
 'use strict';
 
 var gulp = require('gulp'),
+  gutil = require('gulp-util'),
   browserSync = require('browser-sync'),
+  browserify = require('browserify'),
+  watchify = require('watchify'),
+  sourcemaps = require('gulp-sourcemaps'),
+  source = require('vinyl-source-stream'),
+  buffer = require('vinyl-buffer'),
   jshint = require('gulp-jshint'),
   uglify = require('gulp-uglify'),
   concat = require('gulp-concat'),
@@ -12,50 +18,73 @@ var gulp = require('gulp'),
   pngquant = require('imagemin-pngquant');
 
 // watch files for changes and reload
-gulp.task('serve', function() {
+gulp.task('serve', ['js'], function() {
   browserSync({
     server: {
-      baseDir: 'www'
+      baseDir: 'dist'
     }
   });
 
-  gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js'], {cwd: 'www'}, browserSync.reload);
+  gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js'], {cwd: 'dist'}, browserSync.reload);
 });
 
 gulp.task('html', function () {
-   gulp.src('**/*.html', {cwd: 'www'})
-      .pipe(htmltidy())
-      .pipe(gulp.dest('dist'));
+  gulp.src('**/*.html', {cwd: 'www'})
+    .pipe(htmltidy())
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('css', function () {
-   gulp.src('css/**/*.css', {cwd: 'www'})
-      .pipe(csslint({
-        'compatible-vendor-prefixes': false,
-        'box-sizing': false
-      }))
-      .pipe(minifyCss())
-      .pipe(concat('app.css'))
-      .pipe(gulp.dest('dist'));
+  gulp.src('css/**/*.css', {cwd: 'www'})
+    .pipe(csslint({
+      'compatible-vendor-prefixes': false,
+      'box-sizing': false
+    }))
+    .pipe(minifyCss())
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest('./dist/css'));
 });
 
 gulp.task('js', function () {
-   gulp.src('js/**/*.js', {cwd: 'www'})
-      .pipe(jshint())
-      .pipe(jshint.reporter('jshint-stylish'))
+  var bundler = watchify(browserify({
+    entries: ['./www/js/app.js'],
+    debug: true,
+    cache: {},
+    packageCache: {},
+    fullPaths: true
+  }));
+
+  bundler.transform('brfs');
+
+  var bundle = function () {
+    return bundler
+      .bundle()
+          // log errors if they happen
+      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      .pipe(source('app.js'))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true}))
+      // .pipe(jshint())
+      // .pipe(jshint.reporter('jshint-stylish'))
       .pipe(uglify())
-      .pipe(concat('app.js'))
-      .pipe(gulp.dest('dist'));
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./dist/js'));
+  };
+
+  bundler.on('update', bundle); // on any dep update, runs the bundler
+  bundler.on('log', gutil.log); // output build logs to terminal
+
+  return bundle();
 });
 
 gulp.task('imgs', function () {
-   gulp.src('**/*.png', {cwd: 'www'})
-      .pipe(imagemin({
-          progressive: true,
-          svgoPlugins: [{removeViewBox: false}],
-          use: [pngquant()]
-      }))
-      .pipe(gulp.dest('dist'));
+  gulp.src('**/*.png', {cwd: 'www'})
+    .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [pngquant()]
+    }))
+    .pipe(gulp.dest('dist'));
 });
 
 gulp.task('build', ['html', 'css', 'js', 'imgs']);

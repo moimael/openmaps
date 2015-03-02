@@ -9,6 +9,7 @@
 @import "gaia-building-blocks/toolbars.css";
 @import "gaia-building-blocks/lists.css";
 @import "leaflet.css";
+@import "leaflet-routing-machine.css";
 
 html, body {
   margin: 0;
