@@ -1,7 +1,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var Map = require('./views/Map');
+var MapView = require('./views/Map');
 var ActionBar = require('./views/ActionBar');
 var ToolBar = require('./views/ToolBar');
 var InstructionsPane = require('./views/InstructionsPane');
@@ -16,7 +16,7 @@ var AppView = Backbone.View.extend({
     el: 'body',
 
     initialize: function() {
-        this.map = new Map();
+        this.map = new MapView();
         this.toolBar = new ToolBar();
         this.actionBar = new ActionBar();
         this.instructionsPane = new InstructionsPane();
