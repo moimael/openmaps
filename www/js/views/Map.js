@@ -167,7 +167,6 @@ var MapView = Backbone.View.extend({
     },
 
     mapTypeChanged: function() {
-    //switch case
         if (this.mapType == "road"){
             this.map.removeLayer(this.baseMaps.satellite);
             this.map.removeLayer(this.baseMaps.cycle);
