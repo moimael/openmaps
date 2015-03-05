@@ -18,13 +18,14 @@ var AutocompletePane = Backbone.View.extend({
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
         this.autocompleteList = this.$('#autocomplete-list');
+        this.container = document.createDocumentFragment();
         Locations.on("all", this.render, this);
     },
 
     renderItem: function(model){
         var autocompleteItem = new AutocompleteItem({model: model});
         autocompleteItem.render();
-        this.autocompleteList.append(autocompleteItem.el);
+        this.container.appendChild(autocompleteItem.el);
         // this.$el.append(autocompleteItem.el);
     },
 
@@ -32,6 +33,7 @@ var AutocompletePane = Backbone.View.extend({
         this.show();
         this.autocompleteList.html("");
         Locations.each(this.renderItem, this);
+        this.autocompleteList.append(this.container);
     },
     
     show: function() {
