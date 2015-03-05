@@ -15,7 +15,8 @@ var gulp = require('gulp'),
   csslint = require('gulp-csslint'),
   htmltidy = require('gulp-htmltidy'),
   imagemin = require('gulp-imagemin'),
-  pngquant = require('imagemin-pngquant');
+  pngquant = require('imagemin-pngquant'),
+  filesize = require('gulp-filesize');
 
 // watch files for changes and reload
 gulp.task('serve', ['js'], function() {
@@ -24,18 +25,18 @@ gulp.task('serve', ['js'], function() {
       baseDir: 'dist'
     }
   });
-
+  /* FIXME: separate watch to not rebuild css + js everytime */
   gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js'], {cwd: 'dist'}, browserSync.reload);
 });
 
 gulp.task('html', function () {
-  gulp.src('**/*.html', {cwd: 'www'})
+  return gulp.src('**/*.html', {cwd: 'www'})
     .pipe(htmltidy())
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('css', function () {
-  gulp.src('css/**/*.css', {cwd: 'www'})
+  return gulp.src('css/**/*.css', {cwd: 'www'})
     .pipe(csslint({
       'compatible-vendor-prefixes': false,
       'box-sizing': false
@@ -43,6 +44,12 @@ gulp.task('css', function () {
     .pipe(minifyCss())
     .pipe(concat('app.css'))
     .pipe(gulp.dest('./dist/css'));
+});
+
+gulp.task('lintjs', function () {
+  return gulp.src('js/**/*.js', {cwd: 'www'})
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
 });
 
 gulp.task('js', function () {
@@ -60,13 +67,13 @@ gulp.task('js', function () {
     return bundler
       .bundle()
           // log errors if they happen
-      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      // .on('error', gutil.log.bind(gutil, 'Browserify Error'))
       .pipe(source('app.js'))
       .pipe(buffer())
+      .pipe(filesize())
       .pipe(sourcemaps.init({loadMaps: true}))
-      // .pipe(jshint())
-      // .pipe(jshint.reporter('jshint-stylish'))
       .pipe(uglify())
+      .pipe(filesize())
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./dist/js'));
   };
@@ -78,7 +85,7 @@ gulp.task('js', function () {
 });
 
 gulp.task('imgs', function () {
-  gulp.src('**/*.png', {cwd: 'www'})
+  return gulp.src('**/*.png', {cwd: 'www'})
     .pipe(imagemin({
         progressive: true,
         svgoPlugins: [{removeViewBox: false}],
@@ -87,4 +94,13 @@ gulp.task('imgs', function () {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['html', 'css', 'js', 'imgs']);
+gulp.task('copy-manifest', function(){
+  return gulp.src('manifest.webapp', {cwd: 'www'})
+    .pipe(gulp.dest('dist'));
+});
+
+gulp.watch(['*.html'], {cwd: 'www'}, ['html']);
+gulp.watch(['css/**/*.css'], {cwd: 'www'}, ['css']);
+
+gulp.task('build', ['lintjs', 'js', 'imgs', 'css', 'html', 'copy-manifest']);
+gulp.task('default', ['serve']);
