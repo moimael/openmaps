@@ -183,7 +183,6 @@ div#action-bar {
   margin-left: 5%;
   margin-right: 5%;
   flex: 1;
-  top: -100%;
 
   z-index: 150;
   overflow-y: auto;
