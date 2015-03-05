@@ -1,8 +1,8 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var Search = require('../models/Search');
 var Location = require('../models/Location');
+var Locations = require('../collections/Locations');
 var Common = require('../common');
 
 
@@ -21,20 +21,17 @@ var ActionBarSearch = Backbone.View.extend({
         }
         return __p;
     },
-    //<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n
-    
+
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-        'keyup #search-input': 'searchPlace',
-        // 'click #clear-btn': 'clearInput'
+        'keyup #search-input': 'searchPlace'
     },
     
     // At initialization we bind to the relevant events on the `Todos`
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-        this.find = new Search();
-        this.find.setCredentials('9b753dc36cb692bf4cb8becbada0ae94');
+        this.jqXHR = null;
     },
 
     // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
@@ -43,31 +40,30 @@ var ActionBarSearch = Backbone.View.extend({
         this.searchInput = this.$('#search-input');
     },
 
-    clearInput: function() {
-        this.searchInput.val('');
-    },
-
     searchPlace: function(e) {
-        $('#autocomplete-pane').hide();
+
         if ( !this.searchInput.val().trim() ) {
+            // Hide autocomplete if no text to search
+            $('#autocomplete-pane').hide();
             return;
         }
-        // $('#toto').children('ul').html('');
-        this.find.findLocation(this.searchInput.val(), function(data){
-            events.trigger("search:completed", data);
-            // var results = data.results[0].locations;
-//                     var locationProperties = new Location({
-//                         lat: results[0].latLng.lat,
-//                         lng: results[0].latLng.lng,
-//                         city: results[0].adminArea5,
-//                         country: results[0].adminArea1,
-//                         county: results[0].adminArea4,
-// //                        countycode: results[0].countycode,
-//                         state: results[0].adminArea3,
-//                         uzip: results[0].postalCode
-//                     });
-//                     events.trigger("search:completed", locationProperties);
-            });
+
+        var locations = Locations;
+
+        var search_params = {
+            'q': this.searchInput.val(),
+            'limit': '8'
+        };
+
+        // Abort current request if another one was launched in the mean time
+        if (this.jqXHR !== null) {
+            this.jqXHR.abort();
+        }
+
+        this.jqXHR = locations.fetch({
+            reset: true,
+            data: $.param(search_params)
+        });
     }
 });
 

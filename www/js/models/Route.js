@@ -1,7 +1,6 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var Location = require('./Location');
-var Search = require('./Search');
 var RoutingMachine = require('leaflet-routing-machine');
 
 

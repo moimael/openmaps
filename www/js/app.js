@@ -22,16 +22,19 @@ var AppView = Backbone.View.extend({
         this.instructionsPane = new InstructionsPane();
         this.autocompletePane = new AutocompletePane();
 
-        // Zepto ajax global settings
-        $.ajaxSettings.xhr = function() {
-            return new window.XMLHttpRequest({
-                mozSystem: true
-            });
-        };
+        // ajax global settings
+        $.ajaxSetup( {
+            xhr: function() {
+                return new window.XMLHttpRequest({
+                    mozSystem: true
+                });
+            }
+        });
 
         this.locate();
         
         events.on('search:completed', this.drawSearchMarker, this);
+        events.on('routing:search:completed', this.addWayPoint, this);
         events.on('routing:completedlats', this.drawRoute, this);
         events.on('routing:completedinstructions', this.setInstructions, this);
         events.on('toolbar:locate', this.locate, this);
@@ -39,22 +42,17 @@ var AppView = Backbone.View.extend({
         events.on('actionmenu:maplayer actionmenu:satellitelayer actionmenu:cyclelayer actionmenu:offlinelayer', this.changeMapType, this);
     },
 
-    render: function() {
-    },
-    
-    drawSearchMarker: function(inResults) {
-        this.autocompletePane.show();
-        this.autocompletePane.render(inResults[0]);
-        // var markerLocation = [inResults.get('lat'), inResults.get('lng')];
-        // var marker = new L.Marker(markerLocation).addTo(this.map.hasMap());
-        // marker.bindPopup("<b>" + inResults.get('city') + ", " + inResults.get('county') + "<br/>" + inResults.get('state') + ", " + inResults.get('country') + "</b>").openPopup();
-        // this.map.hasMap().setView([inResults.get('lat'), inResults.get('lng')], 16);
-        // if(this.map.getMapType() === "road") {
-        //     this.map.hasMap().setView(markerLocation, 16);
-        // }
-        // else {
-        //     this.map.hasMap().setView(markerLocation, 11);
-        // }
+    drawSearchMarker: function(model) {
+        this.autocompletePane.hide();
+        var markerLocation = [model.get('lat'), model.get('lng')];
+        var marker = new L.Marker(markerLocation).addTo(this.map.hasMap());
+        marker.bindPopup("<b>" + model.get('name') + "<br/>" + model.get('state') + ", " + model.get('country') + "</b>").openPopup();
+        if(this.map.getMapType() === "road") {
+            this.map.hasMap().setView(markerLocation, 16);
+        }
+        else {
+            this.map.hasMap().setView(markerLocation, 11);
+        }
     },
     
     drawRoute: function(latlngs) {
@@ -82,4 +80,5 @@ var AppView = Backbone.View.extend({
 $(function() {
     // Kick things off by creating the **App**.
     app = new AppView();
+    module.exports = app;
 });
