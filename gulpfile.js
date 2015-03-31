@@ -5,6 +5,7 @@ var gulp = require('gulp'),
   browserSync = require('browser-sync'),
   browserify = require('browserify'),
   watchify = require('watchify'),
+  del = require('del'),
   sourcemaps = require('gulp-sourcemaps'),
   source = require('vinyl-source-stream'),
   buffer = require('vinyl-buffer'),
@@ -26,8 +27,15 @@ gulp.task('serve', ['js'], function() {
     }
   });
   /* FIXME: separate watch to not rebuild css + js everytime */
-  gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js'], {cwd: 'dist'}, browserSync.reload);
+  gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js', 'js/**/*.jsx'], {cwd: 'dist'}, browserSync.reload);
 });
+
+/**
+ * Cleaning dist/ folder
+ */
+gulp.task('clean', function(cb) {
+  del(['dist/**'], cb);
+})
 
 gulp.task('html', function () {
   return gulp.src('**/*.html', {cwd: 'www'})
@@ -55,13 +63,12 @@ gulp.task('lintjs', function () {
 gulp.task('js', function () {
   var bundler = watchify(browserify({
     entries: ['./www/js/app.js'],
+    transform: ['reactify', 'brfs'],
     debug: true,
     cache: {},
     packageCache: {},
     fullPaths: true
   }));
-
-  bundler.transform('brfs');
 
   var bundle = function () {
     return bundler
@@ -72,7 +79,7 @@ gulp.task('js', function () {
       .pipe(buffer())
       .pipe(filesize())
       .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(uglify())
+      // .pipe(uglify())
       .pipe(filesize())
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./dist/js'));

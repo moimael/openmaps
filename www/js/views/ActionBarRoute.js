@@ -1,7 +1,8 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var Search = require('../models/Search');
+var Locations = require('../collections/Locations');
+var WayPoints = require('../collections/WayPoints');
 var Route = require('../models/Route');
 var Common = require('../common');
 
@@ -22,21 +23,22 @@ var ActionBarRoute = Backbone.View.extend({
         }
         return __p;
     },
-    //<a href="#"><span class="icon icon-menu">hide sidebar</span></a>\n<a href="#drawer"><span class="icon icon-menu">show sidebar</span></a>\n
+
     // Delegated events for creating new items, and clearing completed ones.
     events: {
         'click #instructions-list-button' : 'showInstructionsPane',
-        'keypress #end-input': 'search'
+        'keyup #start-input, #end-input': 'searchPlace',
+        'keypress #end-input': 'route'
     },
     
     // At initialization we bind to the relevant events on the `Todos`
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-        this.locations = [];
-        this.find = new Search();
-        this.find.setCredentials('Fmjtd|luub2duan9%2C8a%3Do5-9u2llr');
+        this.jqXHR = null;
         this.route = new Route();
+        this.waypoints = WayPoints;
+        events.on('routing:search:completed', this.addWayPoint, this);
     },
 
     render: function() {
@@ -47,38 +49,62 @@ var ActionBarRoute = Backbone.View.extend({
         this.btnMenu = this.$('#menu-button');
     },
     
-    
-    search: function(e) {
+
+    searchPlace: function(e) {
+        var locations = Locations;
+
+        var search_params = {
+            'q': $(e.target).val(),
+            'limit': '8'
+        };
+
+        // Abort current request if another one was launched in the mean time
+        if (this.jqXHR !== null) {
+            this.jqXHR.abort();
+        }
+
+        this.jqXHR = locations.fetch({
+            reset: true,
+            data: $.param(search_params)
+        });
+    },
+
+    addWayPoint: function(model) {
+        this.waypoints.add(model);
+    },
+
+    route: function(e) {
         if ( e.which !== Common.ENTER_KEY || !this.startInput.val().trim() || !this.endInput.val().trim()) {
             return;
         }
-        
-        self = this;
-        this.find.findLocation(this.startInput.val(), function(data){
-                var results = data.results[0].locations;
-                var lat = results[0].latLng.lat;
-                var lng = results[0].latLng.lng;
-                var latlng = new L.LatLng(lat, lng);
-                self.locations.push(latlng);
+
+        this.route.startRouting(self.locations[0], self.locations[1]);
+        // self = this;
+        // this.find.findLocation(this.startInput.val(), function(data){
+        //         var results = data.results[0].locations;
+        //         var lat = results[0].latLng.lat;
+        //         var lng = results[0].latLng.lng;
+        //         var latlng = new L.LatLng(lat, lng);
+        //         self.locations.push(latlng);
                 
-                if(self.locations.length === 2){
-                    self.route.startRouting(self.locations[0], self.locations[1]);
-                    self.locations = [];
-                }
-        });
+        //         if(self.locations.length === 2){
+        //             self.route.startRouting(self.locations[0], self.locations[1]);
+        //             self.locations = [];
+        //         }
+        // });
     
-        this.find.findLocation(this.endInput.val(), function(data){
-                var results = data.results[0].locations;
-                var lat = results[0].latLng.lat;
-                var lng = results[0].latLng.lng;
-                var latlng = new L.LatLng(lat, lng);
-                self.locations.push(latlng);
+        // this.find.findLocation(this.endInput.val(), function(data){
+        //         var results = data.results[0].locations;
+        //         var lat = results[0].latLng.lat;
+        //         var lng = results[0].latLng.lng;
+        //         var latlng = new L.LatLng(lat, lng);
+        //         self.locations.push(latlng);
                 
-                if(self.locations.length === 2){
-                    self.route.startRouting(self.locations[0], self.locations[1]);
-                    self.locations = [];
-                }
-        });
+        //         if(self.locations.length === 2){
+        //             self.route.startRouting(self.locations[0], self.locations[1]);
+        //             self.locations = [];
+        //         }
+        // });
     },
     
     showInstructionsPane: function() {

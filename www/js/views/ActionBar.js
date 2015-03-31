@@ -1,7 +1,9 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var ActionBarSearch = require('./ActionBarSearch');
+var React = require('react');
+// var ActionBarSearch = require('./ActionBarSearch');
+var Typeahead = require('../components/Typeahead.jsx');
 var ActionBarRoute = require('./ActionBarRoute');
 var ActionBarInstructions = require('./ActionBarInstructions');
 var Common = require('../common');
@@ -23,7 +25,7 @@ var ActionBar = Backbone.View.extend({
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-        this.actionBarSearch = new ActionBarSearch();
+        this.actionBarSearch = React.render(<Typeahead />, this.el);
         this.actionBarRoute = new ActionBarRoute();
         this.actionBarInstructions = new ActionBarInstructions();
         
@@ -35,7 +37,6 @@ var ActionBar = Backbone.View.extend({
         events.on('instructionspane:rendered actionbarroute:showinstructionspane', this.showInstructionsView, this);
     },
 
-    // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
     render: function() {
         if(this.view === 'search'){
             this.actionBarSearch.render();
@@ -46,6 +47,10 @@ var ActionBar = Backbone.View.extend({
         else if(this.view === 'instructions'){
             this.actionBarInstructions.render();
         }
+    },
+
+    getCurrentView: function(){
+        return this.view();
     },
     
     toggleSearchView: function(){

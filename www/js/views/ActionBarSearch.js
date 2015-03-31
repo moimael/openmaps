@@ -42,9 +42,10 @@ var ActionBarSearch = Backbone.View.extend({
 
     searchPlace: function(e) {
 
+        // Hide autocomplete if no text to search
+        $('#autocomplete-pane').hide();
+
         if ( !this.searchInput.val().trim() ) {
-            // Hide autocomplete if no text to search
-            $('#autocomplete-pane').hide();
             return;
         }
 

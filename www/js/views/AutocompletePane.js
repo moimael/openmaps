@@ -30,10 +30,14 @@ var AutocompletePane = Backbone.View.extend({
     },
 
     render: function() {
-        this.show();
-        this.autocompleteList.html("");
-        Locations.each(this.renderItem, this);
-        this.autocompleteList.append(this.container);
+        if (Locations.length !== 0) {
+            this.show();
+            this.autocompleteList.html("");
+            Locations.each(this.renderItem, this);
+            this.autocompleteList.append(this.container);
+        } else {
+            this.hide();
+        }
     },
     
     show: function() {

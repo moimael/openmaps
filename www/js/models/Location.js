@@ -3,6 +3,7 @@ var Backbone = require('backbone');
 
 var Location = Backbone.Model.extend({
     defaults: {
+        type: "",
         name: "",
         lat: "",
         lng: "",
@@ -16,6 +17,7 @@ var Location = Backbone.Model.extend({
 
     parse: function(response) {
         var parsed = {
+            'type': response.geometry.type,
             'name': response.properties.name,
             'lat': response.geometry.coordinates[1],
             'lng': response.geometry.coordinates[0],

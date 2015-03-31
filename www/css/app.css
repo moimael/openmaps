@@ -2,12 +2,12 @@
 /* Tip: Use "@import" to add styles instead of adding <link>'s in your
    HTML, and volo will inline it when building for production */
 
-@import "gaia-building-blocks/headers.css";
-@import "gaia-building-blocks/input_areas.css";
-@import "gaia-building-blocks/action_menu.css";
+@import "headers.css";
+@import "input_areas.css";
+@import "action_menu.css";
 /*@import "gaia-building-blocks/buttons.css";*/
-@import "gaia-building-blocks/toolbars.css";
-@import "gaia-building-blocks/lists.css";
+@import "toolbars.css";
+@import "lists.css";
 @import "leaflet.css";
 @import "leaflet-routing-machine.css";
 
@@ -131,22 +131,22 @@ div#action-bar {
 }
 
 [id="tool"] .pack-icon-search {
-    background-image: url(gaia-building-blocks/toolbars/search.png);
+    background-image: url(toolbars/search.png);
     background-repeat: no-repeat;
 }
 
 [id="tool"] .pack-icon-route {
-    background-image: url(gaia-building-blocks/toolbars/route.png);
+    background-image: url(toolbars/route.png);
     background-repeat: no-repeat;
 }
 
 [id="tool"] .pack-icon-location {
-    background-image: url(gaia-building-blocks/toolbars/location.png);
+    background-image: url(toolbars/location.png);
     background-repeat: no-repeat;
 }
 
 [id="tool"] .pack-icon-layers {
-    background-image: url(gaia-building-blocks/toolbars/layers.png);
+    background-image: url(toolbars/layers.png);
     background-repeat: no-repeat;
 }
 
@@ -187,7 +187,7 @@ div#action-bar {
   z-index: 150;
   overflow-y: auto;
   overflow-x: hidden;
-  display: none;
+  /*display: none;*/
 }
 
 .current-location {
