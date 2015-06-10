@@ -17,7 +17,8 @@ var gulp = require('gulp'),
   htmltidy = require('gulp-htmltidy'),
   imagemin = require('gulp-imagemin'),
   pngquant = require('imagemin-pngquant'),
-  filesize = require('gulp-filesize');
+  filesize = require('gulp-filesize'),
+  babel = require('gulp-babel');
 
 // watch files for changes and reload
 gulp.task('serve', ['js'], function() {
@@ -79,7 +80,7 @@ gulp.task('js', function () {
       .pipe(buffer())
       .pipe(filesize())
       .pipe(sourcemaps.init({loadMaps: true}))
-      // .pipe(uglify())
+      .pipe(babel())
       .pipe(filesize())
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./dist/js'));
