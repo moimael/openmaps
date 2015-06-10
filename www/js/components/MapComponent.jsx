@@ -6,21 +6,9 @@ var Circle = require('react-leaflet/lib/Circle');
 var Marker = require('react-leaflet/lib/Marker');
 var Popup = require('react-leaflet/lib/Popup');
 var Actions = require('../actions/Actions');
-// var RoutingMachine = require('leaflet-routing-machine');
 
-// Method to retrieve application state from store
-// function getMapState() {
-//   return {
-//     shoes: MapStore.getAll()
-//   };
-// }
 
 var MapComponent = React.createClass({
-
-  // Use getAppState method to set initial state
-  // getInitialState: function() {
-  //   return getMapState();
-  // },
 
   componentDidMount: function() {
 
@@ -28,24 +16,14 @@ var MapComponent = React.createClass({
     // Listen to device orientation changes
     window.addEventListener('deviceorientation', this.handleOrientation);
     // MapStore.addChangeListener(this._onChange);
-
-
-
-    // map.on('click', this.onMapClick);
   },
 
   componentWillUnmount: function() {
     window.removeEventListener('deviceorientation', this.handleOrientation);
-      // MapStore.removeChangeListener(this._onChange);
   },
 
   _handleOrientation: function(e) {
     // this.setState({windowWidth: window.innerWidth});
-  },
-
-  // Update view state when change event is received
-  _onChange: function() {
-    // this.setState(getMapState());
   },
 
   handleLocationFound: function(e) {

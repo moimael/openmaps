@@ -79,24 +79,24 @@ module.exports = app;
 //             this.map.hasMap().setView(markerLocation, 11);
 //         }
 //     },
-    
+
 //     drawRoute: function(latlngs) {
 //         this.map.drawRoute(latlngs);
 //     },
-    
+
 //     locate: function() {
 //         this.map.showLocation();
 //     },
-    
+
 //     toggleView: function() {
 //         $('#instructions-list-button').prop('disabled', false);
 //         this.instructionsPane.toggle();
 //     },
-    
+
 //     setInstructions: function(instructions) {
 //         this.instructionsPane.render(instructions.routes[0].instructions);
 //     },
-    
+
 //     changeMapType: function(mapType) {
 //         this.map.setMapType(mapType);
 //     }

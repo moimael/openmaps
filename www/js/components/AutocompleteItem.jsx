@@ -24,8 +24,8 @@ var AutocompleteItem = React.createClass({
     return (
       <li onClick={this.completeSearch}>
         <a href="#">
-          <p>{this.props.location.get('name')}</p>
-          <p>{this.props.location.get('state')}, {this.props.location.get('country')}</p>
+          <p>{this.props.location.name}</p>
+          <p>{this.props.location.state}, {this.props.location.country}</p>
         </a>
       </li>
     );

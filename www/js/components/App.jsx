@@ -5,47 +5,41 @@ var MapComponent = require('./MapComponent.jsx');
 var ActionMenu = require('./ActionMenu.jsx');
 var UIStore = require('../stores/UIStore');
 
-function getUIState() {
-  return {
-    ui: UIStore.getAll()
-  };
-}
-
 var App = React.createClass({
 
-  getInitialState: function() {
-    return getUIState();
+  getInitialState() {
+    return UIStore.getState();
   },
 
-  componentDidMount: function () {
-    UIStore.addChangeListener(this._onChange);
+  componentDidMount() {
+    UIStore.listen(this.onChange);
   },
 
-  componentWillUmount: function () {
-    UIStore.removeChangeListener(this._onChange);
+  componentWillUmount() {
+    UIStore.unlisten(this.onChange);
   },
 
-  handleLocateClicked: function() {
+  handleLocateClicked() {
     this.refs.mapComponent.locate();
   },
 
-  render: function() {
+  render() {
     return (
       <div role="main">
-        <Typeahead />
-        {this.state.ui.showRoutingWidget ?
+        <Typeahead searchText={this.state.searchText} showSuggestions={this.state.showSuggestions} locations={this.state.locations}/>
+        {this.state.showRoutingWidget ?
         <Typeahead /> : null}
 
         <Toolbar onLocateClicked={this.handleLocateClicked}/>
-        <MapComponent id="map" ref="mapComponent" mapState={this.state.ui}/>
-        {this.state.ui.showLayerMenu ?
+        <MapComponent id="map" ref="mapComponent" mapState={this.state}/>
+        {this.state.showLayerMenu ?
         <ActionMenu /> : null}
       </div>
     );
   },
 
-  _onChange: function() {
-    this.setState(getUIState());
+  onChange(state) {
+    this.setState(state);
   }
 
 });
