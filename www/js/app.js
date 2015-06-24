@@ -1,14 +1,7 @@
 var $ = require('jquery');
-// var _ = require('underscore');
-// var Backbone = require('backbone');
 var React = require('react');
 var App = require('./components/App.jsx');
-// var MapView = require('./views/Map');
-// var ActionBar = require('./views/ActionBar');
-// var ToolBar = require('./views/ToolBar');
-// var InstructionsPane = require('./views/InstructionsPane');
-// var AutocompletePane = require('./views/AutocompletePane');
-// var Common = require('./common');
+
 
 React.initializeTouchEvents(true);
 

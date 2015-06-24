@@ -13,10 +13,6 @@ module.exports = {
     //   }.bind(this));
     // }.bind(this));
 
-    if ( !searchText ) {
-      return;
-    }
-
     var search_params = {
       'q': searchText,
       'limit': '8'
