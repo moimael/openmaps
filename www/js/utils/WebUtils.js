@@ -39,8 +39,10 @@ module.exports = {
       'id': response.properties.osm_id,
       'type': response.geometry.type,
       'name': response.properties.name,
-      'lat': response.geometry.coordinates[1],
-      'lng': response.geometry.coordinates[0],
+      'latlng': {
+        'lat': response.geometry.coordinates[1],
+        'lng': response.geometry.coordinates[0]
+      },
       'state': response.properties.state,
       'country': response.properties.country
     };

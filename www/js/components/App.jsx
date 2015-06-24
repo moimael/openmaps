@@ -1,22 +1,29 @@
 var React = require('react');
 var Typeahead = require('./Typeahead.jsx');
+var RouteSearch = require('./RouteSearch.jsx');
 var Toolbar = require('./Toolbar.jsx');
 var MapComponent = require('./MapComponent.jsx');
 var ActionMenu = require('./ActionMenu.jsx');
 var UIStore = require('../stores/UIStore');
+var RouteStore = require('../stores/RouteStore');
 
 var App = React.createClass({
 
   getInitialState() {
-    return UIStore.getState();
+    return {
+      ui: UIStore.getState(),
+      route: RouteStore.getState()
+    };
   },
 
   componentDidMount() {
     UIStore.listen(this.onChange);
+    RouteStore.listen(this.onChange);
   },
 
   componentWillUmount() {
     UIStore.unlisten(this.onChange);
+    RouteStore.unlisten(this.onChange);
   },
 
   handleLocateClicked() {
@@ -26,20 +33,24 @@ var App = React.createClass({
   render() {
     return (
       <div role="main">
-        <Typeahead searchText={this.state.searchText} showSuggestions={this.state.showSuggestions} locations={this.state.locations}/>
-        {this.state.showRoutingWidget ?
-        <Typeahead /> : null}
+        {this.state.ui.showRoutingWidget ?
+        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} locations={this.state.route.locations} /> : 
+        <Typeahead searchText={this.state.ui.searchText} showSuggestions={this.state.ui.showSuggestions} locations={this.state.ui.locations} />
+        }
 
-        <Toolbar onLocateClicked={this.handleLocateClicked}/>
-        <MapComponent id="map" ref="mapComponent" mapState={this.state}/>
-        {this.state.showLayerMenu ?
+        <Toolbar routeMode={this.state.ui.showRoutingWidget} onLocateClicked={this.handleLocateClicked}/>
+        <MapComponent id="map" ref="mapComponent" mapState={this.state.ui}/>
+        {this.state.ui.showLayerMenu ?
         <ActionMenu /> : null}
       </div>
     );
   },
 
-  onChange(state) {
-    this.setState(state);
+  onChange() {
+    this.setState({
+      ui: UIStore.getState(),
+      route: RouteStore.getState()
+    });
   }
 
 });

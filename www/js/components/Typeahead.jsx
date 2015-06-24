@@ -1,27 +1,34 @@
-var React = require('react');
-var $ = require('jquery');
+var React = require('react/addons');
 var SearchInput = require('./SearchInput.jsx');
 var AutocompleteListItem = require('./AutocompleteListItem.jsx');
 var Actions = require('../actions/Actions');
 
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var Typeahead = React.createClass({
 
-  componentDidMount: function() {
-    this.jqXHR = null;
+  handleChange: function(value) {
+    Actions.fetchLocations(value);
+  },
+
+  handleSearchCompleted: function(location) {
+    Actions.showLocation(location);
   },
 
   render: function() {
     return (
-      <div id="autocomplete">
-        <div id="action-bar">
+      <div className="autocomplete">
+        <div className="action-bar">
           <form action="#">
-            <SearchInput searchText={this.props.searchText}/>
+            <SearchInput placeholder="Enter search terms" searchText={this.props.searchText} onChange={this.handleChange} />
           </form>
         </div>
+        <ReactCSSTransitionGroup className="transitionGroup" transitionName="pull">
         { this.props.showSuggestions ?
-        <section className="card" data-type="list">
-          <AutocompleteListItem locations={this.props.locations} />
-        </section> : null }
+          <section key="1" className="card" data-type="list">
+            <AutocompleteListItem locations={this.props.locations} onSearchCompleted={this.handleSearchCompleted} />
+          </section> : null }
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

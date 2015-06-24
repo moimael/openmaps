@@ -15,7 +15,6 @@ var MapComponent = React.createClass({
     L.Icon.Default.imagePath = '../img';
     // Listen to device orientation changes
     window.addEventListener('deviceorientation', this.handleOrientation);
-    // MapStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
@@ -35,8 +34,9 @@ var MapComponent = React.createClass({
   },
 
   render: function() {
-    var radius = this.props.mapState.accuracy / 2;
+    var radius = Math.round(this.props.mapState.accuracy / 2);
     var baseLayer;
+    var center = this.props.mapState.userPosition;
     if (this.props.mapState.baseLayer === 'road') {
       baseLayer = <TileLayer
           key={this.props.mapState.baseLayer}
@@ -53,18 +53,33 @@ var MapComponent = React.createClass({
           url="http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
           subdomains={['a', 'b', 'c']} />;
     }
+    
+    if (this.props.mapState.hasUserPosition) {
+      center = this.props.mapState.userPosition;
+    } else if (this.props.mapState.hasCurrentLocation) {
+      center = this.props.mapState.currentLocation.latlng;
+    }
 
     return (
-      <Map id={this.props.id} ref="map" center={this.props.mapState.latlng} zoom={this.props.mapState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
+      <Map id={this.props.id} ref="map" center={center} zoom={this.props.mapState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
         {baseLayer}
-        {this.props.mapState.hasLocation ?
-        <Circle center={this.props.mapState.latlng} radius={radius} color="#FF4E00">
-          <Marker position={this.props.mapState.latlng}>
+        {this.props.mapState.hasUserPosition ?
+        <Circle center={this.props.mapState.userPosition} radius={radius} color="#FF4E00">
+          <Marker position={this.props.mapState.userPosition}>
             <Popup>
               <span>You are within {radius} meters from this point</span>
             </Popup>
           </Marker>
         </Circle> : null}
+        {this.props.mapState.hasCurrentLocation ?
+          <Marker position={this.props.mapState.currentLocation.latlng}>
+            <Popup>
+              <span>
+                {this.props.mapState.currentLocation.name}<br/>
+                {this.props.mapState.currentLocation.state} {this.props.mapState.currentLocation.country}
+              </span>
+            </Popup>
+          </Marker> : null}
       </Map>
     );
   }

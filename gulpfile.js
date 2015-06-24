@@ -18,17 +18,18 @@ var gulp = require('gulp'),
   imagemin = require('gulp-imagemin'),
   pngquant = require('imagemin-pngquant'),
   filesize = require('gulp-filesize'),
-  babel = require('gulp-babel');
+  babelify = require('babelify'),
+  lrload = require('livereactload');
 
 // watch files for changes and reload
-gulp.task('serve', ['js'], function() {
+gulp.task('serve', ['watchjs', 'js'], function() {
   browserSync({
     server: {
       baseDir: 'dist'
     }
   });
   /* FIXME: separate watch to not rebuild css + js everytime */
-  gulp.watch(['*.html', 'css/**/*.css', 'js/**/*.js', 'js/**/*.jsx'], {cwd: 'dist'}, browserSync.reload);
+  gulp.watch(['*.html', 'js/**/*.js', '!js/app.js', 'js/**/*.jsx'], {cwd: 'dist'}, browserSync.reload);
 });
 
 /**
@@ -41,7 +42,7 @@ gulp.task('clean', function(cb) {
 gulp.task('html', function () {
   return gulp.src('**/*.html', {cwd: 'www'})
     .pipe(htmltidy())
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('css', function () {
@@ -50,21 +51,28 @@ gulp.task('css', function () {
       'compatible-vendor-prefixes': false,
       'box-sizing': false
     }))
-    .pipe(minifyCss())
+    .pipe(sourcemaps.init())
+    // .pipe(minifyCss())
     .pipe(concat('app.css'))
-    .pipe(gulp.dest('./dist/css'));
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./dist/css'))
 });
 
+/* FIXME: transform jsx to js before linting */
 gulp.task('lintjs', function () {
   return gulp.src('js/**/*.js', {cwd: 'www'})
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
 });
 
+gulp.task('watchjs', function () {
+  lrload.monitor('dist/js/app.js', {displayNotification: true});
+});
+
 gulp.task('js', function () {
   var bundler = watchify(browserify({
     entries: ['./www/js/app.js'],
-    transform: ['reactify', 'brfs'],
+    transform: ['babelify', 'livereactload', 'brfs'],
     debug: true,
     cache: {},
     packageCache: {},
@@ -74,13 +82,11 @@ gulp.task('js', function () {
   var bundle = function () {
     return bundler
       .bundle()
-          // log errors if they happen
-      // .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      .on('error', gutil.log)
       .pipe(source('app.js'))
       .pipe(buffer())
       .pipe(filesize())
       .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(babel())
       .pipe(filesize())
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest('./dist/js'));
@@ -110,5 +116,5 @@ gulp.task('copy-manifest', function(){
 gulp.watch(['*.html'], {cwd: 'www'}, ['html']);
 gulp.watch(['css/**/*.css'], {cwd: 'www'}, ['css']);
 
-gulp.task('build', ['lintjs', 'js', 'imgs', 'css', 'html', 'copy-manifest']);
+gulp.task('build', ['js', 'css', 'imgs', 'html', 'copy-manifest']);
 gulp.task('default', ['serve']);

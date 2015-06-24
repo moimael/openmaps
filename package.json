@@ -2,13 +2,13 @@
   "name": "openmaps",
   "version": "0.3.0",
   "devDependencies": {
+    "babelify": "^6.1.2",
     "brfs": "^1.4.0",
     "browser-sync": "^2.4.0",
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.3",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.1.0",
     "gulp-concat": "^2.5.2",
     "gulp-csslint": "^0.1.5",
     "gulp-filesize": "0.0.6",
@@ -21,6 +21,7 @@
     "gulp-util": "^3.0.4",
     "imagemin-pngquant": "^4.0.0",
     "jshint-stylish": "^2.0.0",
+    "livereactload": "^0.5.2",
     "reactify": "^1.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
@@ -34,7 +35,8 @@
     "leaflet": "^0.7.3",
     "leaflet-routing-machine": "^2.3.0",
     "react": "^0.13.3",
-    "react-leaflet": "^0.6.1",
+    "react-leaflet": "^0.6.2",
+    "react-spinkit": "^1.1.2",
     "underscore": "^1.8.3",
     "whatwg-fetch": "^0.9.0"
   }
