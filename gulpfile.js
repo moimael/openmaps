@@ -37,7 +37,7 @@ gulp.task('serve', ['watchjs', 'js'], function() {
  */
 gulp.task('clean', function(cb) {
   del(['dist/**'], cb);
-})
+});
 
 gulp.task('html', function () {
   return gulp.src('**/*.html', {cwd: 'www'})
@@ -55,14 +55,14 @@ gulp.task('css', function () {
     // .pipe(minifyCss())
     .pipe(concat('app.css'))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./dist/css'))
+    .pipe(gulp.dest('./dist/css'));
 });
 
 /* FIXME: transform jsx to js before linting */
 gulp.task('lintjs', function () {
   return gulp.src('js/**/*.js', {cwd: 'www'})
     .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('watchjs', function () {
