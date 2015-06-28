@@ -35,7 +35,7 @@ define([
         initialize: function() {
             this.locations = [];
             this.find = new Search();
-            this.find.setCredentials('Fmjtd|luub2duan9%2C8a%3Do5-9u2llr');
+            this.find.setCredentials('Fmjtd|luub2duan9,8a=o5-9u2llr');
             this.route = new Route();
         },
 

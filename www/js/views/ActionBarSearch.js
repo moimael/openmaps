@@ -34,7 +34,7 @@ define([
         // loading any preexisting todos that might be saved in *localStorage*.
         initialize: function() {
             this.find = new Search();
-            this.find.setCredentials('Fmjtd|luub2duan9%2C8a%3Do5-9u2llr');
+            this.find.setCredentials('Fmjtd|luub2duan9,8a=o5-9u2llr');
         },
 
         // Re-rendering the Map means detroying everything and re-creating plus re-adding all layers.
