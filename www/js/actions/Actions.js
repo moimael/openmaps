@@ -99,6 +99,10 @@ class Actions {
     this.dispatch(locations);
   }
 
+  showRouteInstructions(routeData) {
+    this.dispatch(routeData);
+  }
+
   /* ActionMenu */
   changeLayer(layer) {
     this.dispatch(layer);

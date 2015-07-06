@@ -10,6 +10,8 @@ class RouteStore {
     this.locations = [];
     this.waypoints = [];
     this.hasRoute = false;
+    this.showInstructions = false;
+    this.route = {};
     // Put everything in locations, with an order parameter
     this.startLocation = false;
     this.endLocation = false;
@@ -22,6 +24,7 @@ class RouteStore {
       handleUpdateEndLocations: Actions.UPDATE_END_LOCATIONS,
       handleConfirmLocation: Actions.CONFIRM_LOCATION,
       handleFetchEndLocations: Actions.FETCH_END_LOCATIONS,
+      handleRouteFound: Actions.SHOW_ROUTE_INSTRUCTIONS
       // handleLocationsFailed: Actions.LOCATIONS_FAILED,
     });
   }
@@ -74,6 +77,18 @@ class RouteStore {
       this.showSuggestions = false;
     }
     this.locations = [];
+  }
+
+  /* TODO: Manage multiple routes */
+  handleRouteFound(routeData) {
+    console.log(routeData);
+    this.route = {
+      'instructions': routeData.routes[0].instructions,
+      'totalTime': AppUtils.secondsToTime(routeData.routes[0].summary.totalTime),
+      'totalDistance': AppUtils.metersToDistance(routeData.routes[0].summary.totalDistance)
+    }
+    this.hasRoute = false;
+    this.showInstructions = true;
   }
 
   // handleLocationsFailed(errorMessage) {

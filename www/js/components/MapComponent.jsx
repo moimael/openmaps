@@ -16,6 +16,9 @@ var MapComponent = React.createClass({
     L.Icon.Default.imagePath = '../img';
     this.routeControl =  new L.Routing.control({});
 
+    this.routeControl.on('routesfound', function(routeData) {
+      Actions.showRouteInstructions(routeData);
+    });
     // Listen to device orientation changes
     window.addEventListener('deviceorientation', this.handleOrientation);
   },

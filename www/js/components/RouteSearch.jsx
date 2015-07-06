@@ -33,6 +33,10 @@ var RouteSearch = React.createClass({
           <section key="2" className="card" data-type="list">
             <AutocompleteListItem locations={this.props.locations} onItemClicked={this.handleSearchCompleted}/>
           </section> : null }
+        { this.props.showInstructions ?
+          <section key="3" className="card" data-type="list">
+            <AutocompleteListItem locations={this.props.route.instructions} onItemClicked={this.handleSearchCompleted}/>
+          </section> : null }
         </ReactCSSTransitionGroup>
       </div>
     );
