@@ -47,12 +47,11 @@ class RouteStore {
 
   handleConfirmLocation(location) {
     var locationText = location.name + ", " + (location.state ? location.state + ", " : "") + location.country;
+    this.waypoints.push(location.latlng);
     if (this.startLocation) {
       this.routeStartText = locationText;
-      this.waypoints.push(location.latlng);
     } else {
       this.routeEndText = locationText;
-      this.waypoints.push(location.latlng);
       this.hasRoute = true;
     }
     this.showSuggestions = false;
