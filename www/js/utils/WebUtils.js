@@ -31,7 +31,7 @@ module.exports = {
   },
 
   reverseGeocode(latlng) {
-
+    /* Not implemented yet, waiting for photon to implement it https://github.com/komoot/photon/pull/164 */
   },
 
   parse(response) {
