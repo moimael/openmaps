@@ -26,7 +26,7 @@ var Typeahead = React.createClass({
         <ReactCSSTransitionGroup className="transitionGroup" transitionName="pull">
         { this.props.showSuggestions ?
           <section key="1" className="card" data-type="list">
-            <AutocompleteListItem locations={this.props.locations} onSearchCompleted={this.handleSearchCompleted} />
+            <AutocompleteListItem locations={this.props.locations} onItemClicked={this.handleSearchCompleted} />
           </section> : null }
         </ReactCSSTransitionGroup>
       </div>

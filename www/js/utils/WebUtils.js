@@ -30,6 +30,10 @@ module.exports = {
     return jqXHR.done();
   },
 
+  reverseGeocode(latlng) {
+
+  },
+
   parse(response) {
     var parsed = {
       'id': response.properties.osm_id,

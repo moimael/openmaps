@@ -68,6 +68,7 @@ class UIStore {
 
   handleUserPosition(location) {
     this.userPosition = location.latlng;
+    this.searchText = location.name + ", " + location.state + ", " + location.country;
     this.accuracy = location.accuracy;
     this.hasUserPosition = true;
     this.zoom = 13;

@@ -7,7 +7,7 @@ var AutocompleteItem = React.createClass({
   },
 
   handleClick: function() {
-    this.props.onSearchCompleted(this.props.location);
+    this.props.onItemClicked(this.props.location);
   },
 
   render: function () {

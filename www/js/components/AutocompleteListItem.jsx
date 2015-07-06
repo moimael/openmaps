@@ -5,8 +5,7 @@ var AutocompleteItem = require('./AutocompleteItem.jsx');
 var AutocompleteListItem = React.createClass({
 
   handleClick: function(location) {
-    console.log(location);
-    this.props.onSearchCompleted(location);
+    this.props.onItemClicked(location);
   },
 
   render: function() {
@@ -15,7 +14,7 @@ var AutocompleteListItem = React.createClass({
     if (this.props.locations.length > 0) {
       autocompleteItem = this.props.locations.map(function(location) {
         return (
-          <AutocompleteItem key={location.id} location={location} onSearchCompleted={this.props.onSearchCompleted.bind(null, location)} />
+          <AutocompleteItem key={location.id} location={location} onItemClicked={this.props.onItemClicked.bind(null, location)} />
         );
       }, this);
     } else {
