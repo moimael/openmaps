@@ -31,7 +31,7 @@ var RouteSearch = React.createClass({
         <ReactCSSTransitionGroup className="transitionGroup" transitionName="pull">
         { this.props.showSuggestions ?
           <section key="2" className="card" data-type="list">
-            <AutocompleteListItem locations={this.props.locations} onSearchCompleted={this.handleSearchCompleted}/>
+            <AutocompleteListItem locations={this.props.locations} onItemClicked={this.handleSearchCompleted}/>
           </section> : null }
         </ReactCSSTransitionGroup>
       </div>
