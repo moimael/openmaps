@@ -15,7 +15,7 @@ var AutocompleteListItem = React.createClass({
     if (this.props.locations.length > 0) {
       autocompleteItem = this.props.locations.map(function(location) {
         return (
-          <AutocompleteItem key={location.id} location={location} onSearchCompleted={this.props.onSearchCompleted.bind(this, location)} />
+          <AutocompleteItem key={location.id} location={location} onSearchCompleted={this.props.onSearchCompleted.bind(null, location)} />
         );
       }, this);
     } else {
