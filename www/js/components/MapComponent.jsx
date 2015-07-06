@@ -1,11 +1,12 @@
 var React = require('react');
-var Leaflet = require('leaflet');
+require('leaflet');
 var Map = require('react-leaflet/lib/Map');
 var TileLayer = require('react-leaflet/lib/TileLayer');
 var Circle = require('react-leaflet/lib/Circle');
 var Marker = require('react-leaflet/lib/Marker');
 var Popup = require('react-leaflet/lib/Popup');
 var Actions = require('../actions/Actions');
+require('leaflet-routing-machine');
 
 
 var MapComponent = React.createClass({
@@ -13,6 +14,8 @@ var MapComponent = React.createClass({
   componentDidMount: function() {
 
     L.Icon.Default.imagePath = '../img';
+    this.routeControl =  new L.Routing.control({});
+
     // Listen to device orientation changes
     window.addEventListener('deviceorientation', this.handleOrientation);
   },
@@ -26,57 +29,73 @@ var MapComponent = React.createClass({
   },
 
   handleLocationFound: function(e) {
-    Actions.showLocation(e);
+    Actions.showUserPosition(e);
   },
 
   locate: function() {
     this.refs.map.leafletElement.locate();
   },
 
+  calculateRoute: function() {
+    // Clear previous routes
+    this.routeControl.getPlan().setWaypoints([]);
+    console.log(this.props.routeState.waypoints);
+    // Add new waypoints
+    this.routeControl.getPlan().setWaypoints([L.latLng(this.props.routeState.waypoints[0].lat, this.props.routeState.waypoints[0].lng), L.latLng(this.props.routeState.waypoints[1].lat, this.props.routeState.waypoints[1].lng)]);
+
+    // Display route
+    this.refs.map.leafletElement.addLayer(this.routeControl);
+  },
+
   render: function() {
-    var radius = Math.round(this.props.mapState.accuracy / 2);
+    var radius = Math.round(this.props.uiState.accuracy / 2);
     var baseLayer;
-    var center = this.props.mapState.userPosition;
-    if (this.props.mapState.baseLayer === 'road') {
+    var center = this.props.uiState.userPosition;
+
+    if (this.props.uiState.baseLayer === 'road') {
       baseLayer = <TileLayer
-          key={this.props.mapState.baseLayer}
+          key={this.props.uiState.baseLayer}
           url="http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png"
           subdomains={['otile1', 'otile2', 'otile3', 'otile4']} />;
-    } else if (this.props.mapState.baseLayer === 'satellite') {
+      } else if (this.props.uiState.baseLayer === 'satellite') {
       baseLayer = <TileLayer
-          key={this.props.mapState.baseLayer}
+          key={this.props.uiState.baseLayer}
           url="http://{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.png"
           subdomains={['otile1', 'otile2', 'otile3', 'otile4']} />;
-    } else if (this.props.mapState.baseLayer === 'cycle') {
+      } else if (this.props.uiState.baseLayer === 'cycle') {
       baseLayer = <TileLayer
-          key={this.props.mapState.baseLayer}
+          key={this.props.uiState.baseLayer}
           url="http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
           subdomains={['a', 'b', 'c']} />;
     }
-    
-    if (this.props.mapState.hasUserPosition) {
-      center = this.props.mapState.userPosition;
-    } else if (this.props.mapState.hasCurrentLocation) {
-      center = this.props.mapState.currentLocation.latlng;
+
+    if (this.props.uiState.hasUserPosition) {
+      center = this.props.uiState.userPosition;
+    } else if (this.props.uiState.hasCurrentLocation) {
+      center = this.props.uiState.currentLocation.latlng;
+    }
+
+    if (this.props.routeState.hasRoute) {
+      this.calculateRoute();
     }
 
     return (
-      <Map id={this.props.id} ref="map" center={center} zoom={this.props.mapState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
+      <Map id={this.props.id} ref="map" center={center} zoom={this.props.uiState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
         {baseLayer}
-        {this.props.mapState.hasUserPosition ?
-        <Circle center={this.props.mapState.userPosition} radius={radius} color="#FF4E00">
-          <Marker position={this.props.mapState.userPosition}>
+        {this.props.uiState.hasUserPosition ?
+        <Circle center={this.props.uiState.userPosition} radius={radius} color="#FF4E00">
+          <Marker position={this.props.uiState.userPosition}>
             <Popup>
               <span>You are within {radius} meters from this point</span>
             </Popup>
           </Marker>
         </Circle> : null}
-        {this.props.mapState.hasCurrentLocation ?
-          <Marker position={this.props.mapState.currentLocation.latlng}>
+        {this.props.uiState.hasCurrentLocation ?
+          <Marker position={this.props.uiState.currentLocation.latlng}>
             <Popup>
               <span>
-                {this.props.mapState.currentLocation.name}<br/>
-                {this.props.mapState.currentLocation.state} {this.props.mapState.currentLocation.country}
+                {this.props.uiState.currentLocation.name}<br/>
+              {this.props.uiState.currentLocation.state} {this.props.uiState.currentLocation.country}
               </span>
             </Popup>
           </Marker> : null}

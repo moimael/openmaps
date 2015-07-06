@@ -19,7 +19,6 @@ var App = React.createClass({
   componentDidMount() {
     UIStore.listen(this.onChange);
     RouteStore.listen(this.onChange);
-    this.handleLocateClicked();
   },
 
   componentWillUmount() {
@@ -35,12 +34,12 @@ var App = React.createClass({
     return (
       <div role="main">
         {this.state.ui.showRoutingWidget ?
-        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} locations={this.state.route.locations} /> : 
+        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} locations={this.state.route.locations} /> :
         <Typeahead searchText={this.state.ui.searchText} showSuggestions={this.state.ui.showSuggestions} locations={this.state.ui.locations} />
         }
 
         <Toolbar routeMode={this.state.ui.showRoutingWidget} onLocateClicked={this.handleLocateClicked}/>
-        <MapComponent id="map" ref="mapComponent" mapState={this.state.ui}/>
+        <MapComponent id="map" ref="mapComponent" uiState={this.state.ui} routeState={this.state.route}/>
         {this.state.ui.showLayerMenu ?
         <ActionMenu /> : null}
       </div>

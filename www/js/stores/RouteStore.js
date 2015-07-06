@@ -37,7 +37,7 @@ class RouteStore {
     this.routeStartText = searchText;
     // reset the array while we're fetching new locations so React can
     // be smart and render a spinner for us since the data is empty.
-    if (this.routeStartText !== "" || this.routeEndText !== "") {
+    if (this.routeStartText !== "") {
       this.showSuggestions = true;
     } else {
       this.showSuggestions = false;
@@ -49,11 +49,13 @@ class RouteStore {
     var locationText = location.name + ", " + (location.state ? location.state + ", " : "") + location.country;
     if (this.startLocation) {
       this.routeStartText = locationText;
+      this.waypoints.push(location.latlng);
     } else {
       this.routeEndText = locationText;
+      this.waypoints.push(location.latlng);
+      this.hasRoute = true;
     }
     this.showSuggestions = false;
-    // this.calculateRoute();
   }
 
   handleUpdateEndLocations(locations) {
@@ -67,7 +69,7 @@ class RouteStore {
     this.routeEndText = searchText;
     // reset the array while we're fetching new locations so React can
     // be smart and render a spinner for us since the data is empty.
-    if (this.routeStartText !== "" || this.routeEndText !== "") {
+    if (this.routeEndText !== "") {
       this.showSuggestions = true;
     } else {
       this.showSuggestions = false;
