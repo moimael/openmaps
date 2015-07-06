@@ -38,6 +38,7 @@
     "react-leaflet": "^0.6.2",
     "react-spinkit": "^1.1.2",
     "underscore": "^1.8.3",
+    "uuid": "^2.0.1",
     "whatwg-fetch": "^0.9.0"
   }
 }
