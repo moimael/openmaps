@@ -82,17 +82,19 @@ var MapComponent = React.createClass({
       this.calculateRoute();
     }
 
+    var currentPositionMarker = L.divIcon({className: 'current-location'});
+
     return (
       <Map id={this.props.id} ref="map" center={center} zoom={this.props.uiState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
         {baseLayer}
         {this.props.uiState.hasUserPosition ?
-        <Circle center={this.props.uiState.userPosition} radius={radius} color="#FF4E00">
-          <Marker position={this.props.uiState.userPosition}>
+          <Circle center={this.props.uiState.userPosition} radius={radius} color="#FF4E00"></Circle> : null}
+        {this.props.uiState.hasUserPosition ?
+          <Marker position={this.props.uiState.userPosition} icon={currentPositionMarker}>
             <Popup>
               <span>You are within {radius} meters from this point</span>
             </Popup>
-          </Marker>
-        </Circle> : null}
+          </Marker> : null}
         {this.props.uiState.hasCurrentLocation ?
           <Marker position={this.props.uiState.currentLocation.latlng}>
             <Popup>
