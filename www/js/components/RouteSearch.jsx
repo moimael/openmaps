@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var SearchInput = require('./SearchInput.jsx');
-var AutocompleteListItem = require('./AutocompleteListItem.jsx');
+var ListComponent = require('./ListComponent.jsx');
 var Actions = require('../actions/Actions');
 
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
@@ -31,11 +31,11 @@ var RouteSearch = React.createClass({
         <ReactCSSTransitionGroup className="transitionGroup" transitionName="pull">
         { this.props.showSuggestions ?
           <section key="2" className="card" data-type="list">
-            <AutocompleteListItem locations={this.props.locations} onItemClicked={this.handleSearchCompleted}/>
+            <ListComponent items={this.props.locations} onItemClicked={this.handleSearchCompleted}/>
           </section> : null }
         { this.props.showInstructions ?
           <section key="3" className="card" data-type="list">
-            <AutocompleteListItem locations={this.props.route.instructions} onItemClicked={this.handleSearchCompleted}/>
+            <ListComponent items={this.props.route.instructions} onItemClicked={this.handleSearchCompleted}/>
           </section> : null }
         </ReactCSSTransitionGroup>
       </div>

@@ -32,7 +32,15 @@ class RouteStore {
   handleUpdateStartLocations(locations) {
     this.startLocation = true;
     this.endLocation = false;
-    this.locations = locations;
+    this.locations = locations.map(function(location) {
+        return ({
+            'id': location.id,
+            'mainText': location.name,
+            'subText': (location.state ? location.state + ", " : null) + location.country,
+            'data': location
+          }
+        );
+      });
     this.errorMessage = null;
   }
 
@@ -48,9 +56,9 @@ class RouteStore {
     this.locations = [];
   }
 
-  handleConfirmLocation(location) {
-    var locationText = location.name + ", " + (location.state ? location.state + ", " : "") + location.country;
-    this.waypoints.push(location.latlng);
+  handleConfirmLocation(item) {
+    var locationText = item.data.name + ", " + (item.data.state ? item.data.state + ", " : "") + item.data.country;
+    this.waypoints.push(item.data.latlng);
     if (this.startLocation) {
       this.routeStartText = locationText;
     } else {
@@ -63,7 +71,15 @@ class RouteStore {
   handleUpdateEndLocations(locations) {
     this.startLocation = false;
     this.endLocation = true;
-    this.locations = locations;
+    this.locations = locations.map(function(location) {
+      return ({
+          'id': location.id,
+          'mainText': location.name,
+          'subText': (location.state ? location.state + ", " : null) + location.country,
+          'data': location
+        }
+      );
+    });
     this.errorMessage = null;
   }
 
@@ -83,10 +99,18 @@ class RouteStore {
   handleRouteFound(routeData) {
     console.log(routeData);
     this.route = {
-      'instructions': routeData.routes[0].instructions,
+      'instructions': routeData.routes[0].instructions.map(function(instruction) {
+        return (
+          {
+            'id': AppUtils.generateUUID(),
+            'mainText': instruction.road,
+            'subText': AppUtils.secondsToTime(instruction.time) + ', ' + AppUtils.metersToDistance(instruction.distance)
+          }
+        );
+      }),
       'totalTime': AppUtils.secondsToTime(routeData.routes[0].summary.totalTime),
       'totalDistance': AppUtils.metersToDistance(routeData.routes[0].summary.totalDistance)
-    }
+    };
     this.hasRoute = false;
     this.showInstructions = true;
   }

@@ -41,7 +41,15 @@ class UIStore {
   }
 
   handleUpdateLocations(locations) {
-    this.locations = locations;
+    this.locations = locations.map(function(location) {
+      return ({
+          'id': location.id,
+          'mainText': location.name,
+          'subText': (location.state ? location.state + ", " : null) + location.country,
+          'data': location
+        }
+      );
+    });
     this.errorMessage = null;
   }
 
@@ -62,21 +70,19 @@ class UIStore {
   }
 
   handleClearText() {
-    console.log("test");
     this.searchText = "";
   }
 
   handleUserPosition(location) {
     this.userPosition = location.latlng;
-    this.searchText = location.name + ", " + location.state + ", " + location.country;
     this.accuracy = location.accuracy;
     this.hasUserPosition = true;
     this.zoom = 13;
   }
 
-  handleCurrentLocation(location) {
-    this.currentLocation = location;
-    this.searchText = location.name + ", " + location.state + ", " + location.country;
+  handleCurrentLocation(item) {
+    this.currentLocation = item.data;
+    this.searchText = this.currentLocation.name + ", " + this.currentLocation.state + ", " + this.currentLocation.country;
     this.hasCurrentLocation = true;
     this.zoom = 16;
     this.showSuggestions = false;
