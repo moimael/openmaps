@@ -28,7 +28,7 @@
     "watchify": "^3.2.2"
   },
   "dependencies": {
-    "alt": "^0.16.10",
+    "alt": "^0.17.0",
     "flux": "^2.0.2",
     "jquery": "^2.1.4",
     "keymirror": "^0.1.1",
