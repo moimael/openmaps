@@ -184,8 +184,9 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   margin-right: 10px;
   margin-bottom: 10px;
   padding: 0;
+  /* So we can display scrollbar properly*/
+  padding-right: 0 !important;
 
-  overflow-y: auto;
   overflow-x: hidden;
   z-index: 200;
 }
@@ -195,6 +196,9 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow-y: auto !important;
+  /* So we can display scrollbar properly*/
+  padding-right: 10px !important;
 }
 
 .card .spinner {
@@ -236,14 +240,14 @@ pullDown
 
 .pull-enter{
   animation-name: pull-down;
-  animation-duration: 1.1s; 
+  animation-duration: 1.1s;
   animation-timing-function: ease-out;
   transform-origin: 50% 0%;
 }
 
 .pull-leave {
   animation-name: pull-up;
-  animation-duration: 0.5s; 
+  animation-duration: 0.5s;
   animation-timing-function: ease-out;
   transform-origin: 50% 0%;
 }
@@ -263,7 +267,7 @@ pullDown
   }
   100% {
     transform: scaleY(0.98);
-  }       
+  }
   80% {
     transform: scaleY(1.01);
   }
