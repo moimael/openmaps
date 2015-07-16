@@ -11,9 +11,12 @@ var ListItem = React.createClass({
   },
 
   render: function () {
-    console.log(this.props.item);
     return (
       <li onClick={this.handleClick}>
+        {this.props.item.imgSrc ?
+        <aside>
+          <img src="{this.props.item.imgSrc}" />
+        </aside> : null}
         <a href="#">
           <p>{this.props.item.mainText}</p>
           <p>{this.props.item.subText}</p>

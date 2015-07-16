@@ -2,6 +2,7 @@
 /* Tip: Use "@import" to add styles instead of adding <link>'s in your
    HTML, and gulp will inline it when building for production */
 
+@import "layout.css";
 @import "headers.css";
 @import "input_areas.css";
 @import "action_menu.css";
@@ -24,13 +25,7 @@ section[role="region"] {
   font: 2.2rem/1em "MozTT", Sans-serif;
 }
 
-/* So the header shadow stay above the route list*/
-section[role="region"] > header:first-child:after {
-  z-index: 200;
-}
-
-/* So we can hide the route list behind the header*/
-section[role="region"] > header:first-child{
+section[role="region"] > div > header{
   z-index: 200;
 }
 
@@ -39,7 +34,7 @@ div[role="main"] {
   overflow: hidden;
 }
 
-div.autocomplete, div.routing-autocomplete {
+.autocomplete, .routing-autocomplete {
   position: relative;
   max-height: 100%;
   width: 100%;
@@ -48,9 +43,14 @@ div.autocomplete, div.routing-autocomplete {
   flex-direction: column;
 }
 
-div.action-bar, div.routing-bar {
+div.action-bar {
   position: relative;
   margin: 1rem 10px 0;
+  z-index: 200;
+}
+
+div.routing-bar {
+  position: relative;
   z-index: 200;
 }
 
@@ -91,7 +91,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   margin-right: 1rem;
   margin-bottom: 6rem;
   border-radius: 4rem;
-  box-shadow: 1px 1px 5px 0px #656565;
+  box-shadow: 1px 1px 5px 0 #656565;
   border: none;
   background-color: #00caf2;
   background-position: center;
@@ -111,7 +111,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   margin-left: 1rem;
   margin-bottom: 1rem;
   border-radius: 4rem;
-  box-shadow: 1px 1px 5px 0px #656565;
+  box-shadow: 1px 1px 5px 0 #656565;
   border: none;
   background-color: #2C393B;
   background-position: center;
@@ -127,7 +127,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   margin-right: 1rem;
   margin-bottom: 1rem;
   border-radius: 4rem;
-  box-shadow: 1px 1px 5px 0px #656565;
+  box-shadow: 1px 1px 5px 0 #656565;
   border: none;
   background-color: #2C393B;
   background-position: center;
@@ -167,6 +167,10 @@ div.routing-bar > form > p:last-child > input[type="text"] {
     background-repeat: no-repeat;
 }
 
+.route-header {
+  height: auto !important;
+}
+
 .transitionGroup {
   min-height: 0;
   position: relative;
@@ -174,16 +178,25 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   display: flex;
 }
 
-.card {
+.routing-autocomplete .card {
   background: white;
   position: relative;
   flex: 1;
   display: flex;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  padding: 0;
+  /* So we can display scrollbar properly*/
+  padding-right: 0 !important;
+
+  overflow-x: hidden;
+  z-index: 200;
+}
+
+.autocomplete .card {
+  background: white;
+  position: relative;
+  flex: 1;
+  display: flex;
+  padding-: 0;
+  margin: 10px;
   /* So we can display scrollbar properly*/
   padding-right: 0 !important;
 
@@ -216,7 +229,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   width: 1rem;
   border-radius: 1rem;
   background-color: #FF4E00;
-  box-shadow: 1px 1px 5px 0px #656565;
+  box-shadow: 1px 1px 5px 0 #656565;
 }
 
 /* View - Slide Vertical Transition */
@@ -249,7 +262,7 @@ pullDown
   animation-name: pull-up;
   animation-duration: 0.5s;
   animation-timing-function: ease-out;
-  transform-origin: 50% 0%;
+  transform-origin: 50% 0;
 }
 
 @keyframes pull-down {

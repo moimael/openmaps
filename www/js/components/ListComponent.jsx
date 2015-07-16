@@ -4,6 +4,10 @@ var ListItem = require('./ListItem.jsx');
 
 var ListComponent = React.createClass({
 
+  propTypes: {
+    items: React.PropTypes.array.isRequired
+  },
+
   handleClick: function(item) {
     this.props.onItemClicked(item);
   },

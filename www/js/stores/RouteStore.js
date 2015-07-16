@@ -9,7 +9,9 @@ class RouteStore {
     this.routeEndText = "";
     this.locations = [];
     this.waypoints = [];
+    this.calculateRoute = false;
     this.hasRoute = false;
+    this.showRouteInputs = false;
     this.showInstructions = false;
     this.route = {};
     // Put everything in locations, with an order parameter
@@ -24,7 +26,10 @@ class RouteStore {
       handleUpdateEndLocations: Actions.UPDATE_END_LOCATIONS,
       handleConfirmLocation: Actions.CONFIRM_LOCATION,
       handleFetchEndLocations: Actions.FETCH_END_LOCATIONS,
-      handleRouteFound: Actions.SHOW_ROUTE_INSTRUCTIONS
+      handleRouteFound: Actions.SHOW_ROUTE_INSTRUCTIONS,
+      toggleInstructions: Actions.TOGGLE_INSTRUCTIONS,
+      toggleActionbar: Actions.TOGGLE_ACTIONBAR,
+      goBack: Actions.GO_BACK,
       // handleLocationsFailed: Actions.LOCATIONS_FAILED,
     });
   }
@@ -63,7 +68,7 @@ class RouteStore {
       this.routeStartText = locationText;
     } else {
       this.routeEndText = locationText;
-      this.hasRoute = true;
+      this.calculateRoute = true;
     }
     this.showSuggestions = false;
   }
@@ -97,24 +102,42 @@ class RouteStore {
 
   /* TODO: Manage multiple routes */
   handleRouteFound(routeData) {
-    console.log(routeData);
+    this.calculateRoute = false;
+    this.hasRoute = true;
+
     this.route = {
       'instructions': routeData.routes[0].instructions.map(function(instruction) {
         return (
           {
             'id': AppUtils.generateUUID(),
             'mainText': instruction.road,
-            'subText': AppUtils.secondsToTime(instruction.time) + ', ' + AppUtils.metersToDistance(instruction.distance)
+            'subText': AppUtils.secondsToTime(instruction.time) + ', ' + AppUtils.metersToDistance(instruction.distance),
+            'data': instruction
           }
         );
       }),
       'totalTime': AppUtils.secondsToTime(routeData.routes[0].summary.totalTime),
       'totalDistance': AppUtils.metersToDistance(routeData.routes[0].summary.totalDistance)
     };
-    this.hasRoute = false;
     this.showInstructions = true;
   }
 
+  toggleActionbar() {
+    this.showRouteInputs = true;
+  }
+
+  toggleInstructions() {
+    this.showInstructions = !this.showInstructions;
+  }
+
+  toggleRouteInputs() {
+    this.showRouteInputs = !this.showRouteInputs;
+  }
+
+  goBack() {
+    this.toggleInstructions();
+    this.toggleRouteInputs();
+  }
   // handleLocationsFailed(errorMessage) {
   //   this.errorMessage = errorMessage;
   // }

@@ -103,6 +103,14 @@ class Actions {
     this.dispatch(routeData);
   }
 
+  toggleInstructions() {
+    this.dispatch();
+  }
+
+  goBack() {
+    this.dispatch();
+  }
+
   /* ActionMenu */
   changeLayer(layer) {
     this.dispatch(layer);

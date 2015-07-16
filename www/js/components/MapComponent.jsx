@@ -42,7 +42,7 @@ var MapComponent = React.createClass({
   calculateRoute: function() {
     // Clear previous routes
     this.routeControl.getPlan().setWaypoints([]);
-    console.log(this.props.routeState.waypoints);
+
     // Add new waypoints
     this.routeControl.getPlan().setWaypoints([L.latLng(this.props.routeState.waypoints[0].lat, this.props.routeState.waypoints[0].lng), L.latLng(this.props.routeState.waypoints[1].lat, this.props.routeState.waypoints[1].lng)]);
 
@@ -78,7 +78,7 @@ var MapComponent = React.createClass({
       center = this.props.uiState.currentLocation.latlng;
     }
 
-    if (this.props.routeState.hasRoute) {
+    if (this.props.routeState.calculateRoute) {
       this.calculateRoute();
     }
 
