@@ -22,11 +22,11 @@ html, body {
 
 section[role="region"] {
   height: 100%;
-  font: 2.2rem/1em "MozTT", Sans-serif;
+  font: 1.9rem "MozTT", Sans-serif;
 }
 
 section[role="region"] > div > header{
-  z-index: 200;
+  z-index: 50;
 }
 
 div[role="main"] {
@@ -46,12 +46,12 @@ div[role="main"] {
 div.action-bar {
   position: relative;
   margin: 1rem 10px 0;
-  z-index: 200;
+  z-index: 50;
 }
 
 div.routing-bar {
   position: relative;
-  z-index: 200;
+  z-index: 50;
 }
 
 div.action-bar input[type="text"] {
@@ -83,7 +83,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
 
 #toggle-search-button {
   position: absolute;
-  z-index: 150;
+  z-index: 20;
   bottom: 0;
   right: 0;
   width: 4rem;
@@ -103,7 +103,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
 
 #toggle-layers-button {
   position: absolute;
-  z-index: 150;
+  z-index: 20;
   bottom: 0;
   left: 0;
   width: 4rem;
@@ -119,7 +119,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
 
 #locate-button {
   position: absolute;
-  z-index: 150;
+  z-index: 20;
   bottom: 0;
   right: 0;
   width: 4rem;
@@ -187,7 +187,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   padding-right: 0 !important;
 
   overflow-x: hidden;
-  z-index: 200;
+  z-index: 50;
 }
 
 .autocomplete .card {
@@ -201,7 +201,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   padding-right: 0 !important;
 
   overflow-x: hidden;
-  z-index: 200;
+  z-index: 50;
 }
 
 /* Suggestions spinner */
