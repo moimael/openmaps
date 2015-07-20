@@ -15,7 +15,7 @@ Cartes uses the following technologies :
 * [leaflet-routing-machine](https://github.com/perliedman/leaflet-routing-machine) + [OSRM](http://map.project-osrm.org/) as routing engine
 
 * [Photon](https://photon.komoot.de/) as search as you type OpenStreetMap engine
-* [Open MapQuest](http://open.mapquest.com/) as tile provider and
+* [Open MapQuest](http://open.mapquest.com/) as tiles provider
 
 # How to contribute
 
