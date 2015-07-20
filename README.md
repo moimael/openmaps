@@ -1,21 +1,35 @@
-# A Blank Template for Open Web Apps
+# Cartes
 
-The is a minimal template that has a little HTML, CSS, and js to help
-you start writing an Open Web App.
+Cartes is a FirefoxOS webapp designed to provide a map / navigation service using free data sources like OpenStreetMap.
 
-This is part of the [mortar](https://github.com/mozilla/mortar/)
-template collection for building Open Web Apps.
+# Technical Overview
 
-# Usage
+Cartes uses the following technologies :
 
-There are a few ways to get this template:
+* [React](https://facebook.github.io/react/) as UI library
+* [Flux](http://facebook.github.io/flux/) as application pattern
+* [Alt](http://alt.js.org/) as Flux implementation
+* [Gulp](http://gulpjs.com/) as task runner
+* [npm](https://www.npmjs.com/) + [Browserify](http://browserify.org/) as dependency manager
+* [Leaflet](http://leafletjs.com/) + [react-leaflet](https://github.com/PaulLeCam/react-leaflet) as map libraries
+* [leaflet-routing-machine](https://github.com/perliedman/leaflet-routing-machine) + [OSRM](http://map.project-osrm.org/) as routing engine
 
-* git clone git://github.com/mozilla/mortar-app-stub.git myapp
-* volo create myapp mozilla/mortar-app-stub
+* [Photon](https://photon.komoot.de/) as search as you type OpenStreetMap engine
+* [Open MapQuest](http://open.mapquest.com/) as tile provider and
 
-If you have node installed, you can run a development server with volo:
+# How to contribute
 
-* cd myapp
-* volo serve
+```
+git clone https://github.com/moimael/openmaps.git
+cd openmaps
+npm install
+```
 
-View the app at http://localhost:8008/.
+You can run a development server with gulp:
+
+```
+cd openmaps
+gulp serve
+```
+
+View the app at http://localhost:3000/.
