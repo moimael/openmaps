@@ -90,11 +90,7 @@ var MapComponent = React.createClass({
         {this.props.uiState.hasUserPosition ?
           <Circle center={this.props.uiState.userPosition} radius={radius} color="#FF4E00"></Circle> : null}
         {this.props.uiState.hasUserPosition ?
-          <Marker position={this.props.uiState.userPosition} icon={currentPositionMarker}>
-            <Popup>
-              <span>You are within {radius} meters from this point</span>
-            </Popup>
-          </Marker> : null}
+          <Marker position={this.props.uiState.userPosition} icon={currentPositionMarker}></Marker> : null}
         {this.props.uiState.hasCurrentLocation ?
           <Marker position={this.props.uiState.currentLocation.latlng}>
             <Popup>
