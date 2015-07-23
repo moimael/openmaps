@@ -7,6 +7,8 @@ class RouteStore {
   constructor() {
     this.routeStartText = "";
     this.routeEndText = "";
+    this.hasStartLocation = false;
+    this.hasDestLocation = false;
     this.locations = [];
     this.waypoints = [];
     this.calculateRoute = false;
@@ -37,6 +39,7 @@ class RouteStore {
   handleUpdateStartLocations(locations) {
     this.startLocation = true;
     this.endLocation = false;
+    this.hasStartLocation = false;
     this.locations = locations.map(function(location) {
         return ({
             'id': location.id,
@@ -64,10 +67,16 @@ class RouteStore {
   handleConfirmLocation(item) {
     var locationText = item.data.name + ", " + (item.data.state ? item.data.state + ", " : "") + item.data.country;
     this.waypoints.push(item.data.latlng);
+
     if (this.startLocation) {
       this.routeStartText = locationText;
+      this.hasStartLocation = true;
     } else {
       this.routeEndText = locationText;
+      this.hasDestLocation = true;
+    }
+
+    if(this.hasStartLocation && this.hasDestLocation) {
       this.calculateRoute = true;
     }
     this.showSuggestions = false;
@@ -76,6 +85,7 @@ class RouteStore {
   handleUpdateEndLocations(locations) {
     this.startLocation = false;
     this.endLocation = true;
+    this.hasDestLocation = false;
     this.locations = locations.map(function(location) {
       return ({
           'id': location.id,
