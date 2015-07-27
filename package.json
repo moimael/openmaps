@@ -1,12 +1,16 @@
 {
   "name": "openmaps",
-  "version": "0.3.0",
+  "version": "0.4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moimael/openmaps.git"
+  },
   "devDependencies": {
     "babelify": "^6.1.3",
     "brfs": "^1.4.0",
-    "browser-sync": "^2.7.13",
-    "browserify": "^10.2.6",
-    "browserify-shim": "^3.8.9",
+    "browser-sync": "^2.8.0",
+    "browserify": "^11.0.0",
+    "browserify-shim": "^3.8.10",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
@@ -25,7 +29,7 @@
     "reactify": "^1.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.2.3"
+    "watchify": "^3.3.0"
   },
   "dependencies": {
     "alt": "^0.17.1",
