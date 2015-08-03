@@ -43,8 +43,8 @@ class RouteStore {
     this.locations = locations.map(function(location) {
         return ({
             'id': location.id,
-            'mainText': location.name,
-            'subText': (location.state ? location.state + ", " : null) + location.country,
+            'mainText':  (location.housenumber ? location.housenumber + ' ' : '') + (location.street ? location.street : location.name),
+            'subText': (location.city ? location.city + ', ' : '') + location.country,
             'data': location
           }
         );
@@ -89,8 +89,8 @@ class RouteStore {
     this.locations = locations.map(function(location) {
       return ({
           'id': location.id,
-          'mainText': location.name,
-          'subText': (location.state ? location.state + ", " : null) + location.country,
+          'mainText':  (location.housenumber ? location.housenumber + ' ' : '') + (location.street ? location.street : location.name),
+          'subText': (location.city ? location.city + ', ' : '') + location.country,
           'data': location
         }
       );
