@@ -4,7 +4,7 @@ var alt = require('../alt');
 class Actions {
 
   /* Typeahead */
-  fetchLocations(searchText) {
+  fetchLocations(searchText, boundsCenter) {
     // we dispatch an event here so we can have "loading" state.
     this.dispatch(searchText);
 
@@ -12,7 +12,7 @@ class Actions {
       return;
     }
 
-    WebUtils.search(searchText)
+    WebUtils.search(searchText, boundsCenter)
       .then((locations) => {
         locations = locations.features;
         for (var i=0; i < locations.length; i++) {

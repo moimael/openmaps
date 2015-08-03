@@ -39,6 +39,10 @@ var MapComponent = React.createClass({
     this.refs.map.leafletElement.locate();
   },
 
+  getBoundsCenter: function() {
+    return this.refs.map.leafletElement.getBounds().getCenter();
+  },
+
   calculateRoute: function() {
     // Clear previous routes
     this.routeControl.getPlan().setWaypoints([]);

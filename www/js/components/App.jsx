@@ -30,12 +30,19 @@ var App = React.createClass({
     this.refs.mapComponent.locate();
   },
 
+  getCurrentBoundsCenter() {
+    if (this.refs.mapComponent !== undefined) {
+      return this.refs.mapComponent.getBoundsCenter();
+    }
+    return this.state.ui.userPosition;
+  },
+
   render() {
     return (
       <div role="main">
         {this.state.ui.showRoutingWidget ?
-        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} showInstructions={this.state.route.showInstructions} showRouteInputs={this.state.route.showRouteInputs} locations={this.state.route.locations} route={this.state.route.route} hasRoute={this.state.route.hasRoute}/> :
-        <Typeahead searchText={this.state.ui.searchText} showSuggestions={this.state.ui.showSuggestions} locations={this.state.ui.locations} />
+        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} showInstructions={this.state.route.showInstructions} showRouteInputs={this.state.route.showRouteInputs} locations={this.state.route.locations} route={this.state.route.route} hasRoute={this.state.route.hasRoute} /> :
+        <Typeahead searchText={this.state.ui.searchText} showSuggestions={this.state.ui.showSuggestions} locations={this.state.ui.locations} bounds={this.getCurrentBoundsCenter()} />
         }
 
         <Toolbar routeMode={this.state.ui.showRoutingWidget} onLocateClicked={this.handleLocateClicked}/>

@@ -8,7 +8,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Typeahead = React.createClass({
 
   handleChange: function(value) {
-    Actions.fetchLocations(value);
+    Actions.fetchLocations(value, this.props.bounds);
   },
 
   handleSearchCompleted: function(location) {
