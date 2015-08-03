@@ -27,6 +27,9 @@ var RouteSearch = React.createClass({
     Actions.goBack();
   },
 
+  doNothing: function() {
+  },
+
 // <div className="hbox center"><button><span className="icon icon-back">back</span></button><button><span className="icon icon-back">back</span></button><button><span className="icon icon-back">back</span></button></div>
 // <button onClick={this.goBack} disabled={this.props.showRouteInputs ? null : "disabled"}><span className="icon icon-back">back</span></button>
   render: function() {
@@ -53,7 +56,7 @@ var RouteSearch = React.createClass({
           </section> : null }
         { this.props.showInstructions ?
           <section key="3" className="card" data-type="list">
-            <ListComponent items={this.props.route.instructions} onItemClicked={this.handleSearchCompleted}/>
+            <ListComponent items={this.props.route.instructions} onItemClicked={this.doNothing}/>
           </section> : null }
         </ReactCSSTransitionGroup>
       </div>
