@@ -71,6 +71,8 @@ class UIStore {
 
   handleClearText() {
     this.searchText = "";
+    this.showSuggestions = false;
+    this.locations = [];
   }
 
   handleUserPosition(location) {
@@ -82,7 +84,9 @@ class UIStore {
 
   handleCurrentLocation(item) {
     this.currentLocation = item.data;
-    this.searchText = this.currentLocation.name + ", " + this.currentLocation.country;
+    this.searchText = (this.currentLocation.housenumber ? this.currentLocation.housenumber + ' ' : '')
+      + (this.currentLocation.street ? this.currentLocation.street + ', ' : this.currentLocation.name)
+      + (this.currentLocation.city ? this.currentLocation.city : '');
     this.hasCurrentLocation = true;
     this.zoom = 16;
     this.showSuggestions = false;

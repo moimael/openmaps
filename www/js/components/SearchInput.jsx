@@ -15,7 +15,7 @@ var SearchInput = React.createClass({
     return (
         <p>
           <input id="search-input" type="text" placeholder={this.props.placeholder} ref="searchTextInput" autoComplete="off" value={this.props.searchText} onChange={this.handleChange}/>
-          <button id="clear-btn" type="reset" onClick={this.handleClear}>Clear</button>
+          {this.props.searchText ? <button id="clear-btn" type="reset" onClick={this.handleClear}>Clear</button> : null}
         </p>
     );
   }
