@@ -96,14 +96,7 @@ var MapComponent = React.createClass({
         {this.props.uiState.hasUserPosition ?
           <Marker position={this.props.uiState.userPosition} icon={currentPositionMarker}></Marker> : null}
         {this.props.uiState.hasCurrentLocation ?
-          <Marker position={this.props.uiState.currentLocation.latlng}>
-            <Popup>
-              <span>
-                {this.props.uiState.currentLocation.name}<br/>
-              {this.props.uiState.currentLocation.state} {this.props.uiState.currentLocation.country}
-              </span>
-            </Popup>
-          </Marker> : null}
+          <Marker position={this.props.uiState.currentLocation.latlng}></Marker> : null}
       </Map>
     );
   }
