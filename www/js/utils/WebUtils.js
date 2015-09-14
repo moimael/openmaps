@@ -3,16 +3,6 @@ var jqXHR = null;
 
 module.exports = {
   search(searchText, boundsCenter) {
-    // var paramsString = "q=searchText&limit=8"
-    // var searchParams = new URLSearchParams(paramsString);
-    // fetch('https://photon.komoot.de' + '/api/', {body: searchParams}).then(function(response) {
-    //   console.log(response);
-    //   response.json().then(function(data) {
-    //     console.log(data);
-    //     return this.parse(data);
-    //   }.bind(this));
-    // }.bind(this));
-
     var search_params = {
       'q': searchText,
       'limit': '8'
@@ -72,4 +62,4 @@ module.exports = {
     };
     return parsed;
   }
-}
+};
