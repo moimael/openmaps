@@ -13,7 +13,6 @@ class RouteStore {
     this.waypoints = [];
     this.calculateRoute = false;
     this.hasRoute = false;
-    this.showRouteInputs = false;
     this.showInstructions = false;
     this.route = {};
     // Put everything in locations, with an order parameter
@@ -30,7 +29,6 @@ class RouteStore {
       handleFetchEndLocations: Actions.FETCH_END_LOCATIONS,
       handleRouteFound: Actions.SHOW_ROUTE_INSTRUCTIONS,
       toggleInstructions: Actions.TOGGLE_INSTRUCTIONS,
-      toggleActionbar: Actions.TOGGLE_ACTIONBAR,
       goBack: Actions.GO_BACK,
       // handleLocationsFailed: Actions.LOCATIONS_FAILED,
     });
@@ -65,7 +63,9 @@ class RouteStore {
   }
 
   handleConfirmLocation(item) {
-    var locationText = item.data.name + ", " + (item.data.state ? item.data.state + ", " : "") + item.data.country;
+    var locationText = (item.data.housenumber ? item.data.housenumber + ' ' : '')
+      + (item.data.street ? item.data.street + ', ' : item.data.name)
+      + (item.data.city ? item.data.city : '');
     this.waypoints.push(item.data.latlng);
 
     if (this.startLocation) {
@@ -126,27 +126,18 @@ class RouteStore {
           }
         );
       }),
-      'totalTime': AppUtils.secondsToTime(routeData.routes[0].summary.totalTime),
+      'totalTime': AppUtils.secondsToTime(routeData.routes[0].summary.totalTime, true),
       'totalDistance': AppUtils.metersToDistance(routeData.routes[0].summary.totalDistance)
     };
     this.showInstructions = true;
-  }
-
-  toggleActionbar() {
-    this.showRouteInputs = true;
   }
 
   toggleInstructions() {
     this.showInstructions = !this.showInstructions;
   }
 
-  toggleRouteInputs() {
-    this.showRouteInputs = !this.showRouteInputs;
-  }
-
   goBack() {
-    this.toggleInstructions();
-    this.toggleRouteInputs();
+    this.showInstructions = false;
   }
   // handleLocationsFailed(errorMessage) {
   //   this.errorMessage = errorMessage;

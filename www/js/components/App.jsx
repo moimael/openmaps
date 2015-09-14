@@ -41,7 +41,7 @@ var App = React.createClass({
     return (
       <div role="main">
         {this.state.ui.showRoutingWidget ?
-        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} showInstructions={this.state.route.showInstructions} showRouteInputs={this.state.route.showRouteInputs} locations={this.state.route.locations} route={this.state.route.route} hasRoute={this.state.route.hasRoute} /> :
+        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} showInstructions={this.state.route.showInstructions} locations={this.state.route.locations} route={this.state.route.route} hasRoute={this.state.route.hasRoute} /> :
         <Typeahead searchText={this.state.ui.searchText} showSuggestions={this.state.ui.showSuggestions} locations={this.state.ui.locations} bounds={this.getCurrentBoundsCenter()} />
         }
 

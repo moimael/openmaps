@@ -37,6 +37,7 @@ class UIStore {
       handleUserPosition: Actions.SHOW_USER_POSITION,
       handleCurrentLocation: Actions.SHOW_LOCATION,
       handleClearText: Actions.CLEAR_TEXT,
+      goBack: Actions.GO_BACK,
     });
   }
 
@@ -102,6 +103,10 @@ class UIStore {
 
   changeLayer(layer) {
     this.baseLayer = layer;
+  }
+
+  goBack() {
+    this.showRoutingWidget = false;
   }
 }
 
