@@ -24,6 +24,7 @@ var RouteSearch = React.createClass({
   },
 
   goBack: function() {
+    this.props.map.clearRoutes();
     Actions.goBack();
   },
 

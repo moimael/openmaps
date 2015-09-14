@@ -43,9 +43,13 @@ var MapComponent = React.createClass({
     return this.refs.map.leafletElement.getBounds().getCenter();
   },
 
+  clearRoutes: function() {
+    this.routeControl.getPlan().setWaypoints([]);
+  },
+
   calculateRoute: function() {
     // Clear previous routes
-    this.routeControl.getPlan().setWaypoints([]);
+    this.clearRoutes();
 
     // Add new waypoints
     this.routeControl.getPlan().setWaypoints([L.latLng(this.props.routeState.waypoints[0].lat, this.props.routeState.waypoints[0].lng), L.latLng(this.props.routeState.waypoints[1].lat, this.props.routeState.waypoints[1].lng)]);
