@@ -80,12 +80,6 @@ var MapComponent = React.createClass({
           subdomains={['a', 'b', 'c']} />;
     }
 
-    if (this.props.uiState.hasUserPosition) {
-      center = this.props.uiState.userPosition;
-    } else if (this.props.uiState.hasCurrentLocation) {
-      center = this.props.uiState.currentLocation.latlng;
-    }
-
     if (this.props.routeState.calculateRoute) {
       this.calculateRoute();
     }
@@ -93,7 +87,7 @@ var MapComponent = React.createClass({
     var currentPositionMarker = L.divIcon({className: 'current-location'});
 
     return (
-      <Map id={this.props.id} ref="map" center={center} zoom={this.props.uiState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
+      <Map id={this.props.id} ref="map" center={this.props.uiState.center} zoom={this.props.uiState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
         {baseLayer}
         {this.props.uiState.hasUserPosition ?
           <Circle center={this.props.uiState.userPosition} radius={radius} color="#FF4E00"></Circle> : null}

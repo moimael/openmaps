@@ -21,11 +21,12 @@ class UIStore {
     this.hasUserPosition = false;
     this.accuracy = null;
     this.currentLocation = null;
-    this.userPosition = {
+    this.userPosition = null;
+    this.zoom = 3;
+    this.center = {
       lat: 51.505,
       lng: -0.09
     };
-    this.zoom = 3;
 
     this.bindListeners({
       handleUpdateLocations: Actions.UPDATE_LOCATIONS,
@@ -80,6 +81,7 @@ class UIStore {
     this.userPosition = location.latlng;
     this.accuracy = location.accuracy;
     this.hasUserPosition = true;
+    this.center = this.userPosition;
     this.zoom = 13;
   }
 
@@ -90,6 +92,7 @@ class UIStore {
       + (this.currentLocation.city ? this.currentLocation.city : '');
     this.hasCurrentLocation = true;
     this.zoom = 16;
+    this.center = this.currentLocation.latlng;
     this.showSuggestions = false;
   }
 
