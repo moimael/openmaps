@@ -19,17 +19,53 @@ var gulp = require('gulp'),
   pngquant = require('imagemin-pngquant'),
   filesize = require('gulp-filesize'),
   babelify = require('babelify'),
-  lrload = require('livereactload');
+  //lrload = require('livereactload');
+  assign = require('lodash.assign');
+
+//add custom browserify options here
+var customOpts = {
+  entries: ['./www/js/app.js'],
+  transform: ['babelify', 'brfs'],
+  debug: true,
+  cache: {},
+  packageCache: {},
+  fullPaths: true
+};
+
+var opts = assign({}, watchify.args, customOpts);
+var bundler = browserify(opts);
+
+function bundle() {
+  return bundler
+      .bundle()
+      .on('error', gutil.log)
+      .pipe(source('app.js'))
+      .pipe(buffer())
+      .pipe(filesize())
+      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(filesize())
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./dist/js'));
+}
 
 // watch files for changes and reload
-gulp.task('serve', ['watchjs', 'js'], function() {
+gulp.task('serve', ['js'], function() {
+  var watch = watchify(bundler);
+  // Without the line, update events won't be fired
+  watch.bundle().on('data', function() {});
+
   browserSync({
     server: {
       baseDir: 'dist'
     }
   });
+
   /* FIXME: separate watch to not rebuild css + js everytime */
-  gulp.watch(['*.html', 'js/**/*.js', '!js/app.js', 'js/**/*.jsx'], {cwd: 'dist'}, browserSync.reload);
+  gulp.watch(['*.html'], {cwd: 'www'}, ['html', browserSync.reload]);
+  gulp.watch(['css/**/*.css'], {cwd: 'www'}, ['css', browserSync.reload]);
+  bundler.on('update', bundle); // on any dep update, runs the bundler
+  bundler.on('log', gutil.log); // output build logs to terminal
+  gulp.watch(['js/**/*.js'], {cwd: 'dist'}, browserSync.reload);
 });
 
 /**
@@ -65,38 +101,11 @@ gulp.task('lintjs', function () {
     .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('watchjs', function () {
-  lrload.monitor('dist/js/app.js', {displayNotification: true});
-});
+//gulp.task('watchjs', function () {
+//  lrload.monitor('dist/js/app.js', {displayNotification: true});
+//});
 
-gulp.task('js', function () {
-  var bundler = watchify(browserify({
-    entries: ['./www/js/app.js'],
-    transform: ['babelify', 'livereactload', 'brfs'],
-    debug: true,
-    cache: {},
-    packageCache: {},
-    fullPaths: true
-  }));
-
-  var bundle = function () {
-    return bundler
-      .bundle()
-      .on('error', gutil.log)
-      .pipe(source('app.js'))
-      .pipe(buffer())
-      .pipe(filesize())
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(filesize())
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest('./dist/js'));
-  };
-
-  bundler.on('update', bundle); // on any dep update, runs the bundler
-  bundler.on('log', gutil.log); // output build logs to terminal
-
-  return bundle();
-});
+gulp.task('js', bundle);
 
 gulp.task('imgs', function () {
   return gulp.src('**/*.png', {cwd: 'www'})
@@ -112,9 +121,6 @@ gulp.task('copy-manifest', function(){
   return gulp.src('manifest.webapp', {cwd: 'www'})
     .pipe(gulp.dest('dist'));
 });
-
-gulp.watch(['*.html'], {cwd: 'www'}, ['html']);
-gulp.watch(['css/**/*.css'], {cwd: 'www'}, ['css']);
 
 gulp.task('build', ['js', 'css', 'imgs', 'html', 'copy-manifest']);
 gulp.task('default', ['serve']);

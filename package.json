@@ -26,7 +26,7 @@
     "gulp-util": "^3.0.4",
     "imagemin-pngquant": "^4.2.0",
     "jshint-stylish": "^2.0.1",
-    "livereactload": "^0.7.0",
+    "lodash.assign": "^3.2.0",
     "reactify": "^1.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
