@@ -40,6 +40,17 @@ class UIStore {
       handleClearText: Actions.CLEAR_TEXT,
       goBack: Actions.GO_BACK,
     });
+
+    if(window.MozActivity) {
+      navigator.mozSetMessageHandler('activity', function(aRequestHandler) {
+        var activityOptions = aRequestHandler.source;
+        if (activityOptions.name == 'view') {
+          this.handleCurrentLocation({
+            'latlng': option.position
+          });
+        }
+      });
+    }
   }
 
   handleUpdateLocations(locations) {

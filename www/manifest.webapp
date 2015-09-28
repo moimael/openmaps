@@ -12,7 +12,6 @@
     "128": "/img/icons/openmaps-128.png"
   },
   "installs_allowed_from": ["*"],
-
   "locales": {
     "fr": {
       "description": "Une application basée sur OpenStreetMap qui vous permet de trouver votre chemin.",
@@ -29,6 +28,17 @@
     },
     "geolocation": {
       "description": "Required to display your location"
+    }
+  },
+  "activities": {
+    "view": {
+      "href": "./index.html",
+      "disposition": "inline",
+      "filter": {
+        "type": "map",
+        "required": "position"
+      },
+      "returnValue": false
     }
   }
 }
