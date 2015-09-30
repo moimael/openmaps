@@ -19,6 +19,7 @@ var App = React.createClass({
   componentDidMount() {
     UIStore.listen(this.onChange);
     RouteStore.listen(this.onChange);
+    this.handleLocateClicked();
   },
 
   componentWillUmount() {
