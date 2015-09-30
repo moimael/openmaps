@@ -13,10 +13,8 @@ var ListItem = React.createClass({
   render: function () {
     return (
       <li onClick={this.handleClick}>
-        {this.props.item.imgSrc ?
-        <aside>
-          <img src="{this.props.item.imgSrc}" />
-        </aside> : null}
+        {this.props.item.imgClass ?
+        <aside className={"leaflet-routing-icon " + this.props.item.imgClass}></aside> : null}
         <a href="#">
           <p>{this.props.item.mainText}</p>
           <p>{this.props.item.subText}</p>

@@ -2,9 +2,24 @@ var alt = require('../alt');
 var AppUtils = require('../utils/AppUtils');
 var Actions = require('../actions/Actions');
 
-
 class RouteStore {
   constructor() {
+    this.directionIcons = {
+      'Straight': 'leaflet-routing-icon-continue',
+      'SlightRight': 'leaflet-routing-icon-bear-right ',
+      'Right': 'leaflet-routing-icon-turn-right',
+      'SharpRight': 'leaflet-routing-icon-sharp-right',
+      'TurnAround': 'leaflet-routing-icon-u-turn',
+      'SharpLeft': 'leaflet-routing-icon-sharp-left',
+      'Left': 'leaflet-routing-icon-turn-left',
+      'SlightLeft': 'leaflet-routing-icon-bear-left',
+      'WaypointReached': 'leaflet-routing-icon-via',
+      'Roundabout': 'leaflet-routing-icon-enter-roundabout',
+      'StartAt': 'leaflet-routing-icon-depart',
+      'DestinationReached': 'leaflet-routing-icon-arrive',
+      'EnterAgainstAllowedDirection': '',
+      'LeaveAgainstAllowedDirection': ''
+    };
     this.routeStartText = "";
     this.routeEndText = "";
     this.hasStartLocation = false;
@@ -120,12 +135,13 @@ class RouteStore {
         return (
           {
             'id': AppUtils.generateUUID(),
+            'imgClass': this.directionIcons[instruction.type],
             'mainText': instruction.road,
             'subText': AppUtils.secondsToTime(instruction.time) + ', ' + AppUtils.metersToDistance(instruction.distance),
             'data': instruction
           }
         );
-      }),
+      }.bind(this)),
       'totalTime': AppUtils.secondsToTime(routeData.routes[0].summary.totalTime, true),
       'totalDistance': AppUtils.metersToDistance(routeData.routes[0].summary.totalDistance)
     };
