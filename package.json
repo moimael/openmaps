@@ -8,7 +8,7 @@
   "devDependencies": {
     "babelify": "^6.3.0",
     "brfs": "^1.4.1",
-    "browser-sync": "^2.9.6",
+    "browser-sync": "^2.9.7",
     "browserify": "^11.2.0",
     "browserify-shim": "^3.8.10",
     "cssify": "^0.7.0",
