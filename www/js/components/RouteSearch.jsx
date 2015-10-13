@@ -1,9 +1,9 @@
-var React = require('react/addons');
+var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var SearchInput = require('./SearchInput.jsx');
 var ListComponent = require('./ListComponent.jsx');
 var Actions = require('../actions/Actions');
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var RouteSearch = React.createClass({
 
@@ -50,7 +50,7 @@ var RouteSearch = React.createClass({
             <SearchInput placeholder="End" searchText={this.props.routeEndText} onChange={this.handleRouteEndChange} />
           </form>
         </div>
-        <ReactCSSTransitionGroup className="transitionGroup" transitionName="pull">
+        <ReactCSSTransitionGroup className="transitionGroup" transitionName="pull" transitionEnterTimeout={1100} transitionLeaveTimeout={500}>
         { this.props.showSuggestions ?
           <section key="2" className="card" data-type="list">
             <ListComponent items={this.props.locations} onItemClicked={this.handleSearchCompleted}/>

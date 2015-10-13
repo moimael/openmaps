@@ -1,9 +1,8 @@
 var $ = require('jquery');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var App = require('./components/App.jsx');
 
-
-React.initializeTouchEvents(true);
 
 // ajax global settings
 $.ajaxSetup( {
@@ -14,6 +13,6 @@ $.ajaxSetup( {
   }
 });
 
-var app = React.render(<App />, document.getElementById('app'));
+var app = ReactDOM.render(<App />, document.getElementById('app'));
 
 module.exports = app;
