@@ -153,7 +153,21 @@ class RouteStore {
   }
 
   goBack() {
+    /* FIXME: Learn to use alt.recycle */
+    this.routeStartText = "";
+    this.routeEndText = "";
+    this.hasStartLocation = false;
+    this.hasDestLocation = false;
+    this.locations = [];
+    this.waypoints = [];
+    this.calculateRoute = false;
+    this.hasRoute = false;
     this.showInstructions = false;
+    this.route = {};
+    this.startLocation = false;
+    this.endLocation = false;
+    this.errorMessage = null;
+    this.showSuggestions = false;
   }
   // handleLocationsFailed(errorMessage) {
   //   this.errorMessage = errorMessage;
