@@ -16,7 +16,9 @@ var MapComponent = React.createClass({
   componentDidMount: function() {
 
     L.Icon.Default.imagePath = '../img';
-    this.routeControl =  new L.Routing.control({});
+    this.routeControl =  new L.Routing.control({
+      serviceUrl: 'http://router.project-osrm.org/viaroute'
+    });
 
     this.routeControl.on('routesfound', function(routeData) {
       Actions.showRouteInstructions(routeData);
