@@ -8,6 +8,8 @@ var Popup = require('react-leaflet/lib/Popup');
 var Actions = require('../actions/Actions');
 require('leaflet-routing-machine');
 
+import './L.TileLayer.PouchDBCached'
+
 
 var MapComponent = React.createClass({
 
@@ -67,7 +69,8 @@ var MapComponent = React.createClass({
       baseLayer = <TileLayer
           key={this.props.uiState.baseLayer}
           url="http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png"
-          subdomains={['otile1', 'otile2', 'otile3', 'otile4']} />;
+          subdomains={['otile1', 'otile2', 'otile3', 'otile4']}
+          useCache={true} />;
       } else if (this.props.uiState.baseLayer === 'satellite') {
       baseLayer = <TileLayer
           key={this.props.uiState.baseLayer}
