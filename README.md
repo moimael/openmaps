@@ -20,12 +20,15 @@ Cartes uses the following technologies :
 * [Flux](http://facebook.github.io/flux/) as application pattern
 * [Alt](http://alt.js.org/) as Flux implementation
 * [Gulp](http://gulpjs.com/) as task runner
-* [npm](https://www.npmjs.com/) + [Browserify](http://browserify.org/) as dependency manager
-* [Leaflet](http://leafletjs.com/) + [react-leaflet](https://github.com/PaulLeCam/react-leaflet) as map libraries
-* [leaflet-routing-machine](https://github.com/perliedman/leaflet-routing-machine) + [OSRM](http://map.project-osrm.org/) as routing engine
-
+* [npm](https://www.npmjs.com/)
+* [Browserify](http://browserify.org/) as dependency manager
+* [Leaflet](http://leafletjs.com/)
+* [react-leaflet](https://github.com/PaulLeCam/react-leaflet) as map libraries
+* [leaflet-routing-machine](https://github.com/perliedman/leaflet-routing-machine)
+* [OSRM](http://map.project-osrm.org/) as routing engine
 * [Photon](https://photon.komoot.de/) as search as you type OpenStreetMap engine
 * [Open MapQuest](http://open.mapquest.com/) as tiles provider
+* [pouchdb](http://pouchdb.com/) as offline cache
 
 # How to contribute
 
