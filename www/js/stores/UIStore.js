@@ -16,12 +16,14 @@ class UIStore {
     this.showRoutingWidget = false;
     this.showSuggestions = false;
     this.showLayerMenu = false;
+    this.showSaveTiles = false;
     this.baseLayer = 'road';
     this.hasCurrentLocation = false;
     this.hasUserPosition = false;
     this.accuracy = null;
     this.currentLocation = null;
     this.userPosition = null;
+    this.shouldTilesBeSaved = false;
     this.zoom = 3;
     this.center = {
       lat: 51.505,
@@ -38,6 +40,8 @@ class UIStore {
       handleUserPosition: Actions.SHOW_USER_POSITION,
       handleCurrentLocation: Actions.SHOW_LOCATION,
       handleClearText: Actions.CLEAR_TEXT,
+      handleShowSaveTiles: Actions.SHOW_SAVE_TILES,
+      handleSaveTiles: Actions.SAVE_TILES,
       goBack: Actions.GO_BACK,
     });
 
@@ -121,6 +125,14 @@ class UIStore {
 
   goBack() {
     this.showRoutingWidget = false;
+  }
+
+  handleShowSaveTiles() {
+    this.showSaveTiles = true;
+  }
+
+  handleSaveTiles() {
+    this.shouldTilesBeSaved = true;
   }
 }
 

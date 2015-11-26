@@ -128,6 +128,14 @@ class Actions {
   toggleActionbar() {
     this.dispatch();
   }
+
+  showSaveTiles() {
+    this.dispatch();
+  }
+
+  saveTiles() {
+    this.dispatch();
+  }
 }
 
 module.exports = alt.createActions(Actions);

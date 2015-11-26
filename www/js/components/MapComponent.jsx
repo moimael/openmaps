@@ -62,14 +62,19 @@ var MapComponent = React.createClass({
     this.refs.map.leafletElement.addLayer(this.routeControl);
   },
 
+  saveTiles: function() {
+    this.refs.road.leafletElement.seed(this.refs.map.leafletElement.getBounds(), 7, 9);
+  },
+
   render: function() {
-    var radius = Math.round(this.props.uiState.accuracy / 2);
-    var baseLayer;
-    var center = this.props.uiState.userPosition;
+    let radius = Math.round(this.props.uiState.accuracy / 2);
+    let center = this.props.uiState.userPosition;
+    let baseLayer = null;
 
     if (this.props.uiState.baseLayer === 'road') {
       baseLayer = <TileLayer
           key={this.props.uiState.baseLayer}
+          ref="road"
           url="http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png"
           subdomains={['otile1', 'otile2', 'otile3', 'otile4']}
           useCache={true} />;
@@ -89,7 +94,7 @@ var MapComponent = React.createClass({
       this.calculateRoute();
     }
 
-    var currentPositionMarker = L.divIcon({className: 'current-location'});
+    let currentPositionMarker = L.divIcon({className: 'current-location'});
 
     return (
       <Map id={this.props.id} ref="map" center={this.props.uiState.center} zoom={this.props.uiState.zoom} zoomControl={false} attributionControl={false} worldCopyJump={true} boxZoom={false} onLocationfound={this.handleLocationFound}>
