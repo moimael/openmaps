@@ -128,6 +128,22 @@ class Actions {
   toggleActionbar() {
     this.dispatch();
   }
+
+  showSaveTiles() {
+    this.dispatch();
+  }
+
+  fetchTiles() {
+    this.dispatch();
+  }
+
+  updateFetchTilesProgress(event) {
+    this.dispatch(event);
+  }
+
+  tilesFetched() {
+    this.dispatch();
+  }
 }
 
 module.exports = alt.createActions(Actions);

@@ -19,9 +19,9 @@ var ActionMenu = React.createClass({
     return (
       <div id="tool">
         {this.props.routeMode ? null :
-        <button id="toggle-search-button" className="pack-icon-route" onClick={this.handleSwitchInput}></button>}
-        <button id="toggle-layers-button" className="pack-icon-layers" onClick={this.handleSwitchLayer}></button>
-        <button id="locate-button" className="pack-icon-location" onClick={this.handleLocate}></button>
+        <button id="toggle-search-button" className="pack-icon-route rounded-button" onClick={this.handleSwitchInput}></button>}
+        <button id="toggle-layers-button" className="pack-icon-layers rounded-button" onClick={this.handleSwitchLayer}></button>
+        <button id="locate-button" className="pack-icon-location rounded-button" onClick={this.handleLocate}></button>
       </div>
     );
   }

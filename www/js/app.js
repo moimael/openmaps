@@ -8,7 +8,8 @@ var App = require('./components/App.jsx');
 $.ajaxSetup( {
   xhr: function() {
     return new window.XMLHttpRequest({
-        mozSystem: true
+        mozSystem: true,
+        mozAnon: true
     });
   }
 });

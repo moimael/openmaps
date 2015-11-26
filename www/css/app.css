@@ -6,6 +6,8 @@
 @import "input_areas.css";
 @import "action_menu.css";
 @import "toolbars.css";
+@import "progress_activity.css";
+@import "confirm.css";
 @import "lists.css";
 @import "leaflet.css";
 @import "leaflet-routing-machine.css";
@@ -31,6 +33,10 @@ section[role="region"] > div > header{
 div[role="main"] {
   height: 100%;
   overflow: hidden;
+}
+
+form[role="dialog"] {
+  z-index: 50;
 }
 
 .autocomplete, .routing-autocomplete {
@@ -62,7 +68,7 @@ div.routing-bar input[type="text"] {
 }
 
 div.routing-bar > form > p:last-child > input[type="text"] {
-  border-top-width: 0px !important;
+  border-top-width: 0 !important;
 }
 
 
@@ -80,20 +86,23 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   margin: 0 0 1rem !important;
 }
 
+.rounded-button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+  box-shadow: 1px 1px 5px 0 #656565;
+  border: none;
+  background-position: center;
+}
+
 #toggle-search-button {
   position: absolute;
   z-index: 20;
   bottom: 0;
   right: 0;
-  width: 4rem;
-  height: 4rem;
   margin-right: 1rem;
   margin-bottom: 6rem;
-  border-radius: 4rem;
-  box-shadow: 1px 1px 5px 0 #656565;
-  border: none;
   background-color: #00caf2;
-  background-position: center;
 }
 
 #toggle-search-button:hover, #toggle-search-button:active, #toggle-search-button:focus {
@@ -105,15 +114,20 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   z-index: 20;
   bottom: 0;
   left: 0;
-  width: 4rem;
-  height: 4rem;
   margin-left: 1rem;
   margin-bottom: 1rem;
   border-radius: 4rem;
-  box-shadow: 1px 1px 5px 0 #656565;
-  border: none;
   background-color: #2C393B;
-  background-position: center;
+}
+
+#save-tiles-button {
+  position: absolute;
+  z-index: 20;
+  bottom: 0;
+  margin-left: calc(50% - 2rem);
+  margin-bottom: 1rem;
+  border-radius: 4rem;
+  background-color: #2C393B;
 }
 
 #locate-button {
@@ -121,15 +135,9 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   z-index: 20;
   bottom: 0;
   right: 0;
-  width: 4rem;
-  height: 4rem;
   margin-right: 1rem;
   margin-bottom: 1rem;
-  border-radius: 4rem;
-  box-shadow: 1px 1px 5px 0 #656565;
-  border: none;
   background-color: #2C393B;
-  background-position: center;
 }
 
 #map {
@@ -166,6 +174,11 @@ div.routing-bar > form > p:last-child > input[type="text"] {
     background-repeat: no-repeat;
 }
 
+.icon-download {
+    background-image: url(../img/download.png);
+    background-repeat: no-repeat;
+}
+
 .route-header {
   height: auto !important;
 }
@@ -194,7 +207,7 @@ div.routing-bar > form > p:last-child > input[type="text"] {
   position: relative;
   flex: 1;
   display: flex;
-  padding-: 0;
+  padding: 0;
   margin: 10px;
   /* So we can display scrollbar properly*/
   padding-right: 0 !important;
@@ -263,7 +276,7 @@ pullDown
   animation-name: pull-down;
   animation-duration: 1.1s;
   animation-timing-function: ease-out;
-  transform-origin: 50% 0%;
+  transform-origin: 50% 0;
 }
 
 .pull-leave {

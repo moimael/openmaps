@@ -16,12 +16,16 @@ class UIStore {
     this.showRoutingWidget = false;
     this.showSuggestions = false;
     this.showLayerMenu = false;
+    this.showSaveTiles = false;
     this.baseLayer = 'road';
     this.hasCurrentLocation = false;
     this.hasUserPosition = false;
     this.accuracy = null;
     this.currentLocation = null;
     this.userPosition = null;
+    this.progressValue = 0;
+    this.maxProgress = 0;
+    this.showFetchTilesProgress = false;
     this.zoom = 3;
     this.center = {
       lat: 51.505,
@@ -38,15 +42,21 @@ class UIStore {
       handleUserPosition: Actions.SHOW_USER_POSITION,
       handleCurrentLocation: Actions.SHOW_LOCATION,
       handleClearText: Actions.CLEAR_TEXT,
+      handleShowSaveTiles: Actions.SHOW_SAVE_TILES,
+      handleFetchTiles: Actions.FETCH_TILES,
+      handleUpdateFetchTilesProgress: Actions.UPDATE_FETCH_TILES_PROGRESS,
+      handleTilesFetched: Actions.TILES_FETCHED,
       goBack: Actions.GO_BACK,
     });
 
     if(window.MozActivity) {
-      navigator.mozSetMessageHandler('activity', function(aRequestHandler) {
-        var activityOptions = aRequestHandler.source;
-        if (activityOptions.name == 'view') {
+      navigator.mozSetMessageHandler('activity', function(requestHandler) {
+        var activityOptions = requestHandler.source;
+        if (activityOptions.name === 'view') {
           this.handleCurrentLocation({
-            'latlng': option.position
+            'data': {
+              'latlng': activityOptions.data.position
+            }
           });
         }
       });
@@ -121,6 +131,24 @@ class UIStore {
 
   goBack() {
     this.showRoutingWidget = false;
+    this.showSaveTiles = false;
+  }
+
+  handleShowSaveTiles() {
+    this.showSaveTiles = true;
+  }
+
+  handleFetchTiles() {
+    this.showFetchTilesProgress = true;
+  }
+
+  handleUpdateFetchTilesProgress(event) {
+    this.maxProgress = event.queueLength;
+    this.progressValue = event.queueLength - event.remainingLength;
+  }
+
+  handleTilesFetched() {
+    console.log("test");
   }
 }
 

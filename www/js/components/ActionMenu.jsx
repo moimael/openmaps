@@ -8,6 +8,11 @@ var ActionMenu = React.createClass({
     this.handleClose();
   },
 
+  handleSaveTiles: function() {
+    Actions.showSaveTiles();
+    this.handleClose();
+  },
+
   handleClose: function() {
     Actions.toggleLayerMenu();
   },
@@ -21,6 +26,7 @@ var ActionMenu = React.createClass({
             <button type="button" id="map-view-button" value="road" onClick={this.handleChangeLayer}>Map</button>
             <button type="button" id="satellite-view-button" value="satellite" onClick={this.handleChangeLayer}>Satellite</button>
             <button type="button" id="cycle-view-button" value="cycle" onClick={this.handleChangeLayer}>Cycle</button>
+            <button type="button" id="offline-save-button" value="save" onClick={this.handleSaveTiles}>Save area</button>
             <button type="button" id="cancel-button" onClick={this.handleClose}>Cancel</button>
           </menu>
         </form>
