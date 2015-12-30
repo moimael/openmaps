@@ -13,14 +13,18 @@ var ActionMenu = React.createClass({
   },
 
   render: function() {
+    let buttons = null;
+    buttons = this.props.items.map((button) => {
+      return (
+        <button type="button" key={button.id} id={button.id} value={button.value} onClick={this.handleChangeLayer}>{button.text}</button>
+      );
+    });
     return (
       <div id="action-menu">
         <form data-type="action" role="dialog">
-          <header>Layers</header>
+          <header>{this.props.title}</header>
           <menu>
-            <button type="button" id="map-view-button" value="road" onClick={this.handleChangeLayer}>Map</button>
-            <button type="button" id="satellite-view-button" value="satellite" onClick={this.handleChangeLayer}>Satellite</button>
-            <button type="button" id="cycle-view-button" value="cycle" onClick={this.handleChangeLayer}>Cycle</button>
+            {buttons}
             <button type="button" id="cancel-button" onClick={this.handleClose}>Cancel</button>
           </menu>
         </form>

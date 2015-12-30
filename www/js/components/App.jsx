@@ -39,6 +39,23 @@ var App = React.createClass({
   },
 
   render() {
+    let buttons = [
+      {
+        'id': 'map-view-button',
+        'value': 'road',
+        'text': 'Map'
+      },
+      {
+        'id': 'satellite-view-button',
+        'value': 'satellite',
+        'text': 'Satellite'
+      },
+      {
+        'id': 'cycle-view-button',
+        'value': 'cycle',
+        'text': 'Cycle'
+      }
+    ];
     return (
       <div role="main">
         {this.state.ui.showRoutingWidget ?
@@ -49,7 +66,7 @@ var App = React.createClass({
         <Toolbar routeMode={this.state.ui.showRoutingWidget} onLocateClicked={this.handleLocateClicked}/>
         <MapComponent id="map" ref="mapComponent" uiState={this.state.ui} routeState={this.state.route}/>
         {this.state.ui.showLayerMenu ?
-        <ActionMenu /> : null}
+        <ActionMenu title="Layers" items={buttons} /> : null}
       </div>
     );
   },
