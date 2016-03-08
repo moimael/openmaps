@@ -1,38 +1,43 @@
-var React = require('react');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var SearchInput = require('./SearchInput.jsx');
-var ListComponent = require('./ListComponent.jsx');
-var Actions = require('../actions/Actions');
+import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import SearchInput from './SearchInput.jsx';
+import ListComponent from './ListComponent.jsx';
+import Actions from '../actions/Actions';
 
 
-var RouteSearch = React.createClass({
+class RouteSearch extends React.Component{
 
-  handleRouteStartChange: function(value) {
+  constructor(props) {
+    super(props);
+    this.goBack = this.goBack.bind(this);
+  }
+
+  handleRouteStartChange(value) {
     Actions.fetchStartLocations(value);
-  },
+  }
 
-  handleRouteEndChange: function(value) {
+  handleRouteEndChange(value) {
     Actions.fetchEndLocations(value);
-  },
+  }
 
-  handleSearchCompleted: function(location) {
+  handleSearchCompleted(location) {
     Actions.confirmLocation(location);
-  },
+  }
 
-  toggleInstructions: function() {
+  toggleInstructions() {
     Actions.toggleInstructions();
-  },
+  }
 
-  goBack: function() {
+  goBack() {
     this.props.map.clearRoutes();
     Actions.goBack();
-  },
+  }
 
-  doNothing: function() {
-  },
+  doNothing() {
+  }
 
 // <div className="hbox center"><button><span className="icon icon-back">back</span></button><button><span className="icon icon-back">back</span></button><button><span className="icon icon-back">back</span></button></div>
-  render: function() {
+  render() {
     return (
       <div className="routing-autocomplete">
         <section role="region" className="skin-dark route-header">
@@ -63,6 +68,6 @@ var RouteSearch = React.createClass({
       </div>
     );
   }
-});
+};
 
-module.exports = RouteSearch;
+export default RouteSearch;

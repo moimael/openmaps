@@ -1,17 +1,22 @@
-var React = require('react');
-var Actions = require('../actions/Actions');
+import React from 'react';
+import Actions from '../actions/Actions';
 
-var SearchInput = React.createClass({
+class SearchInput extends React.Component {
 
-  handleChange: function(event) {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(event) {
     this.props.onChange(event.target.value);
-  },
+  }
 
-  handleClear: function() {
+  handleClear() {
     Actions.clearText();
-  },
+  }
 
-  render: function() {
+  render() {
     return (
         <p>
           <input id="search-input" type="text" placeholder={this.props.placeholder} ref="searchTextInput" autoComplete="off" value={this.props.searchText} onChange={this.handleChange}/>
@@ -19,6 +24,6 @@ var SearchInput = React.createClass({
         </p>
     );
   }
-});
+};
 
-module.exports = SearchInput;
+export default SearchInput;

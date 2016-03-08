@@ -1,21 +1,26 @@
-var React = require('react');
-var Actions = require('../actions/Actions');
+import React from 'react';
+import Actions from '../actions/Actions';
 
-var ActionMenu = React.createClass({
+class ActionMenu extends React.Component{
 
-  handleSwitchInput: function() {
+  constructor(props) {
+    super(props);
+    this.handleLocate = this.handleLocate.bind(this);
+  }
+
+  handleSwitchInput() {
     Actions.toggleActionbar();
-  },
+  }
 
-  handleSwitchLayer: function() {
+  handleSwitchLayer() {
     Actions.toggleLayerMenu();
-  },
+  }
 
-  handleLocate: function(event) {
+  handleLocate(event) {
     this.props.onLocateClicked();
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div id="tool">
         {this.props.routeMode ? null :
@@ -25,6 +30,6 @@ var ActionMenu = React.createClass({
       </div>
     );
   }
-});
+};
 
-module.exports = ActionMenu;
+export default ActionMenu;

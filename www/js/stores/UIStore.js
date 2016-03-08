@@ -1,18 +1,19 @@
-var alt = require('../alt');
-var AppUtils = require('../utils/AppUtils');
-var Actions = require('../actions/Actions');
+import alt from '../alt';
+import AppUtils from '../utils/AppUtils';
+import Actions from '../actions/Actions';
+import SearchActions from '../actions/SearchActions';
 
 
 class UIStore {
   constructor() {
-    this.searchText = "";
-    this.locations = [];
+    // this.searchText = "";
+    // this.results = [];
+    // this.locations = [];
     this.waypoints = [];
     // Put everything in locations, with an order parameter
     this.startLocation = null;
     this.endLocation = null;
     this.errorMessage = null;
-    this.showSearchWidget = true;
     this.showRoutingWidget = false;
     this.showSuggestions = false;
     this.showLayerMenu = false;
@@ -29,9 +30,10 @@ class UIStore {
     };
 
     this.bindListeners({
-      handleUpdateLocations: Actions.UPDATE_LOCATIONS,
-      handleFetchLocations: Actions.FETCH_LOCATIONS,
-      handleLocationsFailed: Actions.LOCATIONS_FAILED,
+      // handleReceivedResults: SearchActions.RECEIVED_RESULTS,
+      // handleUpdateLocations: Actions.UPDATE_LOCATIONS,
+      // handleFetchLocations: Actions.FETCH_LOCATIONS,
+      // handleLocationsFailed: Actions.LOCATIONS_FAILED,
       toggleLayerMenu: Actions.TOGGLE_LAYER_MENU,
       toggleActionbar: Actions.TOGGLE_ACTIONBAR,
       changeLayer: Actions.CHANGE_LAYER,
@@ -51,6 +53,10 @@ class UIStore {
         }
       });
     }
+  }
+
+  handleReceivedResults(results) {
+    console.log(results);
   }
 
   handleUpdateLocations(locations) {
@@ -124,4 +130,4 @@ class UIStore {
   }
 }
 
-module.exports = alt.createStore(UIStore, 'UIStore');
+export default alt.createStore(UIStore, 'UIStore');

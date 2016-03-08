@@ -1,21 +1,27 @@
-var React = require('react');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var SearchInput = require('./SearchInput.jsx');
-var ListComponent = require('./ListComponent.jsx');
-var Actions = require('../actions/Actions');
+import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import SearchInput from './SearchInput.jsx';
+import ListComponent from './ListComponent.jsx';
+import Actions from '../actions/Actions';
+import SearchActions from '../actions/SearchActions';
 
 
-var Typeahead = React.createClass({
+class Typeahead extends React.Component{
 
-  handleChange: function(value) {
-    Actions.fetchLocations(value, this.props.bounds);
-  },
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-  handleSearchCompleted: function(location) {
+  handleChange(value) {
+    SearchActions.fetchResults(value, this.props.bounds);
+  }
+
+  handleSearchCompleted(location) {
     Actions.showLocation(location);
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="autocomplete">
         <div className="action-bar">
@@ -32,6 +38,6 @@ var Typeahead = React.createClass({
       </div>
     );
   }
-});
+};
 
-module.exports = Typeahead;
+export default Typeahead;

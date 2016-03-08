@@ -1,7 +1,7 @@
-var $ = require('jquery');
-var React = require('react');
-var ReactDOM = require('react-dom');
-var App = require('./components/App.jsx');
+import $ from 'jquery';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './components/App.jsx';
 
 
 // ajax global settings
@@ -13,6 +13,6 @@ $.ajaxSetup( {
   }
 });
 
-var app = ReactDOM.render(<App />, document.getElementById('app'));
+let app = ReactDOM.render(<App />, document.getElementById('app'));
 
-module.exports = app;
+export default app;

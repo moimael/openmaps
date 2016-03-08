@@ -1,6 +1,6 @@
-var alt = require('../alt');
-var AppUtils = require('../utils/AppUtils');
-var Actions = require('../actions/Actions');
+import alt from '../alt';
+import AppUtils from '../utils/AppUtils';
+import Actions from '../actions/Actions';
 
 class RouteStore {
   constructor() {
@@ -34,7 +34,7 @@ class RouteStore {
     this.startLocation = false;
     this.endLocation = false;
     this.errorMessage = null;
-    this.showSuggestions = false;
+    // this.showSuggestions = false;
 
     this.bindListeners({
       handleUpdateStartLocations: Actions.UPDATE_START_LOCATIONS,
@@ -174,4 +174,4 @@ class RouteStore {
   // }
 }
 
-module.exports = alt.createStore(RouteStore, 'RouteStore');
+export default alt.createStore(RouteStore, 'RouteStore');

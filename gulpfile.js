@@ -25,7 +25,7 @@ var gulp = require('gulp'),
 //add custom browserify options here
 var customOpts = {
   entries: ['./www/js/app.js'],
-  transform: [['babelify', {'presets': ['es2015', 'react']}], 'brfs'],
+  transform: [['babelify', {'plugins': ['transform-decorators-legacy' ], 'presets': ['es2015', 'react', 'stage-0']}], 'brfs'],
   debug: true,
   cache: {},
   packageCache: {},

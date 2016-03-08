@@ -1,6 +1,6 @@
-var uuid = require('uuid');
+import uuid from 'uuid';
 
-module.exports = {
+export default {
 
   isEmpty: function(obj) {
 
@@ -15,7 +15,7 @@ module.exports = {
     // Otherwise, does it have any properties of its own?
     // Note that this doesn't handle
     // toString and valueOf enumeration bugs in IE < 9
-    for (var key in obj) {
+    for (let key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
     }
 
@@ -23,15 +23,15 @@ module.exports = {
   },
 
   secondsToTime: function(secs, short = false){
-      var hours = Math.floor(secs / (60 * 60));
+      let hours = Math.floor(secs / (60 * 60));
 
-      var divisor_for_minutes = secs % (60 * 60);
-      var minutes = Math.floor(divisor_for_minutes / 60);
+      let divisor_for_minutes = secs % (60 * 60);
+      let minutes = Math.floor(divisor_for_minutes / 60);
 
-      var divisor_for_seconds = divisor_for_minutes % 60;
-      var seconds = Math.ceil(divisor_for_seconds);
+      let divisor_for_seconds = divisor_for_minutes % 60;
+      let seconds = Math.ceil(divisor_for_seconds);
 
-      var formattedTime = null;
+      let formattedTime = null;
 
       if (short) {
         formattedTime = (hours > 0 ? hours + 'h' : '') +
@@ -46,11 +46,11 @@ module.exports = {
 
   metersToDistance: function(meters){
       if (meters > 1000) {
-          var km = (meters / 1000).toFixed(1);
-          var formattedKm = km + 'km';
+          let km = (meters / 1000).toFixed(1);
+          let formattedKm = km + 'km';
           return formattedKm;
       }
-      var formattedMeters = meters + " m";
+      let formattedMeters = meters + " m";
       return formattedMeters;
   },
 

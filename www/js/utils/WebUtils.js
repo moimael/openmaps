@@ -1,9 +1,9 @@
-var $ = require('jquery');
+import $ from 'jquery';
 var jqXHR = null;
 
-module.exports = {
+export default {
   search(searchText, boundsCenter) {
-    var search_params = {
+    let search_params = {
       'q': searchText,
       'limit': '8'
     };
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   reverseGeocode(latlng) {
-    var search_params = {
+    let search_params = {
       'lon': latlng.lng,
       'lat': latlng.lat,
       'limit': '8'
@@ -45,7 +45,7 @@ module.exports = {
   },
 
   parse(response) {
-    var parsed = {
+    let parsed = {
       'id': response.properties.osm_id,
       'type': response.geometry.type,
       'name': response.properties.name,

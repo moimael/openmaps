@@ -1,44 +1,51 @@
-var React = require('react');
-var Typeahead = require('./Typeahead.jsx');
-var RouteSearch = require('./RouteSearch.jsx');
-var Toolbar = require('./Toolbar.jsx');
-var MapComponent = require('./MapComponent.jsx');
-var ActionMenu = require('./ActionMenu.jsx');
-var UIStore = require('../stores/UIStore');
-var RouteStore = require('../stores/RouteStore');
+import React from 'react';
+import connectToStores from 'alt-utils/lib/connectToStores';
+import Typeahead from './Typeahead.jsx';
+import RouteSearch from './RouteSearch.jsx';
+import Toolbar from './Toolbar.jsx';
+import MapComponent from './MapComponent.jsx';
+import ActionMenu from './ActionMenu.jsx';
+import UIStore from '../stores/UIStore';
+import RouteStore from '../stores/RouteStore';
+import SearchStore from '../stores/SearchStore';
 
-var App = React.createClass({
+@connectToStores
+class App extends React.Component {
 
-  getInitialState() {
+  static getStores() {
+    return [UIStore, RouteStore];
+  }
+
+  static getPropsFromStores() {
     return {
-      ui: UIStore.getState(),
-      route: RouteStore.getState()
-    };
-  },
+      ...UIStore.getState(),
+      ...RouteStore.getState(),
+      ...SearchStore.getState()
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    this.handleLocateClicked = this.handleLocateClicked.bind(this);
+  }
 
   componentDidMount() {
-    UIStore.listen(this.onChange);
-    RouteStore.listen(this.onChange);
     this.handleLocateClicked();
-  },
-
-  componentWillUmount() {
-    UIStore.unlisten(this.onChange);
-    RouteStore.unlisten(this.onChange);
-  },
+  }
 
   handleLocateClicked() {
     this.refs.mapComponent.locate();
-  },
+  }
 
   getCurrentBoundsCenter() {
     if (this.refs.mapComponent !== undefined) {
       return this.refs.mapComponent.getBoundsCenter();
     }
-    return this.state.ui.userPosition;
-  },
+    return this.props.userPosition;
+  }
 
   render() {
+    var { searchText, showSuggestions, locations, ...other } = this.props;
     let buttons = [
       {
         'id': 'map-view-button',
@@ -56,28 +63,21 @@ var App = React.createClass({
         'text': 'Cycle'
       }
     ];
+
     return (
       <div role="main">
-        {this.state.ui.showRoutingWidget ?
-        <RouteSearch routeStartText={this.state.route.routeStartText} routeEndText={this.state.route.routeEndText} showSuggestions={this.state.route.showSuggestions} showInstructions={this.state.route.showInstructions} locations={this.state.route.locations} route={this.state.route.route} hasRoute={this.state.route.hasRoute} map={this.refs.mapComponent}/> :
-        <Typeahead searchText={this.state.ui.searchText} showSuggestions={this.state.ui.showSuggestions} locations={this.state.ui.locations} bounds={this.getCurrentBoundsCenter()} />
+        {this.props.showRoutingWidget ?
+        <RouteSearch routeStartText={this.props.routeStartText} routeEndText={this.props.routeEndText} showSuggestions={showSuggestions} showInstructions={this.props.showInstructions} locations={locations} route={this.props.route} hasRoute={this.props.hasRoute} map={this.refs.mapComponent}/> :
+        <Typeahead searchText={searchText} showSuggestions={showSuggestions} locations={locations} bounds={this.getCurrentBoundsCenter()} />
         }
 
-        <Toolbar routeMode={this.state.ui.showRoutingWidget} onLocateClicked={this.handleLocateClicked}/>
-        <MapComponent id="map" ref="mapComponent" uiState={this.state.ui} routeState={this.state.route}/>
-        {this.state.ui.showLayerMenu ?
+        <Toolbar routeMode={this.props.showRoutingWidget} onLocateClicked={this.handleLocateClicked}/>
+        <MapComponent {...other} id="map" ref="mapComponent" />
+        {this.props.showLayerMenu ?
         <ActionMenu title="Layers" items={buttons} /> : null}
       </div>
     );
-  },
-
-  onChange() {
-    this.setState({
-      ui: UIStore.getState(),
-      route: RouteStore.getState()
-    });
   }
+};
 
-});
-
-module.exports = App;
+export default App;

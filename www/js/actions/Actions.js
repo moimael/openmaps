@@ -1,133 +1,147 @@
-var WebUtils = require('../utils/WebUtils');
-var alt = require('../alt');
+import alt from '../alt';
+import WebUtils from '../utils/WebUtils';
 
 class Actions {
 
   /* Typeahead */
   fetchLocations(searchText, boundsCenter) {
-    // we dispatch an event here so we can have "loading" state.
-    this.dispatch(searchText);
+    return (dispatch) => {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch(searchText);
 
-    if ( !searchText ) {
-      return;
-    }
+      if ( !searchText || searchText.length <= 1 ) {
+        return;
+      }
 
-    WebUtils.search(searchText, boundsCenter)
-      .then((locations) => {
-        locations = locations.features;
-        for (var i=0; i < locations.length; i++) {
-          locations[i] = WebUtils.parse(locations[i]);
-        }
-        // we can access other actions within our action through `this.actions`
-        this.actions.updateLocations(locations);
-      })
       // .catch((errorMessage) => {
       //   this.actions.locationsFailed(errorMessage);
       // });
+      WebUtils.search(searchText, boundsCenter)
+        .then((locations) => {
+          locations = locations.features;
+          locations = locations.map((location) => {
+            return WebUtils.parse(location);
+          });
+          this.updateLocations(locations);
+        })
+    };
+    return searchText;
   }
 
   updateLocations(locations) {
-    this.dispatch(locations);
+    return locations;
   }
 
   locationsFailed(errorMessage) {
-    this.dispatch(errorMessage);
+    return errorMessage;
   }
 
   clearText() {
-    this.dispatch();
+    return;
   }
 
   showLocation(location) {
-    this.dispatch(location);
+    return location;
   }
 
   /* Route */
   fetchStartLocations(searchText) {
-    // we dispatch an event here so we can have "loading" state.
-    this.dispatch(searchText);
+    return function(dispatch) {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch(searchText);
 
-    if ( !searchText ) {
-      return;
-    }
+      if ( !searchText ) {
+        return;
+      }
 
-    WebUtils.search(searchText)
-      .then((locations) => {
-        locations = locations.features;
-        for (var i=0; i < locations.length; i++) {
-          locations[i] = WebUtils.parse(locations[i]);
-        }
-        // we can access other actions within our action through `this.actions`
-        this.actions.updateStartLocations(locations);
-      })
       // .catch((errorMessage) => {
       //   this.actions.locationsFailed(errorMessage);
       // });
+      WebUtils.search(searchText)
+        .then((locations) => {
+          locations = locations.features;
+          for (var i=0; i < locations.length; i++) {
+            locations[i] = WebUtils.parse(locations[i]);
+          }
+          // we can access other actions within our action through `this.actions`
+          this.updateStartLocations(locations);
+        })
+    };
   }
 
   updateStartLocations(locations) {
-    this.dispatch(locations);
+    return locations;
   }
 
   confirmLocation(location) {
-    this.dispatch(location);
+    return location;
   }
 
   fetchEndLocations(searchText) {
-    // we dispatch an event here so we can have "loading" state.
-    this.dispatch(searchText);
+    return function(dispatch) {
+      // we dispatch an event here so we can have "loading" state.
+      dispatch(searchText);
 
-    if ( !searchText ) {
-      return;
-    }
+      if ( !searchText ) {
+        return;
+      }
 
-    WebUtils.search(searchText)
-      .then((locations) => {
-        locations = locations.features;
-        for (var i=0; i < locations.length; i++) {
-          locations[i] = WebUtils.parse(locations[i]);
-        }
-        // we can access other actions within our action through `this.actions`
-        this.actions.updateEndLocations(locations);
-      })
       // .catch((errorMessage) => {
       //   this.actions.locationsFailed(errorMessage);
       // });
+      WebUtils.search(searchText)
+        .then((locations) => {
+          locations = locations.features;
+          for (var i=0; i < locations.length; i++) {
+            locations[i] = WebUtils.parse(locations[i]);
+          }
+          // we can access other actions within our action through `this.actions`
+          this.updateEndLocations(locations);
+        })
+    };
   }
 
   updateEndLocations(locations) {
-    this.dispatch(locations);
+    return locations;
   }
 
   showRouteInstructions(routeData) {
-    this.dispatch(routeData);
+    return routeData;
   }
 
   toggleInstructions() {
-    this.dispatch();
+    return function(dispatch) {
+      dispatch();
+    }
   }
 
   goBack() {
-    this.dispatch();
+    return function(dispatch) {
+      dispatch();
+    }
   }
 
   /* ActionMenu */
   changeLayer(layer) {
-    this.dispatch(layer);
+    return layer;
   }
 
   /* Actionbar */
   showUserPosition(location) {
-    this.dispatch(location);
+    return location;
   }
 
   toggleLayerMenu() {
-    this.dispatch();
+    return function(dispatch) {
+      dispatch();
+    }
   }
 
   toggleActionbar() {
-    this.dispatch();
+    return function(dispatch) {
+      dispatch();
+    }
   }
 }
 
-module.exports = alt.createActions(Actions);
+export default alt.createActions(Actions);

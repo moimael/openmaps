@@ -1,18 +1,22 @@
-var React = require('react');
-var Spinner = require('react-spinkit');
-var ListItem = require('./ListItem.jsx');
+import React from 'react';
+import Spinner from 'react-spinkit';
+import ListItem from './ListItem.jsx';
 
-var ListComponent = React.createClass({
-
-  propTypes: {
+class ListComponent extends React.Component{
+  static propTypes = {
     items: React.PropTypes.array.isRequired
-  },
+  }
 
-  handleClick: function(item) {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(item) {
     this.props.onItemClicked(item);
-  },
+  }
 
-  render: function() {
+  render() {
     var listItem = null;
 
     if (this.props.items.length > 0) {
@@ -31,6 +35,6 @@ var ListComponent = React.createClass({
         </ul>
     );
   }
-});
+};
 
-module.exports = ListComponent;
+export default ListComponent;

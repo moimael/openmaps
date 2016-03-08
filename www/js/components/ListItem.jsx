@@ -1,16 +1,20 @@
-var React = require('react');
+import React from 'react';
 
-var ListItem = React.createClass({
-
-  propTypes: {
+class ListItem extends React.Component{
+  static propTypes = {
     item: React.PropTypes.object.isRequired
-  },
+  }
 
-  handleClick: function() {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
     this.props.onItemClicked(this.props.item);
-  },
+  }
 
-  render: function () {
+  render() {
     return (
       <li onClick={this.handleClick}>
         {this.props.item.imgClass ?
@@ -22,6 +26,6 @@ var ListItem = React.createClass({
       </li>
     );
   }
-});
+};
 
-module.exports = ListItem;
+export default ListItem;

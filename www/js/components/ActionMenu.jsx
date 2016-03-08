@@ -1,18 +1,23 @@
-var React = require('react');
-var Actions = require('../actions/Actions');
+import React from 'react';
+import Actions from '../actions/Actions';
 
-var ActionMenu = React.createClass({
+class ActionMenu extends React.Component {
 
-  handleChangeLayer: function(event) {
+  constructor(props) {
+    super(props);
+    this.handleChangeLayer = this.handleChangeLayer.bind(this);
+  }
+
+  handleChangeLayer(event) {
     Actions.changeLayer(event.target.value);
     this.handleClose();
-  },
+  }
 
-  handleClose: function() {
+  handleClose() {
     Actions.toggleLayerMenu();
-  },
+  }
 
-  render: function() {
+  render() {
     let buttons = null;
     buttons = this.props.items.map((button) => {
       return (
@@ -31,6 +36,6 @@ var ActionMenu = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = ActionMenu;
+export default ActionMenu;
